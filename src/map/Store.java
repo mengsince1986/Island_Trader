@@ -1,5 +1,6 @@
 package map;
 
+import items.Item;
 import java.util.ArrayList;
 
 public class Store {

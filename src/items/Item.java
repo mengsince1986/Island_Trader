@@ -27,7 +27,7 @@ public class Item {
 		 * "price per unit: " + pricePerUnit;
 		 */
 		return String.format(
-				"%s\nCargo space required: %s\nprice per unit: %s\n", 
+				"%s\nCargo space required: %s\nPrice per unit: %s\n", 
 				name, 
 				cargoSize, 
 				pricePerUnit);
