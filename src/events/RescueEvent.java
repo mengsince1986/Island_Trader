@@ -1,11 +1,13 @@
 package events;
 
+import trader.Trader;
+
 public class RescueEvent extends RandomEvent {
 	
 	private int maxSailorGenerosity;
 
 	public RescueEvent(int chanceLevel, int maxSailorGenerosity) {
-		this.setChanceLevel(chanceLevel);
+		setChanceLevel(chanceLevel);
 		this.maxSailorGenerosity =  maxSailorGenerosity;
 	}
 	

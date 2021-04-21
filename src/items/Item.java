@@ -16,8 +16,12 @@ public class Item {
 		return cargoSize;
 	}
 	
-	public int getpricePerUnit() {
+	public int getPricePerUnit() {
 		return pricePerUnit;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	@Override

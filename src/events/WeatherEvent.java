@@ -5,7 +5,7 @@ public class WeatherEvent extends RandomEvent {
 	private int maxDamage = 69;
 	
 	public WeatherEvent(int chanceLevel) {
-		this.setChanceLevel(chanceLevel);
+		super.setChanceLevel(chanceLevel);
 	}
 	
 	public int getImpact() {

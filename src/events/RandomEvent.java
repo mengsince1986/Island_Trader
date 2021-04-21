@@ -11,7 +11,7 @@ public abstract class RandomEvent {
 		return chanceLevel;
 	}
 
-	public void setchanceLevel(int chanceLevel) {
+	public void setChanceLevel(int chanceLevel) {
 		this.chanceLevel = chanceLevel;
 		//need to throw exception if too high
 	}

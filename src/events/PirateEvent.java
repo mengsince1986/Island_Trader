@@ -1,5 +1,8 @@
 package events;
 
+import ships.Ship;
+import trader.Trader;
+
 public class PirateEvent extends RandomEvent {
 	
 	private int pirateCannons;
@@ -19,22 +22,24 @@ public class PirateEvent extends RandomEvent {
 			if (fastRoll > 0) {
 				return PirateScenarios.FLED_AND_ESCAPED;
 			} else {
-				return getChaseFightOutcome(Ship ship, false);
+				return getFightOutcome(ship, false);
 			}
 		case "normal": 
 			int normalRoll = getRandomInRange(0, 1);
 			if (normalRoll == 1) {
 				return PirateScenarios.FLED_AND_ESCAPED;
 			} else {
-				return getChaseFightOutcome(Ship ship, false);
+				return getFightOutcome(ship, false);
 			}
 		case "slow":
 			int slowRoll = getRandomInRange(0, 3);
 			if (slowRoll < 1) {
 				return PirateScenarios.FLED_AND_ESCAPED;
 			} else {
-				return getChaseFightOutcome(Ship ship, false);
+				return getFightOutcome(ship, false);
 			}
+		default:
+			return getFightOutcome(ship, false);
 		}
 	}
 	

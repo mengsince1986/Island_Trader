@@ -1,29 +1,36 @@
 package map;
 
+import events.RandomEvent;
 import java.util.ArrayList;
 
 public class Route {
 	
-	private String source;
-	private String destination;
+	private Island source;
+	private Island destination;
 	private int distance;
 	private ArrayList<RandomEvent> events;
 	private String dangerLevel;
 	
 	//remove source and destination; add setters for Island objects
-	public Route(String source, String destination, int distance, ArrayList<RandomEvent> events, String dangerLevel) {
-		this.source = source;
-		this.destination = destination;
+	public Route(int distance, ArrayList<RandomEvent> events, String dangerLevel) {
 		this.distance = distance;
 		this.events = events;
 		this.dangerLevel = dangerLevel;
 	}
 	
-	public String getSource() {
+	public void setSource(Island source) {
+		this.source = source;
+	}
+	
+	public void setDest(Island destination) {
+		this.destination = destination;
+	}
+	
+	public Island getSource() {
 		return source;
 	}
 	
-	public String getDest() {
+	public Island getDest() {
 		return destination;
 	}
 	

@@ -1,5 +1,6 @@
 package map;
 
+import exceptions.IslandNotFoundException;
 import java.util.ArrayList;
 
 public class Map {
