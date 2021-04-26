@@ -1,11 +1,14 @@
 package events;
 
+import trader.Trader;
+import ships.Ship;
+
 public class WeatherEvent extends RandomEvent {
 	
 	private int maxDamage = 69;
 	
 	public WeatherEvent(int chanceLevel) {
-		super.setChanceLevel(chanceLevel);
+		setChanceLevel(chanceLevel);
 	}
 	
 	public int getImpact() {
@@ -18,9 +21,10 @@ public class WeatherEvent extends RandomEvent {
 				"Repair at the next port."), shipDamage);
 	}
 	
-//	public void processImpact(Ship ship, int shipDamage) {
-//		ship.sufferDamage(shipDamage);
-//	}
+	public void processImpact(Trader player, int shipDamage) {
+		Ship ship = player.getOwndedShip();
+		ship.sufferDamage(shipDamage);
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

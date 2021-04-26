@@ -5,10 +5,13 @@ import java.util.ArrayList;
 
 public class Map {
 	
-	private ArrayList<Island> islands;
+	private ArrayList<Island> islands = new ArrayList<>();
 	
-	public Map(ArrayList<Island> islands) {
-		this.islands = islands;
+	public Map(){
+	}
+	
+	public void addIsland(Island island) {
+		islands.add(island);
 	}
 	
 	public ArrayList<Island> getIslands() {

@@ -1,6 +1,7 @@
 package events;
 
 import java.util.Random;
+import trader.Trader;
 
 public abstract class RandomEvent {
 	
@@ -32,8 +33,6 @@ public abstract class RandomEvent {
 		}
 	}
 	
-	public abstract String getReport();
-	
-	public abstract void processImpact();
+	public abstract void processImpact(Trader player, int number);	
 	
 }

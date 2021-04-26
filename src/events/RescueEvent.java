@@ -11,18 +11,22 @@ public class RescueEvent extends RandomEvent {
 		this.maxSailorGenerosity =  maxSailorGenerosity;
 	}
 	
-	//add random reward generator
+	public int getReward() {
+		int reward = getRandomInRange(1, maxSailorGenerosity);
+		return reward;
+	}
 
 	public String getReport(int reward) {
 		return String.format(("Some good news: your crew rescued some sailors!\n" +
 				"They rewarded you with %d coins!"), reward);
 	}
 
-	//Needs an increaseBalance method or something?
-	public void processImpact(Trader player) {
+	public void processImpact(Trader player, int reward) {
+		player.addMoney(reward);
 		
 	}
-
+	
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

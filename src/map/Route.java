@@ -8,14 +8,17 @@ public class Route {
 	private Island source;
 	private Island destination;
 	private int distance;
-	private ArrayList<RandomEvent> events;
+	private ArrayList<RandomEvent> events = new ArrayList<>();
 	private String dangerLevel;
 	
 	//remove source and destination; add setters for Island objects
-	public Route(int distance, ArrayList<RandomEvent> events, String dangerLevel) {
+	public Route(int distance, String dangerLevel) {
 		this.distance = distance;
-		this.events = events;
 		this.dangerLevel = dangerLevel;
+	}
+	
+	public void addEvent(RandomEvent event) {
+		events.add(event);
 	}
 	
 	public void setSource(Island source) {
@@ -34,13 +37,17 @@ public class Route {
 		return destination;
 	}
 	
+	public int getDistance() {
+		return distance;
+	}
+	
 	public ArrayList<RandomEvent> getEvents(){
 		return events;
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("from %s to %s\n Distance: %s\n Danger: %s\n", source, destination, distance, dangerLevel);
+		return String.format("from %s to %s\n  Danger level: %s\n", source.getName(), destination.getName(), dangerLevel);
 	}
 
 	public static void main(String[] args) {

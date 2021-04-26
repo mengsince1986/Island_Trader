@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import items.Item;
 import map.Store;
 
-class StoreTest {
+class StoreTests {
 	
 	Item[] toSell = new Item[0];
 	Item[] toBuy = new Item[0];

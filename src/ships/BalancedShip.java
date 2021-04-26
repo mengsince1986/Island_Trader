@@ -15,13 +15,14 @@ public class BalancedShip extends Ship {
 		super.setDurability(75);
 		super.setDefaultDurability(75);
 		super.setSpeed("normal");
+		super.setSailingDaysModifier(0);
 	}
 	
 	public void sailTo(Island destination) {
 		if (super.readyToSail(destination)) {
 
 			// update remaining days
-			int daysToDestination = super.getCaptain().getCurrentIsland().daysToIsland(destination);
+			int daysToDestination = super.getCaptain().getCurrentIsland().daysToIsland(destination, this.getSailingDaysModifier());
 			int remainingDays = super.getCaptain().getRemainingDays();
 			super.getCaptain().setRemainingDays(remainingDays - daysToDestination);
 			
@@ -41,5 +42,5 @@ public class BalancedShip extends Ship {
 	
 	//public void battle(String strategy, Pirate enemy) {
 		//...
-	}
+	//}
 }

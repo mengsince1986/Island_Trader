@@ -14,6 +14,7 @@ public class Trader {
 	private Island currentIsland;
 	private String curentLocation;
 	private ArrayList<TradingLog> tradingLogs;
+	private int totalItemValue; //updated whenever trader gains or loses items
 	
 	// constructor
 	public Trader(int days, String name, int money,
@@ -63,6 +64,10 @@ public class Trader {
 		return this.tradingLogs;
 	}
 	
+	public int getTotalItemValue() {
+		return this.totalItemValue;
+	}
+	
 	// print tradinglogs out 
 	public String TradingLogsToString() {
 		String logs = "";
@@ -81,11 +86,9 @@ public class Trader {
 		this.name = name;
 	}
 	
-	/*
 	public void setOwnedMoney(int amount) {
 		this.ownedMoney = amount;
 	}
-	*/
 	
 	// addMoeny
 	public void addMoney(int num) {
@@ -95,6 +98,19 @@ public class Trader {
 	// subtractMoney
 	public void subtractMoney(int num) {
 		this.ownedMoney -= num;
+	}
+	
+	public void updateTotalItemValue(int value) {
+		if (value >= 0) {
+			this.totalItemValue += value;
+		} else {
+			this.totalItemValue -= value;
+		}
+	}
+	
+	public void resetItems() {
+		this.tradingLogs = new ArrayList<TradingLog>();
+		this.totalItemValue = 0;
 	}
 	
 	public void setHomeIsland(Island island) {
@@ -115,8 +131,8 @@ public class Trader {
 	
 	// log trading history
 	public void addTradingLog(Island tradingIsland, 
-			                  Item item, String sellOrBuy) {
-		TradingLog log = new TradingLog(tradingIsland, item, sellOrBuy);
+			                  Item item, String sellOrBuy, int quantity) {
+		TradingLog log = new TradingLog(tradingIsland, item, sellOrBuy, quantity);
 		this.tradingLogs.add(log);
 	}
 	
@@ -134,7 +150,7 @@ public class Trader {
 		
 		
 		//update log
-		this.addTradingLog(this.currentIsland, item, "sell");
+		// this.addTradingLog(this.currentIsland, item, "sell");
 	}
 	
 	public void buy(Island currentIsland, Item item) {
@@ -143,7 +159,7 @@ public class Trader {
 		
 		//update money
 		
-		this.addTradingLog(currentIsland, item, "buy");
+		// this.addTradingLog(currentIsland, item, "buy");
 	}
 	
 	public String toString() {

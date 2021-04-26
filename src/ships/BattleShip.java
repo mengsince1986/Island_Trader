@@ -16,6 +16,7 @@ public class BattleShip extends Ship {
 		super.setDurability(90);
 		super.setDefaultDurability(90);
 		super.setSpeed("slow");
+		super.setSailingDaysModifier(3);
 	}
 	
 	public void sailTo(Island destination) {
@@ -23,7 +24,7 @@ public class BattleShip extends Ship {
 
 			// update remaining days
 			// spend 1 more day for slow speed
-			int daysToDestination = super.getCaptain().getCurrentIsland().daysToIsland(destination) + 1;
+			int daysToDestination = super.getCaptain().getCurrentIsland().daysToIsland(destination, this.getSailingDaysModifier());
 			int remainingDays = super.getCaptain().getRemainingDays();
 			super.getCaptain().setRemainingDays(remainingDays - daysToDestination);
 			
@@ -43,6 +44,6 @@ public class BattleShip extends Ship {
 	
 	//public void battle(String strategy, Pirate enemy) {
 		//...
-	}
+	//}
 
 }

@@ -19,6 +19,7 @@ public abstract class Ship {
 	private int durability;
 	private int defaultDurability;
 	private String speed;
+	private int sailingDaysModifier; //negative for faster ship; positive for slower
 	private ArrayList<UpgradeLog> upgradeLogs;
 	
 	public Ship() {
@@ -70,6 +71,10 @@ public abstract class Ship {
 	
 	public String getSpeed() {
 		return this.speed;
+	}
+	
+	public int getSailingDaysModifier() {
+		return this.sailingDaysModifier;
 	}
 	
 	public ArrayList<UpgradeLog> getUpgradeLogs() {
@@ -141,6 +146,10 @@ public abstract class Ship {
 		this.speed = speed;
 	}
 	
+	public void setSailingDaysModifier(int days) {
+		this.sailingDaysModifier = days;
+	}
+	
 	public void emptyCargos() {
 		// set cargos
 		this.cargos = new ArrayList<Item>();
@@ -158,7 +167,7 @@ public abstract class Ship {
 
 		// check if Remaining days enough
 		int remainingDays = this.getCaptain().getRemainingDays();
-		int daysToDestination = this.captain.getCurrentIsland().daysToIsland(destination);
+		int daysToDestination = this.captain.getCurrentIsland().daysToIsland(destination, this.getSailingDaysModifier());
 		if ((remainingDays - daysToDestination) <= 0) {
 			isReady = false;
 			// add exceptions

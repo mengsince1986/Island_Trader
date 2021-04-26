@@ -81,22 +81,21 @@ public class PirateEvent extends RandomEvent {
 		return "Missing a PirateScenarios case!";
 	}
 	
+	public boolean decideLooted(PirateScenarios outcome) {
+		return (outcome == PirateScenarios.FLED_AND_LOST | outcome == PirateScenarios.FOUGHT_AND_LOST);
+	}
 	
-	// These require some agreement about implementation
-	public void processImpact(Trader player, PirateScenarios outcome) {
-		if ((outcome == PirateScenarios.FLED_AND_LOST) | (outcome == PirateScenarios.FOUGHT_AND_LOST)) {
-			if (pirateGreed > player.getOwnedMoney()) {
-				return false;
-			}
-		} else {
-			return true;
+	public void processImpact(Trader player, int playerItemValue) {
+		int playerMoney = player.getOwnedMoney();
+		int netWorth = playerItemValue + playerMoney;
+		player.resetItems();
+		if (pirateGreed >= netWorth) {
+			player.setOwnedMoney(0);
 		}
 	}
 	
 		
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 	}
-
 }

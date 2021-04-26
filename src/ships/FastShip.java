@@ -16,6 +16,7 @@ public class FastShip extends Ship {
 		super.setDurability(70);
 		super.setDefaultDurability(70);
 		super.setSpeed("fast");
+		super.setSailingDaysModifier(-2);
 	}
 	
 	public void sailTo(Island destination) {
@@ -23,7 +24,7 @@ public class FastShip extends Ship {
 
 			// update remaining days
 			// save 1 day for fast speed
-			int daysToDestination = super.getCaptain().getCurrentIsland().daysToIsland(destination) - 1;
+			int daysToDestination = super.getCaptain().getCurrentIsland().daysToIsland(destination, this.getSailingDaysModifier());
 			int remainingDays = super.getCaptain().getRemainingDays();
 			super.getCaptain().setRemainingDays(remainingDays - daysToDestination);
 			
