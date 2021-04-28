@@ -14,7 +14,6 @@ public abstract class RandomEvent {
 
 	public void setChanceLevel(int chanceLevel) {
 		this.chanceLevel = chanceLevel;
-		//need to throw exception if too high
 	}
 
 	public int getRandomInRange(int minRoll, int maxRoll) {

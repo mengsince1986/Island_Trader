@@ -96,6 +96,6 @@ public class PirateEvent extends RandomEvent {
 	
 		
 	public static void main(String[] args) {
-
+	
 	}
 }
