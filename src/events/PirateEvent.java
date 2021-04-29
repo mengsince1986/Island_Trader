@@ -8,6 +8,7 @@ public class PirateEvent extends RandomEvent {
 	private int pirateCannons;
 	private int pirateGreed;
 	
+	//chanceLevel range?
 	public PirateEvent(int chanceLevel, int pirateCannons, int pirateGreed) {
 		this.setChanceLevel(chanceLevel);
 		this.pirateCannons = pirateCannons;
