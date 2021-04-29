@@ -13,26 +13,28 @@ public abstract class Ship {
 	private int costPerSailor; // how much to pay a sailor per day
 	private int costPerDay;
 	private ArrayList<Item> cargos;
+	private int defaultCapacity;
 	private int capacity;
 	private int cannons;
 	private int maxCannons;
-	private int durability;
 	private int defaultDurability;
+	private int durability;
 	private String speed;
 	private ArrayList<UpgradeLog> upgradeLogs;
 	
-	public Ship(String name, int minCrewNum, int crewNum, int sailorCost,
-			    int capacity, int cannons, int defautDurability,
-			    int durability, String speed) {
+	public Ship(String name, int minCrewNum, int sailorCost,
+			    int defaultCapacity, int cannons, int defautDurability, String speed) {
 		this.name = name;
 		this.minimumCrewNum = minCrewNum;
-		this.crewNum = crewNum;
+		this.crewNum = minCrewNum;
 		this.costPerSailor = sailorCost;
 		this.costPerDay = crewNum * sailorCost; 
-		this.capacity = capacity;
+		this.cargos = new ArrayList<Item>();
+		this.defaultCapacity = defaultCapacity;
+		this.capacity = defaultCapacity;
 		this.cannons = cannons;
 		this.defaultDurability = defautDurability;
-		this.durability = durability;
+		this.durability = defautDurability;
 		this.speed = speed;
 		this.upgradeLogs = new ArrayList<UpgradeLog>();
 	}
@@ -66,8 +68,16 @@ public abstract class Ship {
 		return this.capacity;
 	}
 	
+	public int getDefaultCapacity() {
+		return this.defaultCapacity;
+	}
+	
 	public int getCannons() {
 		return this.cannons;
+	}
+	
+	public int getMaxCannons() {
+		return this.maxCannons;
 	}
 	
 	public int getDurability() {
@@ -118,11 +128,31 @@ public abstract class Ship {
 	
 	public void addToCargos(Item item) {
 		this.cargos.add(item);
-		this.capacity -= item.getCargoSize();
+		subtractCapacity(item.getCargoSize());
 	}
 	
-	public void setCapacity(int num) {
-		this.capacity = num;
+	public void subtractFromCargos(Item soldItem) {
+		for (Item item : this.cargos) {
+			if (item.getName() == soldItem.getName()) {
+				this.cargos.remove(item);
+				addCapacity(soldItem.getCargoSize());
+			}
+		}
+	}
+	
+	public void addCapacity(int amount) {
+		this.capacity = Integer.min(this.defaultCapacity, this.capacity+amount);
+	}
+	
+	public void subtractCapacity(int amount) {
+		this.capacity = Integer.max(0, this.capacity-amount);
+	}
+	
+	public boolean checkCapacity(int toReduce) {
+		if (getCapacity() - toReduce < 0) {
+			return false;
+		}
+		return true;
 	}
 	
 	public void setDurability(int num) {
@@ -220,8 +250,6 @@ public abstract class Ship {
 			int daysToDestination = getCaptain().getCurrentIsland().daysToIsland(destination, shipSailingModifier);
 			
 			getCaptain().subtractRemainingDays(daysToDestination);
-			//int remainingDays = super.getCaptain().getRemainingDays();
-			//super.getCaptain().setRemainingDays(remainingDays - daysToDestination);
 			
 			// pay crew and update captain ownedMoney
 			int costToDestination = getCostPerDay() * daysToDestination;
@@ -244,6 +272,7 @@ public abstract class Ship {
 							"Default durability: " + getDurability() + "\n" +
 							"Minimum crew number: " + getMinimumCrewNum() + "\n" +
 							"Current crew number: " + getCrewNumber() + "\n" +
+							"Cannons: " + getCannons() + "\n" +
 							"Cost per day: " + getCostPerDay() + "\n" +
 							"Remaining capacity: " + getCapacity() + "\n" +
 	                        "Current damage: " + getDamage() + "\n";

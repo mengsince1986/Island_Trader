@@ -4,7 +4,7 @@ public class BattleShip extends Ship {
 	
 	public BattleShip() {
 		
-		super("Endeavour", 20, 20, 2, 1000, 18, 90, 90, "slow");
+		super("Endeavour", 20, 2, 1000, 18, 90, "slow");
 	}
 	
 	public static void main(String[] args) {
