@@ -88,7 +88,8 @@ public class PirateEvent extends RandomEvent {
 	public void processImpact(Trader player, int playerItemValue) {
 		int playerMoney = player.getOwnedMoney();
 		int netWorth = playerItemValue + playerMoney;
-		player.resetItems();
+		//player.resetItems();
+		player.getOwndedShip().emptyCargos();
 		if (pirateGreed >= netWorth) {
 			player.setOwnedMoney(0);
 		}

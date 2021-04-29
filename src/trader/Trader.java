@@ -14,7 +14,6 @@ public class Trader {
 	private Island currentIsland;
 	private String curentLocation;
 	private ArrayList<TradingLog> tradingLogs;
-	private int totalItemValue; //updated whenever trader gains or loses items
 	
 	// constructor
 	public Trader(int days, String name, int money,
@@ -64,11 +63,7 @@ public class Trader {
 		return this.tradingLogs;
 	}
 	
-	public int getTotalItemValue() {
-		return this.totalItemValue;
-	}
-	
-	// print tradinglogs out 
+	// print trading logs
 	public String TradingLogsToString() {
 		String logs = "";
 		for (TradingLog log : this.tradingLogs) {
@@ -80,6 +75,10 @@ public class Trader {
 	// setters
 	public void setRemainingDays(int days) {
 		this.remainingDays = days;
+	}
+	
+	public void subtractRemainingDays(int days) {
+		this.remainingDays -= days;
 	}
 	
 	public void setName (String name) {
@@ -100,19 +99,6 @@ public class Trader {
 		this.ownedMoney -= num;
 	}
 	
-	public void updateTotalItemValue(int value) {
-		if (value >= 0) {
-			this.totalItemValue += value;
-		} else {
-			this.totalItemValue -= value;
-		}
-	}
-	
-	public void resetItems() {
-		this.tradingLogs = new ArrayList<TradingLog>();
-		this.totalItemValue = 0;
-	}
-	
 	public void setHomeIsland(Island island) {
 		this.homeIsland = island;
 	}
@@ -131,8 +117,8 @@ public class Trader {
 	
 	// log trading history
 	public void addTradingLog(Island tradingIsland, 
-			                  Item item, String sellOrBuy, int quantity) {
-		TradingLog log = new TradingLog(tradingIsland, item, sellOrBuy, quantity);
+			                  Item item, String sellOrBuy) {
+		TradingLog log = new TradingLog(tradingIsland, item, sellOrBuy);
 		this.tradingLogs.add(log);
 	}
 	
@@ -150,7 +136,7 @@ public class Trader {
 		
 		
 		//update log
-		// this.addTradingLog(this.currentIsland, item, "sell");
+		this.addTradingLog(this.currentIsland, item, "sell");
 	}
 	
 	public void buy(Island currentIsland, Item item) {
@@ -159,7 +145,7 @@ public class Trader {
 		
 		//update money
 		
-		// this.addTradingLog(currentIsland, item, "buy");
+		this.addTradingLog(currentIsland, item, "buy");
 	}
 	
 	public String toString() {
@@ -171,5 +157,12 @@ public class Trader {
 						"Current Island: " + this.currentIsland.getName() + "\n" +
 						"Current Location: " + this.curentLocation;
 		return status;
+	}
+	
+	public static void main(String[] args) {
+		Island superIsland = new Island("super island");
+		FastShip superShip = new FastShip();
+		Trader superPlayer = new Trader(30, "Super Man", 10000, superIsland, superShip, superIsland, "port");
+		System.out.println(superPlayer);
 	}
 }

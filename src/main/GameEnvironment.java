@@ -24,6 +24,9 @@ public class GameEnvironment {
 	
 	public static void main(String[] args) {
 		
+		// start a new Game
+		GameEnvironment newGame = new GameEnvironment();
+		
 		boolean gameOver = false;
 		boolean constructionOver = false;
 		Scanner playerCommands = new Scanner(System.in);
