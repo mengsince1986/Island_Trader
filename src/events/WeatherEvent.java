@@ -11,19 +11,22 @@ public class WeatherEvent extends RandomEvent {
 		setChanceLevel(chanceLevel);
 	}
 	
-	public int getImpact() {
+	public int getDamage() {
 		int damageDealt = getRandomInRange(1, maxDamage);
 		return damageDealt;
 	}
 
 	public String getReport(int shipDamage) {
 		return String.format(("Your ship struck a storm and took %d damage!" + 
-				"Repair at the next port."), shipDamage);
+				"Repair it at the next port."), shipDamage);
 	}
 	
-	public void processImpact(Trader player, int shipDamage) {
+	public String processImpact(Trader player) {
+		int shipDamage = getDamage();
 		Ship ship = player.getOwndedShip();
 		ship.sufferDamage(shipDamage);
+		String reportString = getReport(shipDamage);
+		return reportString;
 	}
 
 	public static void main(String[] args) {

@@ -63,20 +63,21 @@ public class PirateEvent extends RandomEvent {
 	}
 	
 	public String getReport(PirateScenarios outcome) {
+		String reportString = "Oh no! You were beset by pirates!\n";
 		switch (outcome) {
 		case FLED_AND_ESCAPED:
-			return "Phew, you outran the pirates this time!";
+			return reportString + "Don't worry, your ship was just fast enough to outrun the pirates this time!";
 		case FLED_AND_LOST:
-			return "Disaster! The pirates caught up with you and defeated you in battle!\n" +
-			"Consider upgrading your cannons to have a better chance next time.\n";
+			return reportString + "Disaster! Your crew tried to flee but the pirates caught up with you, defeated you in battle, and made off with all your cargo!\n" +
+			"Consider upgrading your cannons to have a better chance in future.\n";
 		case FLED_AND_WON:
-			return "Wow, that was lucky! The pirates caught up with you but you defeated them in battle!\n" +
-			"Your cannons were enough to protect you this time...\n";
+			return reportString + "Wow, that was lucky! The pirates caught up with you but you defeated them in battle!\n "
+					+ "Your cannons were enough to protect you this time...\n";
 		case FOUGHT_AND_LOST:
-			return "OOF! The pirates got the better of you!\n" +
+			return reportString + "OOF! The pirates defeated you in battle and made off with all your cargo!!\n" +
 			"Consider upgrading your cannons to have a better chance next time.\n";
 		case FOUGHT_AND_WON:
-			return "Hooray! You defeated the pirates in battle.\n" +
+			return reportString + "But don't worry; you defeated them in battle.\n" +
 			"Your cannons were enough to protect you this time...\n";
 		}
 		return "Missing a PirateScenarios case!";
@@ -86,14 +87,20 @@ public class PirateEvent extends RandomEvent {
 		return (outcome == PirateScenarios.FLED_AND_LOST | outcome == PirateScenarios.FOUGHT_AND_LOST);
 	}
 	
-	public void processImpact(Trader player, int playerItemValue) {
-		int playerMoney = player.getOwnedMoney();
-		int netWorth = playerItemValue + playerMoney;
-		//player.resetItems();
-		player.getOwndedShip().emptyCargos();
-		if (pirateGreed >= netWorth) {
-			player.setOwnedMoney(0);
-		}
+	public String processImpact(Trader player) {
+		Ship ship = player.getOwndedShip();
+		PirateScenarios outcome = getChaseOutcome(ship);
+		String reportString = getReport(outcome);
+		if (decideLooted(outcome)) {
+			int playerMoney = player.getOwnedMoney();
+			player.getOwndedShip().emptyCargos();
+			if (pirateGreed >= playerMoney) {
+				player.setOwnedMoney(0);
+				reportString = "Oh no! You were beset by pirates!\n" +
+						"They were greedy enough to make off with all your cargo AND your money!\n" +
+						"Game over!";
+			}
+		} return reportString;
 	}
 	
 		

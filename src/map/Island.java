@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import events.*;
 //import ships.Ship;
 import exceptions.IslandNotFoundException;
+import ships.Ship;
 
 public class Island {
 	
@@ -37,15 +38,17 @@ public class Island {
 		return routes;
 	}
 	
-	public String getRoutesString(int shipSailingModifier) {
-		
+	public String getRoutesString(Ship playerShip) {
+		int shipSailingModifier = playerShip.getShipSailingModifier();
+		int costPerDay = playerShip.getCostPerDay();
 		String routesString = "Routes available:\n";
 		if (routes.size() > 0) {
 			for (int i = 0; i < routes.size(); i++) {
 				int sailingTime = Integer.max(1, 
 						(routes.get(i).getDistance() - shipSailingModifier));
-				routesString += String.format("\nRoute %s:  %s  Sailing time: %s days\n", 
-						i, routes.get(i), sailingTime);
+				int totalCost = costPerDay * sailingTime;
+				routesString += String.format("\nRoute %s:  %s  Sailing time: %s days\n  Cost: %s", 
+						i, routes.get(i), sailingTime, totalCost);
 			} 
 			return routesString;
 		} else {
@@ -62,7 +65,8 @@ public class Island {
 		return port;
 	}
 	
-	public int daysToIsland(Island destination, int shipSailingModifier) {
+	public int daysToIsland(Island destination, Ship playerShip) {
+		int shipSailingModifier = playerShip.getShipSailingModifier();
 		for (Route route : routes) {
 			if (route.getDest() == destination) {
 				return Integer.max(1, (route.getDistance() - shipSailingModifier));
@@ -88,6 +92,8 @@ public class Island {
 		route1.addEvent(route1Rescue);
 		
 		island1.addRoute(route1);
+		
+		
 	}
 
 }

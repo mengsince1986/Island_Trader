@@ -32,6 +32,6 @@ public abstract class RandomEvent {
 		}
 	}
 	
-	public abstract void processImpact(Trader player, int number);	
+	public abstract String processImpact(Trader player);	
 	
 }
