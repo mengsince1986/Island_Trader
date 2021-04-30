@@ -1,7 +1,11 @@
 package main;
 import java.util.*;
 import trader.Trader;
+import map.Island;
 import map.Map;
+import map.WorldConstructor;
+import ships.BalancedShip;
+import ships.Ship;
 
 /**
  * <h1> SENG201 Project: Island Trader </h1>
@@ -12,8 +16,8 @@ import map.Map;
 
 public class GameEnvironment {
 	
-	private static Trader player;
-	private static Map defaultMap;
+	//private static Trader player;
+	//private static Map map;
 	
 	
    /**
@@ -24,6 +28,12 @@ public class GameEnvironment {
 	
 	public static void main(String[] args) {
 		
+		// start a new Game
+		//GameEnvironment newGame = new GameEnvironment();
+		
+		Map map;
+		Trader player;
+		Ship ship;
 		boolean gameOver = false;
 		boolean constructionOver = false;
 		Scanner playerCommands = new Scanner(System.in);
@@ -32,15 +42,23 @@ public class GameEnvironment {
 		
 		// constructing game
 		while (!constructionOver) {
-					
+			WorldConstructor newWorld = new WorldConstructor();
+			map = newWorld.getMap();
 			System.out.println("Constructing game environment ...");
-			//defaultMap = new Map();
-			System.out.println("Map is ready ... ");
-			//player = new Trader();
-			System.out.println("Trader is ready ... ");
-			constructionOver = true;
+			System.out.println("A new world is created ... ");
+			
+			String traderName = "Jon Snow";
+			Island homeIsland = map.getIsland("Niawall Haven");
+			player = new Trader(30, traderName, 10000, 
+								homeIsland, homeIsland, "port");
+			ship = new BalancedShip();
+			ship.setCaptain(player);
+			player.setOwnedShip(ship);
+			System.out.println("A new Trader named " + player.getName() + " is created ... ");
+			System.out.println("A new Ship named " + player.getOwndedShip().getName() + " is created ...");
 			System.out.println("===== All Set! =====");
 			System.out.println("");
+			constructionOver = true;
 		}
 		
 		// playing game while !gameOver && 

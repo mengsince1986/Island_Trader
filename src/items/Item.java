@@ -16,6 +16,16 @@ public class Item {
 		return cargoSize;
 	}
 	
+	// by MZ
+	public void addCargoSize(int size) {
+		this.cargoSize += size;
+	}
+	
+	// by MZ
+	public void subtractCargoSize(int size) {
+		this.cargoSize -= size;
+	}
+	
 	public int getPricePerUnit() {
 		return pricePerUnit;
 	}

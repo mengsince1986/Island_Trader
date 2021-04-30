@@ -16,7 +16,63 @@ public class Store {
 			this.toBuy.add(item);
 		}
 	}
-
+	
+	// by MZ
+	public ArrayList<Item> getToSell() {
+		return this.toSell;
+	}
+	
+	// by MZ
+	public ArrayList<Item> getToBuy() {
+		return this.toBuy;
+	}
+	
+	// by MZ
+	public Item getItem(String itemName, String whichList) {
+		// whichList: toSell | toBuy 
+		ArrayList<Item> tradingList = getToSell();
+		if (whichList == "toBuy") {
+			tradingList = getToBuy();
+		}
+		
+		for (Item item : tradingList) {
+			if (itemName == item.getName()) {
+				return item;
+			}
+		}
+		return null;
+	}
+	
+	// by MZ
+	public int checkItemPrice(String itemName, String whichList) {
+		// whichList: toSell | toBuy 
+		// return the price per unit of the available item
+		// if not available return -1
+		Item item = getItem(itemName, whichList);
+		if (item != null) {
+			return item.getPricePerUnit();
+		}
+		return -1;
+	}
+	
+	
+	// by MZ
+	public Item sell(String itemName, int itemSize) {
+		int itemPrice = checkItemPrice(itemName, "toSell");
+		getItem(itemName, "toSell").subtractCargoSize(itemSize); //update toSell list
+		Item goodsToSell = new Item(itemName, itemSize, itemPrice);
+		return goodsToSell;
+	}
+	
+	// by MZ
+	public Item buy(String itemName, int itemSize) {
+		int itemPrice = checkItemPrice(itemName, "toBuy");
+		getItem(itemName, "toBuy").addCargoSize(itemSize); //update toBuy list
+		Item goodsToBuy = new Item(itemName, itemSize, itemPrice);
+		return goodsToBuy;
+	}
+	
+	
 	public String forSale() {
 		String itemString = "Items for sale:\n";
 		if (toSell.size() > 0) {
@@ -50,8 +106,10 @@ public class Store {
 		Item fur = new Item("fur", 3, 2);
 		Item wine = new Item("wine", 2, 4);
 		Item[] toSell = { fur, wine };
-		Item[] toBuy = new Item[0];
-		Store store = new Store(toSell, new Item[0]);
+		//Item[] toBuy = new Item[0];
+		Item[] toBuy = {fur, wine};
+		//Store store = new Store(toSell, new Item[0]);
+		Store store = new Store(toSell, toBuy);
 		System.out.println(store.forSale());
 		System.out.println(store.forPurchase());
 	}

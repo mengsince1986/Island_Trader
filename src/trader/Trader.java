@@ -14,18 +14,18 @@ public class Trader {
 	private Island currentIsland;
 	private String curentLocation;
 	private ArrayList<TradingLog> tradingLogs;
-	private int totalItemValue; //updated whenever trader gains or loses items
 	
 	// constructor
 	public Trader(int days, String name, int money,
-			      Island home, Ship ship, 
+			      //Island home, Ship ship, 
+			      Island home,
 			      Island currentIsland, String currentLocation) {
 		
 		this.remainingDays = days;
 		this.name = name;
 		this.ownedMoney = money;
 		this.homeIsland = home;
-		this.ownedShip = ship;
+		//this.ownedShip = ship;
 		this.currentIsland = currentIsland;
 		this.curentLocation = currentLocation;
 		this.tradingLogs = new ArrayList<TradingLog>();	
@@ -64,11 +64,7 @@ public class Trader {
 		return this.tradingLogs;
 	}
 	
-	public int getTotalItemValue() {
-		return this.totalItemValue;
-	}
-	
-	// print tradinglogs out 
+	// print trading logs
 	public String TradingLogsToString() {
 		String logs = "";
 		for (TradingLog log : this.tradingLogs) {
@@ -82,6 +78,10 @@ public class Trader {
 		this.remainingDays = days;
 	}
 	
+	public void subtractRemainingDays(int days) {
+		this.remainingDays -= days;
+	}
+	
 	public void setName (String name) {
 		this.name = name;
 	}
@@ -89,6 +89,7 @@ public class Trader {
 	public void setOwnedMoney(int amount) {
 		this.ownedMoney = amount;
 	}
+	
 	
 	// addMoeny
 	public void addMoney(int num) {
@@ -98,19 +99,6 @@ public class Trader {
 	// subtractMoney
 	public void subtractMoney(int num) {
 		this.ownedMoney -= num;
-	}
-	
-	public void updateTotalItemValue(int value) {
-		if (value >= 0) {
-			this.totalItemValue += value;
-		} else {
-			this.totalItemValue -= value;
-		}
-	}
-	
-	public void resetItems() {
-		this.tradingLogs = new ArrayList<TradingLog>();
-		this.totalItemValue = 0;
 	}
 	
 	public void setHomeIsland(Island island) {
@@ -131,35 +119,79 @@ public class Trader {
 	
 	// log trading history
 	public void addTradingLog(Island tradingIsland, 
-			                  Item item, String sellOrBuy, int quantity) {
-		TradingLog log = new TradingLog(tradingIsland, item, sellOrBuy, quantity);
+			                  Item item, String sellOrBuy) {
+		TradingLog log = new TradingLog(tradingIsland, item, sellOrBuy);
 		this.tradingLogs.add(log);
 	}
 	
-	public void sell(Item item, int quantity) { 
-		// 
-		Store currentStore = this.currentIsland.getStore();
-		
-		
-		// check cargo refer to Map.getIsland
-		// update cargo
-		
-		
-		//update money
-		
-		
-		
-		//update log
-		// this.addTradingLog(this.currentIsland, item, "sell");
+	public void sell(Island currentIsland, String itemName, int itemSize) { 
+		if (getCurrentLocation() == "store") {
+			Store currentStore = currentIsland.getStore();
+			int itemPrice = currentStore.checkItemPrice(itemName, "toBuy");
+			if (itemPrice != -1) {
+				//update cargo
+				Item itemSold = currentStore.buy(itemName, itemSize); // store.buy() return the item it buys
+				getOwndedShip().subtractFromCargos(itemSold);
+				
+				//update money
+				int priceToReceive = itemSold.getCargoSize() * itemPrice;
+				addMoney(priceToReceive);
+				
+				//update trading log
+				this.addTradingLog(currentIsland, itemSold, "sell");
+			} else {
+				System.out.println("The store is not looking for the item.");
+			}
+		}	
 	}
 	
-	public void buy(Island currentIsland, Item item) {
-		//...
-		//update cargo
+	public void buy(Island currentIsland, String itemName, int itemSize) {
+		if (getCurrentLocation() == "store") {
+			Store currentStore = currentIsland.getStore();
+			int itemPrice = currentStore.checkItemPrice(itemName, "toSell");
+			boolean enoughCapacity = getOwndedShip().checkCapacity(itemSize);
+			//ArrayList<Item> saleList = currentStore.getToSell();
+			
+			if (itemPrice != -1 && enoughCapacity) {
+				//update cargo
+				Item itemBought = currentStore.sell(itemName, itemSize); // store.sell() return the item it sells
+				getOwndedShip().addToCargos(itemBought);
+				
+				//update money
+				int priceToPay = itemBought.getCargoSize() * itemPrice;
+				subtractMoney(priceToPay);
+				
+				//update trading log
+				this.addTradingLog(currentIsland, itemBought, "buy");
+			} else {
+				System.out.println("The item is not available in store or your ship doesn't have enough capacity.");
+			}
+		}	
+	}
+	
+	public void repairShip() {
+		if (getCurrentLocation() == "port") {
+			int repairCost = getCurrentIsland().getPort().getRepairCost();
+			if (repairCost <= getOwnedMoney()) {
+				getOwndedShip().setDurability(getOwndedShip().getDefaultDurability());
+				subtractMoney(repairCost);
+			} else {
+				System.out.println("You money is not enough to repair the ship.");
+			}
+		}
 		
-		//update money
-		
-		// this.addTradingLog(currentIsland, item, "buy");
+	}
+	
+	public void upgradeCannons(int cannonNum) {
+		if (getCurrentLocation() == "port") {
+			int costPerCannon = getCurrentIsland().getPort().getcannonCost();
+			int totalCost = costPerCannon * cannonNum;
+			if (totalCost <= getOwnedMoney() && 
+				getOwndedShip().getCannons() + cannonNum <= getOwndedShip().getMaxCannons()) {
+				getOwndedShip().addCannons(cannonNum);
+				subtractMoney(totalCost);
+			}
+		}	
 	}
 	
 	public String toString() {
@@ -171,5 +203,9 @@ public class Trader {
 						"Current Island: " + this.currentIsland.getName() + "\n" +
 						"Current Location: " + this.curentLocation;
 		return status;
+	}
+	
+	public static void main(String[] args) {
+		
 	}
 }

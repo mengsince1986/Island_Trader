@@ -3,7 +3,7 @@ package map;
 import java.util.ArrayList;
 
 import events.*;
-import ships.Ship;
+//import ships.Ship;
 import exceptions.IslandNotFoundException;
 
 public class Island {
@@ -30,7 +30,7 @@ public class Island {
 	}
 	
 	public String getName() {
-		return name;
+		return this.name;
 	}
 	
 	public ArrayList<Route> getRoutes() {
@@ -88,8 +88,6 @@ public class Island {
 		route1.addEvent(route1Rescue);
 		
 		island1.addRoute(route1);
-		
-		
 	}
 
 }
