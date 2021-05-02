@@ -12,7 +12,7 @@ public class TradingLog {
 	
 	//private int totalValue;
 	
-	public TradingLog(Island tradingIsalnd, Item tradingItem, String sellOrBuy) {
+	public TradingLog(Island tradingIsalnd, Item tradingItem, String sellOrBuy) { //sellOrBuy to soldOrBought
 		this.tradingLocation = tradingIsalnd.getName();
 		this.tradingItemName = tradingItem.getName();
 		this.tradingSize = tradingItem.getCargoSize();

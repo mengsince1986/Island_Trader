@@ -92,13 +92,13 @@ public class Trader {
 	
 	
 	// addMoeny
-	public void addMoney(int num) {
-		this.ownedMoney += num;
+	public void addMoney(int amount) {
+		this.ownedMoney += amount;
 	}
 	
 	// subtractMoney
-	public void subtractMoney(int num) {
-		this.ownedMoney -= num;
+	public void subtractMoney(int amount) {
+		this.ownedMoney = Integer.max(0, this.ownedMoney-amount);
 	}
 	
 	public void setHomeIsland(Island island) {
@@ -130,7 +130,7 @@ public class Trader {
 			int itemPrice = currentStore.checkItemPrice(itemName, "toBuy");
 			if (itemPrice != -1) {
 				//update cargo
-				Item itemSold = currentStore.buy(itemName, itemSize); // store.buy() return the item it buys
+				Item itemSold = currentStore.buy(itemName, itemSize); // store.buy() return the item it buys //change store.buy to itemToBuy
 				getOwndedShip().subtractFromCargos(itemSold);
 				
 				//update money
@@ -145,7 +145,7 @@ public class Trader {
 		}	
 	}
 	
-	public void buy(Island currentIsland, String itemName, int itemSize) {
+	public void buy(Island currentIsland, String itemName, int itemSize) {//itemSize to quantity
 		if (getCurrentLocation() == "store") {
 			Store currentStore = currentIsland.getStore();
 			int itemPrice = currentStore.checkItemPrice(itemName, "toSell");
@@ -190,7 +190,7 @@ public class Trader {
 				getOwndedShip().getCannons() + cannonNum <= getOwndedShip().getMaxCannons()) {
 				getOwndedShip().addCannons(cannonNum);
 				subtractMoney(totalCost);
-			}
+			} 
 		}	
 	}
 	

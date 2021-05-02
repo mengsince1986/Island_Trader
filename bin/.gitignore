@@ -1,7 +1,8 @@
-/ships/
 /events/
-/trader/
-/main/
+/exceptions/
 /items/
+/main/
 /map/
+/ships/
 /tests/
+/trader/

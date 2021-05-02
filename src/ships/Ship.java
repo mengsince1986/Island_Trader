@@ -257,6 +257,12 @@ public abstract class Ship {
 
 			// call random events on the route
 			
+			///get the route 
+			//// iterate event list
+			///// invoke each event
+					//event.processImpact();
+			
+			
 			
 			// update captain currentIsland and currentLocation
 			getCaptain().setCurrentIsland(destination);

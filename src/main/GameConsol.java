@@ -48,15 +48,18 @@ public class GameConsol {
 		// Test commands below
 		
 		
-		/*
+		
 		System.out.println("Test Ship.sailTo()");
 		System.out.println("==================");
 		System.out.println(player.getCurrentIsland().getName() + ":  " + player.getCurrentLocation());
+		
 		player.setCurrentLocation("store");
 		player.buy(player.getCurrentIsland(), "Wine", 50);
+		
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("After trader bought 50 units Wine");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		
 		player.setCurrentLocation("port");
 		player.getOwndedShip().sailTo(island2);
 		
@@ -66,6 +69,7 @@ public class GameConsol {
 		
 		System.out.println(player.getCurrentIsland().getName() + ":  " + player.getCurrentLocation());
 		System.out.println("==================");
+		
 		
 		player.setCurrentLocation("store");
 		System.out.println(player.getCurrentIsland().getName() + ":  " + player.getCurrentLocation());
@@ -86,7 +90,7 @@ public class GameConsol {
 		System.out.println("Trading logs: " + player.getTradingLogs());
 		System.out.println("Ship Capacity: " + player.getOwndedShip().getCapacity());
 		System.out.println("Ship Cargoes: " + player.getOwndedShip().getCargos());
-		*/
+		
 		// Test commands above
 		
 		
