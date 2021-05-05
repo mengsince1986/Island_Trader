@@ -21,9 +21,11 @@ public class RescueEvent extends RandomEvent {
 				"They rewarded you with %d coins!"), reward);
 	}
 
-	public void processImpact(Trader player, int reward) {
+	public String processImpact(Trader player) {
+		int reward = getReward();
 		player.addMoney(reward);
-		
+		String reportString = getReport(reward);
+		return reportString;
 	}
 	
 	

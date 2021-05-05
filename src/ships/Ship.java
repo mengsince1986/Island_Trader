@@ -20,6 +20,7 @@ public abstract class Ship {
 	private int defaultDurability;
 	private int durability;
 	private String speed;
+	private int shipSailingModifier;
 	private ArrayList<UpgradeLog> upgradeLogs;
 	
 	public Ship(String name, int minCrewNum, int sailorCost,
@@ -36,6 +37,11 @@ public abstract class Ship {
 		this.defaultDurability = defautDurability;
 		this.durability = defautDurability;
 		this.speed = speed;
+		if (speed == "fast") {
+			this.shipSailingModifier = 1; // save 1 day for fast speed
+		} else if (speed == "slow") {
+			this.shipSailingModifier = -1; // add 1 day for slow speed
+		}
 		this.upgradeLogs = new ArrayList<UpgradeLog>();
 	}
 	
@@ -96,6 +102,10 @@ public abstract class Ship {
 		return this.speed;
 	}
 	
+	public int getShipSailingModifier() {
+		return shipSailingModifier;
+	}
+
 	public ArrayList<UpgradeLog> getUpgradeLogs() {
 		return this.upgradeLogs;
 	}
@@ -187,6 +197,11 @@ public abstract class Ship {
 		this.speed = speed;
 	}
 	
+
+	public void setShipSailingModifier(int shipSailingModifier) {
+		this.shipSailingModifier = shipSailingModifier;
+	}
+	
 	public void emptyCargos() {
 		this.cargos = new ArrayList<Item>();
 	}
@@ -204,13 +219,7 @@ public abstract class Ship {
 		// check if Remaining days enough
 		int remainingDays = this.getCaptain().getRemainingDays();
 		// update remaining days
-		int shipSailingModifier = 0;
-		if (this.speed == "fast") {
-			shipSailingModifier = 1; // save 1 day for fast speed
-		} else if (this.speed == "slow") {
-			shipSailingModifier = -1; // add 1 day for slow speed
-		}
-		int daysToDestination = getCaptain().getCurrentIsland().daysToIsland(destination, shipSailingModifier);
+		int daysToDestination = getCaptain().getCurrentIsland().daysToIsland(destination, this);
 		
 		
 		if ((remainingDays - daysToDestination) <= 0) {
@@ -241,13 +250,8 @@ public abstract class Ship {
 		if (readyToSail(destination)) {
 
 			// update remaining days
-			int shipSailingModifier = 0;
-			if (this.speed == "fast") {
-				shipSailingModifier = 1; // save 1 day for fast speed
-			} else if (this.speed == "slow") {
-				shipSailingModifier = -1; // add 1 day for slow speed
-			}
-			int daysToDestination = getCaptain().getCurrentIsland().daysToIsland(destination, shipSailingModifier);
+			
+			int daysToDestination = getCaptain().getCurrentIsland().daysToIsland(destination, this);
 			
 			getCaptain().subtractRemainingDays(daysToDestination);
 			
@@ -255,13 +259,13 @@ public abstract class Ship {
 			int costToDestination = getCostPerDay() * daysToDestination;
 			getCaptain().subtractMoney(costToDestination);
 
-			// call random events on the route
+			// call random events on the route:
+			/// get events from array
+			//// String PirateReport =
+			//// String WeatherReport =
+			//// String RescueReport =
 			
-			///get the route 
-			//// iterate event list
-			///// invoke each event
-					//event.processImpact();
-			
+			//return array of report strings for further processing in GameEnvironment?
 			
 			
 			// update captain currentIsland and currentLocation

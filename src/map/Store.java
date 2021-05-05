@@ -57,7 +57,7 @@ public class Store {
 	
 	
 	// by MZ
-	public Item sell(String itemName, int itemSize) {
+	public Item itemToSell(String itemName, int itemSize) {
 		int itemPrice = checkItemPrice(itemName, "toSell");
 		getItem(itemName, "toSell").subtractCargoSize(itemSize); //update toSell list
 		Item goodsToSell = new Item(itemName, itemSize, itemPrice);
@@ -65,7 +65,7 @@ public class Store {
 	}
 	
 	// by MZ
-	public Item buy(String itemName, int itemSize) {
+	public Item itemToBuy(String itemName, int itemSize) {
 		int itemPrice = checkItemPrice(itemName, "toBuy");
 		getItem(itemName, "toBuy").addCargoSize(itemSize); //update toBuy list
 		Item goodsToBuy = new Item(itemName, itemSize, itemPrice);

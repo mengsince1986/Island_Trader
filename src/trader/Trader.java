@@ -98,7 +98,7 @@ public class Trader {
 	
 	// subtractMoney
 	public void subtractMoney(int amount) {
-		this.ownedMoney = Integer.max(0, this.ownedMoney-amount);
+		this.ownedMoney -= amount;
 	}
 	
 	public void setHomeIsland(Island island) {
@@ -130,7 +130,7 @@ public class Trader {
 			int itemPrice = currentStore.checkItemPrice(itemName, "toBuy");
 			if (itemPrice != -1) {
 				//update cargo
-				Item itemSold = currentStore.buy(itemName, itemSize); // store.buy() return the item it buys //change store.buy to itemToBuy
+				Item itemSold = currentStore.itemToBuy(itemName, itemSize); // store.buy() return the item it buys
 				getOwndedShip().subtractFromCargos(itemSold);
 				
 				//update money
@@ -145,16 +145,16 @@ public class Trader {
 		}	
 	}
 	
-	public void buy(Island currentIsland, String itemName, int itemSize) {//itemSize to quantity
+	public void buy(Island currentIsland, String itemName, int quantity) {
 		if (getCurrentLocation() == "store") {
 			Store currentStore = currentIsland.getStore();
 			int itemPrice = currentStore.checkItemPrice(itemName, "toSell");
-			boolean enoughCapacity = getOwndedShip().checkCapacity(itemSize);
+			boolean enoughCapacity = getOwndedShip().checkCapacity(quantity);
 			//ArrayList<Item> saleList = currentStore.getToSell();
 			
 			if (itemPrice != -1 && enoughCapacity) {
 				//update cargo
-				Item itemBought = currentStore.sell(itemName, itemSize); // store.sell() return the item it sells
+				Item itemBought = currentStore.itemToSell(itemName, quantity); // store.sell() return the item it sells
 				getOwndedShip().addToCargos(itemBought);
 				
 				//update money
@@ -190,7 +190,7 @@ public class Trader {
 				getOwndedShip().getCannons() + cannonNum <= getOwndedShip().getMaxCannons()) {
 				getOwndedShip().addCannons(cannonNum);
 				subtractMoney(totalCost);
-			} 
+			}
 		}	
 	}
 	
