@@ -57,16 +57,22 @@ public class GameConsol {
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("After trader bought 50 units Wine");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		*/
 		player.setCurrentLocation("port");
-		player.getOwndedShip().sailTo(island2);
+		ArrayList<String> eventReports = player.getOwndedShip().sailTo(island2);
 		
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println("After " + island1.daysToIsland(island2, 0) + " days ... ... ...");
+		System.out.println("After " + island1.daysToIsland(island2, player.getOwndedShip()) + " days ... ... ...");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		
 		System.out.println(player.getCurrentIsland().getName() + ":  " + player.getCurrentLocation());
+		for (String report : eventReports) {
+			System.out.println(report);
+		}
+		System.out.println(player.getOwndedShip());
 		System.out.println("==================");
 		
+		/*
 		player.setCurrentLocation("store");
 		System.out.println(player.getCurrentIsland().getName() + ":  " + player.getCurrentLocation());
 		System.out.println(player.getCurrentIsland().getStore().forSale()); 
