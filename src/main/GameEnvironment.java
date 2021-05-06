@@ -50,7 +50,7 @@ public class GameEnvironment {
 			String traderName = "Jon Snow";
 			Island homeIsland = map.getIsland("Niawall Haven");
 			player = new Trader(30, traderName, 10000, 
-								homeIsland, homeIsland, "port");
+								homeIsland, "port");
 			ship = new BalancedShip();
 			ship.setCaptain(player);
 			player.setOwnedShip(ship);

@@ -85,7 +85,7 @@ public class WorldConstructor {
 	
 	public static void main(String[] args) {
 		WorldConstructor newWorld = new WorldConstructor();
-		System.out.println(newWorld.getMap().getIslands().get(0).getRoutesString(0));
+		//System.out.println(newWorld.getMap().getIslands().get(0).getRoutesString(0));
 
 	}
 

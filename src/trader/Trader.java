@@ -18,18 +18,29 @@ public class Trader {
 	// constructor
 	public Trader(int days, String name, int money,
 			      //Island home, Ship ship, 
-			      Island home,
-			      Island currentIsland, String currentLocation) {
+			      Island home, String currentLocation) {
 		
 		this.remainingDays = days;
 		this.name = name;
 		this.ownedMoney = money;
 		this.homeIsland = home;
 		//this.ownedShip = ship;
-		this.currentIsland = currentIsland;
+		this.currentIsland = home;
 		this.curentLocation = currentLocation;
 		this.tradingLogs = new ArrayList<TradingLog>();	
 	}
+	
+	public Trader(int days, String name, Island home) {
+	
+	this.remainingDays = days;
+	this.name = name;
+	this.ownedMoney = 1000;
+	this.homeIsland = home;
+	//this.ownedShip = ship;
+	this.currentIsland = home;
+	this.curentLocation = "port";
+	this.tradingLogs = new ArrayList<TradingLog>();	
+}
 	
 	// getters
 	public int getRemainingDays() {

@@ -36,7 +36,7 @@ public class GameConsol {
 		// create a new player
 		String traderName = "Jon Snow"; // get user input + loop invoked by exception
 		player = new Trader(30, traderName, 10000, 
-							island1, island1, "port");
+							island1, "port");
 		ship = new BalancedShip(); // get user input + loop invoked by exception
 		ship.setCaptain(player);
 		player.setOwnedShip(ship);
