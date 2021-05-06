@@ -2,7 +2,15 @@ package io;
 
 import java.util.*;
 
+import trader.Trader;
+
 public class ConstructorIO extends IO {
+	
+	public ConstructorIO(Trader player) {
+		super(player);
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * Not used by far
 	 * read: get input for customizing world 

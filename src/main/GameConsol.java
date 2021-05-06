@@ -58,6 +58,8 @@ public class GameConsol {
 		System.out.println("After trader bought 50 units Wine");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		*/
+		
+		// test random events
 		player.setCurrentLocation("port");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("Captain Pre-Report: ");
