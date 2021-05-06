@@ -16,7 +16,7 @@ public class GameConsol {
 	
 	public static void main(String[] args) {
 		
-		// start a new Game
+		// Initialize properties
 		
 		Map map;
 		Trader player;
@@ -59,16 +59,29 @@ public class GameConsol {
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		*/
 		player.setCurrentLocation("port");
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("Captain Pre-Report: ");
+		System.out.println(player);
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("Ship Pre-Report: ");
+		System.out.println(player.getOwndedShip());
 		ArrayList<String> eventReports = player.getOwndedShip().sailTo(island2);
-		
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("After " + island1.daysToIsland(island2, player.getOwndedShip()) + " days ... ... ...");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		
-		System.out.println(player.getCurrentIsland().getName() + ":  " + player.getCurrentLocation());
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("Island: " + player.getCurrentIsland().getName() + " Location:  " + player.getCurrentLocation());
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("Events:");
 		for (String report : eventReports) {
 			System.out.println(report);
 		}
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("Captain Post-Report: ");
+		System.out.println(player);
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("Ship Post-Report: ");
 		System.out.println(player.getOwndedShip());
 		System.out.println("==================");
 		
