@@ -7,6 +7,7 @@ import items.Item;
 
 public class WorldConstructor {
 	private Map map;
+	//private ArrayList<Ship> ships;
 
 	public WorldConstructor() {
 		// Create items

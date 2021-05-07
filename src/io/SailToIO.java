@@ -5,13 +5,14 @@ import map.*;
 
 import trader.Trader;
 
-public class sailToIO extends IO {
+public class SailToIO extends IO {
 
-	public sailToIO(Trader player) {
+	public SailToIO(Trader player) {
 		super(player);
 		ArrayList<Route> routes = super.getTrader().getCurrentIsland().getRoutes();
 		for (Route route : routes) {
 			super.addCommand(route.getDest().getName());;
+			super.addCommand("cancel");
 		}
 	}
 

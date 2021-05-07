@@ -22,14 +22,17 @@ public class Commands {
 		String key = command.get(0);
 		String argument = command.get(1);
 		
-		if (key != "cancel" && argument != "cancel") {
+		if (key != "cancel" && argument != "cancel") { //move into switch block
 			switch(key) {
 			case "sail": 
 				report = processSailCommand(argument);
 				break;
 			
+			} 
+		} else {
+				report = "Cancelled!";
 			}
-		}
+
 		return report;	
 	}
 	

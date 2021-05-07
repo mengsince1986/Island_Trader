@@ -64,10 +64,9 @@ public class PortIO extends IO {
 		switch(choice) {
 		case 0: 
 			key = "sail";
-			sailToIO newSail = new sailToIO(super.getTrader());
+			SailToIO newSail = new SailToIO(super.getTrader());
 			argument = newSail.read().get(0);
-			super.addUpdate(key);
-			super.addUpdate(argument);
+			
 			break;
 		case 1:
 			key = "store";
@@ -81,11 +80,13 @@ public class PortIO extends IO {
 		case 4:
 			key = "view";
 			break;
-		default:
-			super.addUpdate(key);
-			super.addUpdate(argument);
-			break;
+		//default:
+			//super.addUpdate(key);
+			//super.addUpdate(argument);
+			//break;
 		}
+		super.addUpdate(key);
+		super.addUpdate(argument);
 
 	}
 	
