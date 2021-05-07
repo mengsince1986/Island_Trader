@@ -1,8 +1,11 @@
+/commands/
 /events/
 /exceptions/
+/io/
 /items/
 /main/
 /map/
 /ships/
+/terminalPrinter/
 /tests/
 /trader/
