@@ -16,7 +16,7 @@ public class GameConsol {
 	
 	public static void main(String[] args) {
 		
-		// start a new Game
+		// Initialize properties
 		
 		Map map;
 		Trader player;
@@ -36,7 +36,7 @@ public class GameConsol {
 		// create a new player
 		String traderName = "Jon Snow"; // get user input + loop invoked by exception
 		player = new Trader(30, traderName, 10000, 
-							island1, island1, "port");
+							island1, "port");
 		ship = new BalancedShip(); // get user input + loop invoked by exception
 		ship.setCaptain(player);
 		player.setOwnedShip(ship);
@@ -57,16 +57,37 @@ public class GameConsol {
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("After trader bought 50 units Wine");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		*/
+		
+		// test random events
 		player.setCurrentLocation("port");
-		player.getOwndedShip().sailTo(island2);
-		
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println("After " + island1.daysToIsland(island2, 0) + " days ... ... ...");
+		System.out.println("Captain Pre-Report: ");
+		System.out.println(player);
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		
-		System.out.println(player.getCurrentIsland().getName() + ":  " + player.getCurrentLocation());
+		System.out.println("Ship Pre-Report: ");
+		System.out.println(player.getOwndedShip());
+		ArrayList<String> eventReports = player.getOwndedShip().sailTo(island2);
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("After " + island1.daysToIsland(island2, player.getOwndedShip()) + " days ... ... ...");
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("Island: " + player.getCurrentIsland().getName() + " Location:  " + player.getCurrentLocation());
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("Events:");
+		for (String report : eventReports) {
+			System.out.println(report);
+		}
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("Captain Post-Report: ");
+		System.out.println(player);
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("Ship Post-Report: ");
+		System.out.println(player.getOwndedShip());
 		System.out.println("==================");
 		
+		/*
 		player.setCurrentLocation("store");
 		System.out.println(player.getCurrentIsland().getName() + ":  " + player.getCurrentLocation());
 		System.out.println(player.getCurrentIsland().getStore().forSale()); 

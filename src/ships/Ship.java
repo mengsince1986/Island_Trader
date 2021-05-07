@@ -3,6 +3,7 @@ import java.util.*;
 import trader.*;
 import map.*;
 import items.*;
+import events.*;
 
 public abstract class Ship {
 
@@ -246,13 +247,16 @@ public abstract class Ship {
 		return true;
 	}
 	
-	public void sailTo(Island destination) {
+	public ArrayList<String> sailTo(Island destination) {
+		
+		ArrayList<String> eventReports = new ArrayList<String>();
+		
 		if (readyToSail(destination)) {
+			Trader captain = getCaptain();
+			Island currentIsland = captain.getCurrentIsland();
 
 			// update remaining days
-			
-			int daysToDestination = getCaptain().getCurrentIsland().daysToIsland(destination, this);
-			
+			int daysToDestination = currentIsland.daysToIsland(destination, this);
 			getCaptain().subtractRemainingDays(daysToDestination);
 			
 			// pay crew and update captain ownedMoney
@@ -260,18 +264,23 @@ public abstract class Ship {
 			getCaptain().subtractMoney(costToDestination);
 
 			// call random events on the route:
-			/// get events from array
+			String eventReport = "We've had a safe journey";
+			Route route = currentIsland.getRoute(destination);
+			for (RandomEvent randomEvent : route.getEvents()) {
+				eventReport = randomEvent.processImpact(captain);
+				eventReports.add(eventReport);
+			}
 			//// String PirateReport =
 			//// String WeatherReport =
 			//// String RescueReport =
-			
 			//return array of report strings for further processing in GameEnvironment?
-			
 			
 			// update captain currentIsland and currentLocation
 			getCaptain().setCurrentIsland(destination);
 			getCaptain().setCurrentLocation("port");
 		}
+		
+		return eventReports;
 	}
 	
 	

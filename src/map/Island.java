@@ -38,6 +38,18 @@ public class Island {
 		return routes;
 	}
 	
+	//by MZ
+	public Route getRoute(Island destination) {
+		Route routeToDestination = new Route(0, "safe");
+		ArrayList<Route> routes = getRoutes();
+		for (Route route : routes) {
+			if (route.getDest() == destination) {
+				return route;
+			}
+		}
+		return routeToDestination;
+	}
+	
 	public String getRoutesString(Ship playerShip) {
 		int shipSailingModifier = playerShip.getShipSailingModifier();
 		int costPerDay = playerShip.getCostPerDay();

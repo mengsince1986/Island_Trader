@@ -8,16 +8,16 @@ public class TradingLog {
 	private String tradingItemName;
 	private int tradingSize;
 	private int tradingPrice;
-	private String sellOrBuy;
+	private String soldOrBought;
 	
 	//private int totalValue;
 	
-	public TradingLog(Island tradingIsalnd, Item tradingItem, String sellOrBuy) {
+	public TradingLog(Island tradingIsalnd, Item tradingItem, String soldOrBought) {
 		this.tradingLocation = tradingIsalnd.getName();
 		this.tradingItemName = tradingItem.getName();
 		this.tradingSize = tradingItem.getCargoSize();
 		this.tradingPrice = tradingItem.getPricePerUnit() * tradingItem.getCargoSize();
-		this.sellOrBuy = sellOrBuy;
+		this.soldOrBought = soldOrBought;
 	}
 	
 	public String toString() {
@@ -25,7 +25,7 @@ public class TradingLog {
 					 this.tradingItemName + " " +
 					 this.tradingSize + " " +
 					 this.tradingPrice + " " +
-					 this.sellOrBuy;
+					 this.soldOrBought;
 		return log;
 	}
 }

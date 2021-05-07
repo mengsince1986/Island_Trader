@@ -18,18 +18,29 @@ public class Trader {
 	// constructor
 	public Trader(int days, String name, int money,
 			      //Island home, Ship ship, 
-			      Island home,
-			      Island currentIsland, String currentLocation) {
+			      Island home, String currentLocation) {
 		
 		this.remainingDays = days;
 		this.name = name;
 		this.ownedMoney = money;
 		this.homeIsland = home;
 		//this.ownedShip = ship;
-		this.currentIsland = currentIsland;
+		this.currentIsland = home;
 		this.curentLocation = currentLocation;
 		this.tradingLogs = new ArrayList<TradingLog>();	
 	}
+	
+	public Trader(int days, String name, Island home) {
+	
+	this.remainingDays = days;
+	this.name = name;
+	this.ownedMoney = 1000;
+	this.homeIsland = home;
+	//this.ownedShip = ship;
+	this.currentIsland = home;
+	this.curentLocation = "port";
+	this.tradingLogs = new ArrayList<TradingLog>();	
+}
 	
 	// getters
 	public int getRemainingDays() {
@@ -92,13 +103,13 @@ public class Trader {
 	
 	
 	// addMoeny
-	public void addMoney(int num) {
-		this.ownedMoney += num;
+	public void addMoney(int amount) {
+		this.ownedMoney += amount;
 	}
 	
 	// subtractMoney
-	public void subtractMoney(int num) {
-		this.ownedMoney -= num;
+	public void subtractMoney(int amount) {
+		this.ownedMoney -= amount;
 	}
 	
 	public void setHomeIsland(Island island) {
@@ -130,7 +141,7 @@ public class Trader {
 			int itemPrice = currentStore.checkItemPrice(itemName, "toBuy");
 			if (itemPrice != -1) {
 				//update cargo
-				Item itemSold = currentStore.buy(itemName, itemSize); // store.buy() return the item it buys
+				Item itemSold = currentStore.itemToBuy(itemName, itemSize); // store.buy() return the item it buys
 				getOwndedShip().subtractFromCargos(itemSold);
 				
 				//update money
@@ -145,16 +156,16 @@ public class Trader {
 		}	
 	}
 	
-	public void buy(Island currentIsland, String itemName, int itemSize) {
+	public void buy(Island currentIsland, String itemName, int quantity) {
 		if (getCurrentLocation() == "store") {
 			Store currentStore = currentIsland.getStore();
 			int itemPrice = currentStore.checkItemPrice(itemName, "toSell");
-			boolean enoughCapacity = getOwndedShip().checkCapacity(itemSize);
+			boolean enoughCapacity = getOwndedShip().checkCapacity(quantity);
 			//ArrayList<Item> saleList = currentStore.getToSell();
 			
 			if (itemPrice != -1 && enoughCapacity) {
 				//update cargo
-				Item itemBought = currentStore.sell(itemName, itemSize); // store.sell() return the item it sells
+				Item itemBought = currentStore.itemToSell(itemName, quantity); // store.sell() return the item it sells
 				getOwndedShip().addToCargos(itemBought);
 				
 				//update money
