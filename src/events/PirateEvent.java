@@ -66,12 +66,12 @@ public class PirateEvent extends RandomEvent {
 		String reportString = "Oh no! You were beset by pirates!\n";
 		switch (outcome) {
 		case FLED_AND_ESCAPED:
-			return reportString + "Don't worry, your ship was just fast enough to outrun the pirates this time!";
+			return reportString + "Don't worry; your ship was just fast enough to outrun the pirates this time!\n";
 		case FLED_AND_LOST:
-			return reportString + "Disaster! Your crew tried to flee but the pirates caught up with you, defeated you in battle, and made off with all your cargo!\n" +
+			return reportString + "Disaster! Your crew tried to flee but the pirates caught up with you, \ndefeated you in battle, and made off with all your cargo!\n" +
 			"Consider upgrading your cannons to have a better chance in future.\n";
 		case FLED_AND_WON:
-			return reportString + "Wow, that was lucky! The pirates caught up with you but you defeated them in battle!\n "
+			return reportString + "Wow, that was lucky! The pirates caught up with you but you defeated them in battle!\n"
 					+ "Your cannons were enough to protect you this time...\n";
 		case FOUGHT_AND_LOST:
 			return reportString + "OOF! The pirates defeated you in battle and made off with all your cargo!!\n" +

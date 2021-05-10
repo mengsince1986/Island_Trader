@@ -2,6 +2,7 @@ package main;
 import java.util.*;
 
 import commands.Commands;
+import commands.CommandHandler;
 import io.PortIO;
 import trader.Trader;
 import map.Island;
@@ -25,6 +26,7 @@ public class GameEnvironment {
    * @param args Unused.
    * @return Nothing.
    */
+	
 	
 	public static void main(String[] args) {
 		
@@ -57,24 +59,23 @@ public class GameEnvironment {
 		
 		// Playing
 		
+		CommandHandler commandHandler = new CommandHandler(map, player, ship);
+		StatusLine statusLine = new StatusLine(player, ship);
+		PortIO portIO = new PortIO(player);
 		
 		boolean gameOver = false;
 		
 		while (!gameOver) {
-			PortIO portIO = new PortIO(player);
-			Commands commands = new Commands(map, player, ship);
-			StatusLine statusLine = new StatusLine(player, ship);
-			ReportPrinter reportPrinter = new ReportPrinter();
+			
 			statusLine.printStatusLine();
 			
 			if (player.getCurrentLocation() == "port") {
-				ArrayList<String> command = portIO.read();// read player's input
-				String report = commands.processCommands(command);
-				reportPrinter.printReport(report);
+				ArrayList<String> commandArguments = portIO.readCommandArguments("Captain, what next?");// read player's input
+				String report = CommandHandler.processCommand(commandArguments);
+				ReportPrinter.printReport(report);
+				
 			} else if (player.getCurrentLocation() == "store") {
-				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~");
-				System.out.println("The store is not ready.");
-				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~");
+				//ArrayList<String> command = storeIO.read();
 			}
 			//gameOver = true;
 			

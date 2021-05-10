@@ -6,44 +6,32 @@ import map.*;
 import trader.Trader;
 
 public class SailToIO extends IO {
+	
+	private ArrayList<Route> routes;
 
 	public SailToIO(Trader player) {
 		super(player);
-		ArrayList<Route> routes = super.getTrader().getCurrentIsland().getRoutes();
+		this.routes = super.getTrader().getCurrentIsland().getRoutes();
 		for (Route route : routes) {
-			super.addCommand(route.getDest().getName());;
-			super.addCommand("cancel");
+			this.addCommand(route.getDest().getName());;
 		}
+		this.addCommand("Cancel sailing");
 	}
-
-	public ArrayList<String> read() {
-		
-		// Initialize scanner
-		Scanner playerCommands = new Scanner(System.in);
-		int playerChoice;
-		// Validation while loop
-		boolean isValid = false;
-		do {
-			//Print available commands
-			System.out.println(super.getCommandString());
-			//Prompt for player
-			System.out.println("Captain, where are we going?");
-			playerChoice =  playerCommands.nextInt();
-			if (playerChoice >= 0 && 
-				playerChoice <= super.getCommands().size()-1) {
-				super.addUpdate(super.getCommands().get(playerChoice));
-				// close scanner will cause problem
-				//playerCommands.close();
-				isValid = true;
-			}	
-		} while(!isValid);
-		
-		return super.getUpdates();		
-	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	
+	public void processPlayerInput(int playerChoice) {
+		this.resetCommandArguments();
+		String keyWord = null;
+		String argument = null;
+		if (playerChoice < (this.getCommandsList().size() - 1)) {
+			keyWord = "sail";
+			argument = this.getCommandsList().get(playerChoice);
+		} else {
+			keyWord = "cancel";
+		}
+		System.out.println("Sail keyword " + keyWord);
+		System.out.println("Sail argument " + argument);
+		super.addCommandArgument(keyWord);
+		super.addCommandArgument(argument);
 	}
 
 }

@@ -59,7 +59,7 @@ public class Island {
 				int sailingTime = Integer.max(1, 
 						(routes.get(i).getDistance() - shipSailingModifier));
 				int totalCost = costPerDay * sailingTime;
-				routesString += String.format("\nRoute %s:  %s  Sailing time: %s days\n  Cost: %s", 
+				routesString += String.format("\nRoute %s:  %s  Sailing time: %s days\n  Cost: %s\n\n", 
 						i, routes.get(i), sailingTime, totalCost);
 			} 
 			return routesString;

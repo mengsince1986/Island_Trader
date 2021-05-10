@@ -27,66 +27,34 @@ public class PortIO extends IO {
 		
 	}
 	
-	
-	public ArrayList<String> read() {
-
-		// Initialize scanner
-		Scanner playerCommands = new Scanner(System.in);
-		int playerChoice;
-		// Validation while loop
-		boolean isValid = false;
-		do {
-			
-			//Print available commands
-			System.out.println(super.getCommandString());
-			//Prompt for player
-			System.out.println("Captain, what's your next move?");
-			playerChoice =  playerCommands.nextInt();
-			
-			if (playerChoice >= 0 && 
-				playerChoice <= super.getCommands().size()-1) {
-				processPlayerInput(playerChoice);
-				//playerCommands.close(); cause problem
-				isValid = true;
-			} else {
-				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-				System.out.println("You need to choose a valid number. Choose again.");
-				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-			}		
-		} while(!isValid);
-			
-		return super.getUpdates();		
-	}
-	
-	public void processPlayerInput(int choice) {
-		String key = null;
+	public void processPlayerInput(int playerChoice) {
+		this.resetCommandArguments();
+		String keyWord = null;
 		String argument = null;
-		switch(choice) {
-		case 0: 
-			key = "sail";
+		switch(playerChoice) {
+		case 0: //sail
 			SailToIO newSail = new SailToIO(super.getTrader());
-			argument = newSail.read().get(0);
+			newSail.readCommandArguments("Where do you wish to sail?");
+			keyWord = newSail.getCommandArguments().get(0);
+			argument = newSail.getCommandArguments().get(1);
+			System.out.println("Port keyword " + keyWord);
+			System.out.println("Port argument " + argument);
+			break;
+		case 1: //visit store
 			
 			break;
-		case 1:
-			key = "store";
+		case 2: //repair ship
+			
 			break;
-		case 2:
-			key = "repair";
+		case 3: //upgrade cannons
+			
 			break;
-		case 3:
-			key = "upgradeCannons";
+		case 4: //view properties
+			
 			break;
-		case 4:
-			key = "view";
-			break;
-		//default:
-			//super.addUpdate(key);
-			//super.addUpdate(argument);
-			//break;
 		}
-		super.addUpdate(key);
-		super.addUpdate(argument);
+		super.addCommandArgument(keyWord);
+		super.addCommandArgument(argument);
 
 	}
 	
@@ -116,6 +84,7 @@ public class PortIO extends IO {
 		
 		PortIO port = new PortIO(player);
 		port.processPlayerInput(0);
+		
 
 	}
 

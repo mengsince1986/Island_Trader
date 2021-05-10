@@ -17,15 +17,15 @@ public class ConstructorIO extends IO {
 	 * island_names: ArrayList<String>
 	 * @return 
 	 */
-	@Override
-	public ArrayList<String> read() {
-		return null;
-		// TODO Auto-generated method stub
-		
-	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void processPlayerInput(int choice) {
+		// TODO Auto-generated method stub
+		
 	}
 }
