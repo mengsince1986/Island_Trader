@@ -31,10 +31,21 @@ public class GameEnvironment {
 	public static void main(String[] args) {
 		
 		//Constructing
-		Map map;
-		Trader player;
-		Ship ship;
+		Map map = null;
+		Trader player = null;
+		Ship ship = null;
+		boolean constructed = false;
 		
+		NewPlayerConstructorIO newPlayerIO = new NewPlayerConstructorIO();
+		
+		while (!constructed) {
+			newPlayerIO.readCommandArguments();
+			
+		if (map != null && player != null && ship != null) {
+			constructed = true;
+		}
+		}
+		/*
 		System.out.println("Welcome to the wolrd of Island Trader");
 		System.out.println();
 		// constructing a new map
@@ -47,7 +58,7 @@ public class GameEnvironment {
 		System.out.println("A new world is created ... ");
 		// create a new player
 		String traderName = "Jon Snow"; // name and time can be read from constructorIO
-		player = new Trader(30, traderName, 10000, map.getIsland("Niawall Haven"), "port");
+		player = new Trader(7, traderName, 10000, map.getIsland("Niawall Haven"), "port");
 		ship = new BalancedShip(); // get user input + loop invoked by exception
 		ship.setCaptain(player);
 		player.setOwnedShip(ship);
@@ -56,6 +67,7 @@ public class GameEnvironment {
 		System.out.println();
 		System.out.println("========= All Set. Let's get started!=========");
 		System.out.println();
+		*/
 		
 		// Playing
 		
@@ -66,7 +78,7 @@ public class GameEnvironment {
 		
 		boolean gameOver = false;
 		
-		while (!gameOver) {
+		while (constructed && !gameOver) {
 			
 			statusLine.printStatusLine();
 			
@@ -78,6 +90,11 @@ public class GameEnvironment {
 				
 			} else if (player.getCurrentLocation() == "store") {
 				System.out.println("Welcome to our store!");
+				gameOver = true;
+			}
+			
+			if (player.getRemainingDays() <= 0 || player.getOwnedMoney() <= 0) {
+				ReportPrinter.printReport("Game Over");
 				gameOver = true;
 			}
 			

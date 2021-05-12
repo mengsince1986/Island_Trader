@@ -39,6 +39,7 @@ public class PortIO extends IO {
 		resetCommandArguments();
 		//String keyWord = null; //MZ: update command directly in case
 		String argument = null;
+		
 		switch(playerChoice) {
 		case 0: //sail
 			//MZ: it's workable to update "sail" command in sailIO, but is it
