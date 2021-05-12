@@ -34,7 +34,7 @@ public abstract class IO {
 			String errorMessage = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
 					"You need to choose a valid number. Choose again.\n" +
 					"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
-			
+			Scanner commandReader = new Scanner(System.in);
 			try {
 				playerChoice = commandReader.nextInt();
 				
@@ -53,7 +53,6 @@ public abstract class IO {
 				}
 			} catch (InputMismatchException e) {
 					System.out.println(errorMessage);
-					break;
 			}
 				
 		} while(!isValid);

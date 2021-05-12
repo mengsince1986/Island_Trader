@@ -192,8 +192,10 @@ public class Trader {
 			//update trading log
 			addTradingLog(currentIsland, itemBought, "bought");
 			
-			report = "Success! Return to port to view your trading log.\n" +
-					"Redirecting you to storefront...";
+			report = "Success! Return to port to view your full trading log.\n" +
+					"Most recent " +
+					this.getTradingLogs().get(this.getTradingLogs().size() - 1).toString() +
+					"\nRedirecting you to storefront...";
 		}
 		return report;
 	}

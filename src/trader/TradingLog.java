@@ -28,4 +28,6 @@ public class TradingLog {
 					 this.soldOrBought;
 		return log;
 	}
+	
+	//readable repr
 }
