@@ -15,12 +15,14 @@ public class PortIO extends IO {
 	 * read type: get input for playing commands. e.g. commands that match Ship.sailTo(), Trader.buy()... 
 	 * sailDestination: String
 	 */
+	SailToIO sailTo = new SailToIO(getTrader());
+	// add others
 	
 	public PortIO(Trader player) {
 		
 		super(player);
-		super.addCommand("Sail to another Island"); //0
-		super.addCommand("Go to store");            //1
+		addCommand("Sail to another Island"); //0
+		addCommand("Go to store");            //1
 		super.addCommand("Repair ship"); 		    //2
 		super.addCommand("Upgrade cannons");        //3
 		super.addCommand("View properties");        //4
@@ -28,15 +30,14 @@ public class PortIO extends IO {
 	}
 	
 	public void processPlayerInput(int playerChoice) {
-		this.resetCommandArguments();
+		resetCommandArguments();
 		String keyWord = null;
 		String argument = null;
 		switch(playerChoice) {
 		case 0: //sail
-			SailToIO newSail = new SailToIO(super.getTrader());
-			newSail.readCommandArguments("Where do you wish to sail?");
-			keyWord = newSail.getCommandArguments().get(0);
-			argument = newSail.getCommandArguments().get(1);
+			sailTo.readCommandArguments("Where do you wish to sail?");
+			keyWord = getCommandArguments().get(0);
+			argument = getCommandArguments().get(1);
 			System.out.println("Port keyword " + keyWord);
 			System.out.println("Port argument " + argument);
 			break;
@@ -53,8 +54,8 @@ public class PortIO extends IO {
 			
 			break;
 		}
-		super.addCommandArgument(keyWord);
-		super.addCommandArgument(argument);
+		addCommandArgument(keyWord);
+		addCommandArgument(argument);
 
 	}
 	
@@ -81,9 +82,8 @@ public class PortIO extends IO {
 		ship = new BalancedShip(); // get user input + loop invoked by exception
 		ship.setCaptain(player);
 		player.setOwnedShip(ship);
-		
-		PortIO port = new PortIO(player);
-		port.processPlayerInput(0);
+		PortIO portIO = new PortIO(player);
+		portIO.processPlayerInput(0);
 		
 
 	}

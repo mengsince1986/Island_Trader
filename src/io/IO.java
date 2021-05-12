@@ -8,15 +8,15 @@ public abstract class IO {
 	 * read type: String
 	 * return type: [String command, String argument]
 	 */
-	private Trader player;
-	private ArrayList<String> commandsList;
-	private ArrayList<String> commandArguments;
+	private static Trader player;
+	private static ArrayList<String> commandsList;
+	private static ArrayList<String> commandArguments;
 	private static final Scanner commandReader = new Scanner(System.in);
 	
-	public IO(Trader player) {
-		this.player = player;
-		this.commandsList = new ArrayList<String>();
-		this.commandArguments = new ArrayList<String>();
+	public IO(Trader trader) {
+		player = trader;
+		commandsList = new ArrayList<String>();
+		commandArguments = new ArrayList<String>();
 	}
 	
 	public ArrayList<String> readCommandArguments(String prompt) {
@@ -53,37 +53,37 @@ public abstract class IO {
 	
 	public abstract void processPlayerInput(int choice);
 	
-	public Trader getTrader() {
-		return this.player;
+	public static Trader getTrader() {
+		return player;
 	}
 	
-	public ArrayList<String> getCommandsList() {
-		return this.commandsList;
+	public static ArrayList<String> getCommandsList() {
+		return commandsList;
 	}
 	
-	public void addCommand(String command) {
-		this.commandsList.add(command);
+	public static void addCommand(String command) {
+		commandsList.add(command);
 	}
 	
-	public String getCommandsListString() {
+	public static String getCommandsListString() {
 		String commandList = "=== commandsList ===" + "\n";
-		for (int i=0; i < this.commandsList.size(); i++) {
-			commandList += i + ". " + this.commandsList.get(i) + "\n"; 
+		for (int i=0; i < commandsList.size(); i++) {
+			commandList += i + ". " + commandsList.get(i) + "\n"; 
 		}
 		return commandList;
 	}
 
 	
-	public ArrayList<String> getCommandArguments() {
-		return this.commandArguments;
+	public static ArrayList<String> getCommandArguments() {
+		return commandArguments;
 	}
 	
-	public void resetCommandArguments() {
-		this.commandArguments.clear();
+	public static void resetCommandArguments() {
+		commandArguments.clear();
 	}
 	
-	public void addCommandArgument(String update) {
-		this.commandArguments.add(update);
+	public static void addCommandArgument(String update) {
+		commandArguments.add(update);
 	}
 	
 	

@@ -11,27 +11,27 @@ public class SailToIO extends IO {
 
 	public SailToIO(Trader player) {
 		super(player);
-		this.routes = super.getTrader().getCurrentIsland().getRoutes();
+		this.routes = getTrader().getCurrentIsland().getRoutes();
 		for (Route route : routes) {
-			this.addCommand(route.getDest().getName());;
+			addCommand(route.getDest().getName());;
 		}
-		this.addCommand("Cancel sailing");
+		addCommand("Cancel sailing");
 	}
 	
 	public void processPlayerInput(int playerChoice) {
-		this.resetCommandArguments();
+		resetCommandArguments();
 		String keyWord = null;
 		String argument = null;
-		if (playerChoice < (this.getCommandsList().size() - 1)) {
+		if (playerChoice < (getCommandsList().size() - 1)) {
 			keyWord = "sail";
-			argument = this.getCommandsList().get(playerChoice);
+			argument = getCommandsList().get(playerChoice);
 		} else {
 			keyWord = "cancel";
 		}
 		System.out.println("Sail keyword " + keyWord);
 		System.out.println("Sail argument " + argument);
-		super.addCommandArgument(keyWord);
-		super.addCommandArgument(argument);
+		addCommandArgument(keyWord);
+		addCommandArgument(argument);
 	}
 
 }
