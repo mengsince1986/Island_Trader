@@ -21,7 +21,7 @@ public abstract class ConstructorIO {
 		boolean isValid = false;
 
 		do {
-
+			
 			System.out.println(getCommandsListString());
 
 			System.out.println(this.prompt);

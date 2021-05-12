@@ -9,8 +9,10 @@ public class NewPlayerTimeIO extends ConstructorIO {
 	}
 	
 	@Override
-	public void processPlayerInput(String choice) {
-		// TODO Auto-generated method stub
+	public void processPlayerInput(String playerInput) {
+		super.addCommandArgument(playerInput);
+		//NewPlayerHomeIO newHome = new NewPlayerHomeIO();
+		//newHome.readCommandArguments();
 
 	}
 
