@@ -2,8 +2,7 @@ package io;
 
 import java.util.*;
 import map.*;
-
-import trader.Trader;
+import trader.*;
 
 public class SailToIO extends IO {
 	
@@ -13,9 +12,9 @@ public class SailToIO extends IO {
 		super(player);
 		this.routes = getTrader().getCurrentIsland().getRoutes();
 		for (Route route : routes) {
-			addCommand(route.getDest().getName());;
+			this.addCommand(route.getDest().getName());;
 		}
-		addCommand("Cancel sailing");
+		this.addCommand("Cancel sailing");
 	}
 	
 	public void processPlayerInput(int playerChoice) {

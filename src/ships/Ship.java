@@ -15,7 +15,7 @@ public abstract class Ship {
 	private int costPerDay;
 	private ArrayList<Item> cargos;
 	private int defaultCapacity;
-	private int capacity;
+	private int remainingCapacity;
 	private int cannons;
 	private int maxCannons;
 	private int defaultDurability;
@@ -33,7 +33,7 @@ public abstract class Ship {
 		this.costPerDay = crewNum * sailorCost; 
 		this.cargos = new ArrayList<Item>();
 		this.defaultCapacity = defaultCapacity;
-		this.capacity = defaultCapacity;
+		this.remainingCapacity = defaultCapacity;
 		this.cannons = cannons;
 		this.defaultDurability = defautDurability;
 		this.durability = defautDurability;
@@ -72,7 +72,7 @@ public abstract class Ship {
 	}
 	
 	public int getCapacity() {
-		return this.capacity;
+		return this.remainingCapacity;
 	}
 	
 	public int getDefaultCapacity() {
@@ -111,6 +111,14 @@ public abstract class Ship {
 		return this.upgradeLogs;
 	}
 	
+	public Item getCargoItem(String itemName) {
+		for (Item cargoItem : cargos) {
+			if (cargoItem.getName() == itemName) {
+				return cargoItem;
+			}
+		} return null;
+	}
+	
 	// setters =============================
 	public void setName(String name) {
 		this.name = name;
@@ -137,29 +145,48 @@ public abstract class Ship {
 		this.costPerDay = amount;
 	}
 	
-	public void addToCargos(Item item) {
-		this.cargos.add(item);
-		subtractCapacity(item.getCargoSize());
-	}
-	
-	public void subtractFromCargos(Item soldItem) {
-		for (Item item : this.cargos) {
-			if (item.getName() == soldItem.getName()) {
-				this.cargos.remove(item);
-				addCapacity(soldItem.getCargoSize());
+	public void addToCargos(Item item, int quantity) {
+		boolean found = false;
+		for (Item cargoItem : cargos) {
+			if (cargoItem.getName() == item.getName()) {
+				cargoItem.addQuantity(item.getQuantity());
+				found = true;
 			}
 		}
+		if (!found) {
+			this.cargos.add(item);
+		}
+		subtractCapacity(item.getQuantity());
+	}
+	
+	public void subtractFromCargos(Item soldItem, int quantity) {
+		boolean toDelete = false;
+		int indexToDelete = 0;
+		for (Item item : this.cargos) {
+			if (item.getName() == soldItem.getName()) {
+				if (item.getQuantity() > quantity) {
+					item.subtractQuantity(quantity);
+				} else {
+					toDelete = true;
+					indexToDelete = this.cargos.lastIndexOf(item);
+				}
+			}
+		} if (toDelete) {
+			this.cargos.remove(indexToDelete);
+		}
+		
+		addCapacity(soldItem.getQuantity());
 	}
 	
 	public void addCapacity(int amount) {
-		this.capacity = Integer.min(this.defaultCapacity, this.capacity+amount);
+		this.remainingCapacity = Integer.min(this.defaultCapacity, this.remainingCapacity+amount);
 	}
 	
 	public void subtractCapacity(int amount) {
-		this.capacity = Integer.max(0, this.capacity-amount);
+		this.remainingCapacity = Integer.max(0, this.remainingCapacity-amount);
 	}
 	
-	public boolean checkCapacity(int toReduce) {
+	public boolean checkCapacityOK(int toReduce) {
 		if (getCapacity() - toReduce < 0) {
 			return false;
 		}
@@ -264,11 +291,21 @@ public abstract class Ship {
 			getCaptain().subtractMoney(costToDestination);
 
 			// call random events on the route:
-			String eventReport = "We've had a safe journey";
+			
 			Route route = currentIsland.getRoute(destination);
+			boolean reportsAllEmpty = true;
 			for (RandomEvent randomEvent : route.getEvents()) {
-				eventReport = randomEvent.processImpact(captain);
-				eventReports.add(eventReport);
+				if (randomEvent.getTriggered()) {
+					String eventReport = randomEvent.processImpact(captain);
+					if (!eventReport.isBlank()) {
+						eventReports.add(eventReport);
+						reportsAllEmpty = false;
+					}
+				}
+			}
+			
+			if (route.getEvents().size() == 0 | reportsAllEmpty) {
+				eventReports.add("You had a safe and uneventful journey!\n");
 			}
 			//// String PirateReport =
 			//// String WeatherReport =

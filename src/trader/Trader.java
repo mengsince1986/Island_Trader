@@ -135,49 +135,67 @@ public class Trader {
 		this.tradingLogs.add(log);
 	}
 	
-	public void sell(Island currentIsland, String itemName, int itemSize) { 
-		if (getCurrentLocation() == "store") {
-			Store currentStore = currentIsland.getStore();
-			int itemPrice = currentStore.checkItemPrice(itemName, "toBuy");
-			if (itemPrice != -1) {
+	public String sell(Island currentIsland, String itemName, int quantity) { 
+		String report = "";
+		Store currentStore = currentIsland.getStore();
+		Ship playerShip = getOwndedShip();
+		Item itemToSell = playerShip.getCargoItem(itemName);
+		int pricePerUnit = currentStore.checkItemPrice(itemName, "toBuy");
+		if (itemToSell.getQuantity() < quantity) {
+			report = "You don't own that quantity of the item! Try again.\n" +
+					"Redirecting you to storefront...";
+		} else {
+			
+				//update store
+				currentStore.buyItem(itemName, quantity);
+				
 				//update cargo
-				Item itemSold = currentStore.itemToBuy(itemName, itemSize); // store.buy() return the item it buys
-				getOwndedShip().subtractFromCargos(itemSold);
+				getOwndedShip().subtractFromCargos(itemToSell, quantity);
 				
 				//update money
-				int priceToReceive = itemSold.getCargoSize() * itemPrice;
-				addMoney(priceToReceive);
+				int priceReceived = quantity * pricePerUnit;
+				addMoney(priceReceived);
 				
 				//update trading log
-				this.addTradingLog(currentIsland, itemSold, "sell");
-			} else {
-				System.out.println("The store is not looking for the item.");
-			}
-		}	
+				this.addTradingLog(currentIsland, itemToSell, "sell");
+				
+				report = "Success! Return to port to view your trading log.\n" +
+						"Redirecting you to storefront...";
+		} 
+		return report;
 	}
 	
-	public void buy(Island currentIsland, String itemName, int quantity) {
-		if (getCurrentLocation() == "store") {
-			Store currentStore = currentIsland.getStore();
-			int itemPrice = currentStore.checkItemPrice(itemName, "toSell");
-			boolean enoughCapacity = getOwndedShip().checkCapacity(quantity);
-			//ArrayList<Item> saleList = currentStore.getToSell();
+
+	
+	public String buy(Island currentIsland, String itemName, int quantity) {
+		String report = "";
+		Store currentStore = currentIsland.getStore();
+		Item itemToBuy = currentStore.getItem(itemName, "toSell");
+		if (getOwnedMoney() < (itemToBuy.getPricePerUnit() * quantity)) {
+			report = "You don't have enough funds to make that purchase!\n" +
+					"Redirecting you to storefront...";
+		} else if (quantity > itemToBuy.getQuantity()) {
+			report = "The store can't sell you that many!\n" +
+					"Redirecting you to storefront...";
+		} else if (!getOwndedShip().checkCapacityOK(quantity)) {
+			report = "Your ship doesn't have enough remaining cargo capacity!\n" +
+					"Redirecting you to storefront...";
+		} else {
+			//update cargo
+			Item itemBought = currentStore.itemToSell(itemName, quantity);
+			getOwndedShip().addToCargos(itemBought, quantity);
 			
-			if (itemPrice != -1 && enoughCapacity) {
-				//update cargo
-				Item itemBought = currentStore.itemToSell(itemName, quantity); // store.sell() return the item it sells
-				getOwndedShip().addToCargos(itemBought);
-				
-				//update money
-				int priceToPay = itemBought.getCargoSize() * itemPrice;
-				subtractMoney(priceToPay);
-				
-				//update trading log
-				this.addTradingLog(currentIsland, itemBought, "buy");
-			} else {
-				System.out.println("The item is not available in store or your ship doesn't have enough capacity.");
-			}
-		}	
+			//update money
+			int priceToPay = itemBought.getPricePerUnit() * quantity;
+			subtractMoney(priceToPay);
+			
+			//update trading log
+			addTradingLog(currentIsland, itemBought, "bought");
+			
+			report = "Success! Return to port to view your trading log.\n" +
+					"Redirecting you to storefront...";
+		}
+		return report;
 	}
 	
 	public void repairShip() {

@@ -3,7 +3,7 @@ import java.util.*;
 
 import commands.Commands;
 import commands.CommandHandler;
-import io.PortIO;
+import io.*;
 import trader.Trader;
 import map.Island;
 import map.Map;
@@ -59,7 +59,7 @@ public class GameEnvironment {
 		
 		// Playing
 		
-		CommandHandler commandHandler = new CommandHandler(map, player, ship);
+		new CommandHandler(map, player, ship);
 		StatusLine statusLine = new StatusLine(player, ship);
 		PortIO portIO = new PortIO(player);
 		
@@ -68,6 +68,7 @@ public class GameEnvironment {
 		while (!gameOver) {
 			
 			statusLine.printStatusLine();
+			StoreIO storeIO = new StoreIO(player);
 			
 			if (player.getCurrentLocation() == "port") {
 				ArrayList<String> commandArguments = portIO.readCommandArguments("Captain, what next?");// read player's input
@@ -75,7 +76,9 @@ public class GameEnvironment {
 				ReportPrinter.printReport(report);
 				
 			} else if (player.getCurrentLocation() == "store") {
-				//ArrayList<String> command = storeIO.read();
+				ArrayList<String> commandArguments = storeIO.readCommandArguments("What would you like to do?");
+				String report = CommandHandler.processCommand(commandArguments);
+				ReportPrinter.printReport(report);
 			}
 			//gameOver = true;
 			

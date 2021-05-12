@@ -3,27 +3,27 @@ package items;
 public class Item {
 	
 	private String name;
-	private int cargoSize;
+	private int quantity;
 	private int pricePerUnit;
 	
-	public Item (String name, int cargoSize, int pricePerUnit) {
+	public Item (String name, int quantity, int pricePerUnit) {
 		this.name = name;
-		this.cargoSize = cargoSize;
+		this.quantity = quantity;
 		this.pricePerUnit = pricePerUnit;
 	}
 	
-	public int getCargoSize() {
-		return cargoSize;
+	public int getQuantity() {
+		return quantity;
 	}
 	
 	// by MZ
-	public void addCargoSize(int size) {
-		this.cargoSize += size;
+	public void addQuantity(int size) {
+		this.quantity += size;
 	}
 	
 	// by MZ
-	public void subtractCargoSize(int size) {
-		this.cargoSize -= size;
+	public void subtractQuantity(int size) {
+		this.quantity -= size;
 	}
 	
 	public int getPricePerUnit() {
@@ -37,13 +37,13 @@ public class Item {
 	@Override
 	public String toString() {
 		/*
-		 * return "Item: " + name + "\n" + "Cargo space required: " + cargoSize + "\n" +
+		 * return "Item: " + name + "\n" + "Quantity: " + quantity + "\n" +
 		 * "price per unit: " + pricePerUnit;
 		 */
 		return String.format(
-				"%s\nCargo space required: %s\nPrice per unit: %s\n", 
+				"%s\nQuantity: %s\nPrice per unit: %s\n", 
 				name, 
-				cargoSize, 
+				quantity, 
 				pricePerUnit);
 	}
 	

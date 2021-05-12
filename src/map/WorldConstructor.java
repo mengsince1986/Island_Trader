@@ -26,8 +26,8 @@ public class WorldConstructor {
 		Item timberLow = new Item("Timber", 1000, 2);
 		Item timberHigh = new Item("Timber", 1000, 3);
 		
-		Item marbelLow = new Item("Marbel", 1000, 4);
-		Item marbelHigh = new Item("Marbel", 1000, 7);
+		Item marbleLow = new Item("Marbel", 1000, 4);
+		Item marbleHigh = new Item("Marbel", 1000, 7);
 		
 		Item silverLow = new Item("Silver", 1000, 15);
 		Item silverHigh = new Item("Silver", 1000, 19);
@@ -35,10 +35,10 @@ public class WorldConstructor {
 		Item goldLow = new Item("Gold", 1000, 30);
 		Item goldHigh = new Item("Gold", 1000, 40);
 		
-		Item[] saleList1 = {wineLow, teaLow, goldHigh};
-		Item[] purchaseList1 = {silkHigh, marbelHigh, silverLow};
+		Item[] saleList1 = {wineHigh, teaHigh, goldHigh};
+		Item[] purchaseList1 = {wineLow, teaLow, goldLow};
 		
-		Item[] saleList2 = {silkLow, marbelLow, silverHigh};
+		Item[] saleList2 = {silkLow, marbleLow, silverHigh};
 		Item[] purchaseList2 = {wineHigh, teaHigh, goldLow};
 		
 		// Create stores

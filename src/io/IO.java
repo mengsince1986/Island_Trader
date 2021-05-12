@@ -9,9 +9,10 @@ public abstract class IO {
 	 * return type: [String command, String argument]
 	 */
 	private static Trader player;
-	private static ArrayList<String> commandsList;
+	private ArrayList<String> commandsList;
 	private static ArrayList<String> commandArguments;
 	private static final Scanner commandReader = new Scanner(System.in);
+	private static boolean gettingTransactionQuantity = false;
 	
 	public IO(Trader trader) {
 		player = trader;
@@ -30,20 +31,29 @@ public abstract class IO {
 			//Prompt for player
 			System.out.println(prompt);
 			
+			String errorMessage = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+					"You need to choose a valid number. Choose again.\n" +
+					"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+			
 			try {
 				playerChoice = commandReader.nextInt();
-				if (playerChoice >= 0 && playerChoice <= getCommandsList().size()-1) {
-					processPlayerInput(playerChoice);
-					isValid = true;
+				
+				if (playerChoice >= 0) {
+					if (gettingTransactionQuantity) {
+						processPlayerInput(playerChoice);
+						isValid = true;
+					} else if (playerChoice <= commandsList.size() - 1) {
+						processPlayerInput(playerChoice);
+						isValid = true;
+					} else {
+						System.out.println(errorMessage);
+					}
+				} else {
+					System.out.println(errorMessage);
 				}
 			} catch (InputMismatchException e) {
-				isValid = false;
-			} finally {
-				if (!isValid) {
-					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-					System.out.println("You need to choose a valid number. Choose again.");
-					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-				}
+					System.out.println(errorMessage);
+					break;
 			}
 				
 		} while(!isValid);
@@ -57,15 +67,19 @@ public abstract class IO {
 		return player;
 	}
 	
-	public static ArrayList<String> getCommandsList() {
+	public ArrayList<String> getCommandsList() {
 		return commandsList;
 	}
 	
-	public static void addCommand(String command) {
+	public void setGettingTransactionQuantity(boolean value) {
+		gettingTransactionQuantity = value;
+	}
+	
+	public void addCommand(String command) {
 		commandsList.add(command);
 	}
 	
-	public static String getCommandsListString() {
+	public String getCommandsListString() {
 		String commandList = "=== commandsList ===" + "\n";
 		for (int i=0; i < commandsList.size(); i++) {
 			commandList += i + ". " + commandsList.get(i) + "\n"; 

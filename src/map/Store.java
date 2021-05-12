@@ -1,6 +1,7 @@
 package map;
 
 import items.Item;
+import ships.Ship;
 import java.util.ArrayList;
 
 public class Store {
@@ -57,19 +58,19 @@ public class Store {
 	
 	
 	// by MZ
-	public Item itemToSell(String itemName, int itemSize) {
+	public Item itemToSell(String itemName, int quantity) {
 		int itemPrice = checkItemPrice(itemName, "toSell");
-		getItem(itemName, "toSell").subtractCargoSize(itemSize); //update toSell list
-		Item goodsToSell = new Item(itemName, itemSize, itemPrice);
+		getItem(itemName, "toSell").subtractQuantity(quantity); //update toSell list
+		Item goodsToSell = new Item(itemName, quantity, itemPrice);
 		return goodsToSell;
 	}
 	
 	// by MZ
-	public Item itemToBuy(String itemName, int itemSize) {
-		int itemPrice = checkItemPrice(itemName, "toBuy");
-		getItem(itemName, "toBuy").addCargoSize(itemSize); //update toBuy list
-		Item goodsToBuy = new Item(itemName, itemSize, itemPrice);
-		return goodsToBuy;
+	public void buyItem(String itemName, int quantity) {
+		getItem(itemName, "toBuy").subtractQuantity(quantity); //update toBuy list
+		if (getItem(itemName, "toSell") instanceof Item) {
+			getItem(itemName, "toSell").addQuantity(quantity); //update toSell lest
+		}
 	}
 	
 	
@@ -98,7 +99,37 @@ public class Store {
 			return itemString;
 		}
 	}
+	
+	public ArrayList<Item> getSellablePlayerItems(Ship ship) {
+		ArrayList<Item> cargoList = ship.getCargos();
+		ArrayList<Item> sellablePlayerItems = new ArrayList<>();
+		for (Item cargoItem : cargoList) {
+			for (Item offeredItem : this.toBuy) {
+				String cargoItemName = cargoItem.getName();
+				if (cargoItemName == offeredItem.getName()) {
+					int quantity = cargoItem.getQuantity();
+					int price = offeredItem.getPricePerUnit();
+					sellablePlayerItems.add(
+							new Item(cargoItemName, quantity, price));
+				}
+			}
+		} return sellablePlayerItems;
+	}
 
+	public String getSellablePlayerItemsString(Ship ship) {
+		ArrayList<Item> sellablePlayerItems = getSellablePlayerItems(ship);
+		String itemString = "Items you can sell:\n";
+		if (sellablePlayerItems.size() > 0) {
+			for (int i = 0; i < sellablePlayerItems.size(); i++) {
+				itemString += String.format("\nItem %s: %s", i, sellablePlayerItems.get(i));
+			}
+			return itemString;
+		} else {
+			itemString += "\nIt looks like you don't own anything this store is looking to buy!\n";
+			return itemString;
+		}
+	}
+	
 	// purchase and sell methods might need to be in Trader?
 
 	public static void main(String[] args) {

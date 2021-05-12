@@ -1,5 +1,7 @@
 package commands;
 import java.util.ArrayList;
+
+import items.Item;
 import trader.*;
 import ships.*;
 import map.*;
@@ -18,21 +20,31 @@ public class CommandHandler {
 
 	public static String processCommand(ArrayList<String> commandArguments) {
 		
-		String report = new String();
+		String report = "";
+		System.out.println(commandArguments);
 		String keyWord = commandArguments.get(0);
 		String argument = commandArguments.get(1);
-		System.out.println(commandArguments);
 		
-		if (keyWord != "cancel" && argument != "cancel") { //move into switch block
+		if (!commandArguments.contains("cancel")) {
+			int quantity = 0;
+			if (commandArguments.size() == 3) {
+				quantity = Integer.parseInt(commandArguments.get(2));
+			}
 			switch(keyWord) {
 			case "sail": 
 				report = processSailCommand(argument);
 				break;
-			
+			case "buy":
+				report = processBuyCommand(argument, quantity);
+				break;
+			case "sell":
+				report = processSellCommand(argument, quantity);
 			} 
+		} else if (player.getCurrentLocation() == "store") {
+			report = "Cancelling...\nBack at storefront!";
 		} else {
-				report = "Cancelled!";
-			}
+			report = String.format("Back at %s!", player.getCurrentLocation());
+		}
 
 		return report;	
 	}
@@ -48,6 +60,24 @@ public class CommandHandler {
 		
 		return report;
 	}
+	
+	public static String processBuyCommand(String itemName, int quantity) {
+		Island currentIsland = player.getCurrentIsland();
+		String report = player.buy(currentIsland, itemName, quantity);
+		return report;
+	}
+	
+	public static String processSellCommand(String itemName, int quantity) {
+		Island currentIsland = player.getCurrentIsland();
+		String report = player.sell(currentIsland, itemName, quantity);
+		return report;
+	}
+	
+	
+	
+	
+	
+	
 	
 	public static void main(String[] args) {
 		WorldConstructor newWorld = new WorldConstructor();

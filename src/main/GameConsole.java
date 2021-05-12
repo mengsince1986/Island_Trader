@@ -8,7 +8,7 @@ import ships.BalancedShip;
 import ships.Ship;
 
 
-public class GameConsol {
+public class GameConsole {
 	
    /**
    * Use this class to test the backend of the game
