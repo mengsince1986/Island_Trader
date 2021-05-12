@@ -3,7 +3,7 @@ import java.util.*;
 
 import commands.Commands;
 import commands.CommandHandler;
-import io.PortIO;
+import io.*;
 import trader.Trader;
 import map.Island;
 import map.Map;
@@ -54,11 +54,12 @@ public class GameEnvironment {
 		System.out.println("A new Trader named " + player.getName() + " is created ... ");
 		System.out.println("A new Ship named " + player.getOwndedShip().getName() + " is created ...");
 		System.out.println();
-		System.out.println("===== All Set. Let's get started!=====");
-		
+		System.out.println("========= All Set. Let's get started!=========");
+		System.out.println();
 		
 		// Playing
 		
+		// Do we need a static CommandHandler.processCommand()?
 		CommandHandler commandHandler = new CommandHandler(map, player, ship);
 		StatusLine statusLine = new StatusLine(player, ship);
 		PortIO portIO = new PortIO(player);
@@ -70,14 +71,16 @@ public class GameEnvironment {
 			statusLine.printStatusLine();
 			
 			if (player.getCurrentLocation() == "port") {
-				ArrayList<String> commandArguments = portIO.readCommandArguments("Captain, what next?");// read player's input
-				String report = CommandHandler.processCommand(commandArguments);
+				
+				ArrayList<String> commandArguments = portIO.readCommandArguments();// read player's input MZ: set prompt in constructor
+				String report = commandHandler.processCommand(commandArguments);
 				ReportPrinter.printReport(report);
 				
 			} else if (player.getCurrentLocation() == "store") {
-				//ArrayList<String> command = storeIO.read();
+				System.out.println("Welcome to our store!");
+				gameOver = true;
 			}
-			//gameOver = true;
+			
 			
 		}
 		

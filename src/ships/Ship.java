@@ -35,6 +35,7 @@ public abstract class Ship {
 		this.defaultCapacity = defaultCapacity;
 		this.capacity = defaultCapacity;
 		this.cannons = cannons;
+		this.maxCannons = cannons + 10;
 		this.defaultDurability = defautDurability;
 		this.durability = defautDurability;
 		this.speed = speed;
@@ -215,6 +216,7 @@ public abstract class Ship {
 
 	// Sailing
 	public boolean readyToSail(Island destination) {
+		
 		boolean isReady;
 
 		// check if Remaining days enough
@@ -223,7 +225,7 @@ public abstract class Ship {
 		int daysToDestination = getCaptain().getCurrentIsland().daysToIsland(destination, this);
 		
 		
-		if ((remainingDays - daysToDestination) <= 0) {
+		if ((remainingDays - daysToDestination) < 0) {
 			isReady = false;
 			// add exceptions
 			return isReady;
@@ -267,7 +269,7 @@ public abstract class Ship {
 			String eventReport = "We've had a safe journey";
 			Route route = currentIsland.getRoute(destination);
 			for (RandomEvent randomEvent : route.getEvents()) {
-				eventReport = randomEvent.processImpact(captain);
+				eventReport = randomEvent.processImpact(captain) + "\n";
 				eventReports.add(eventReport);
 			}
 			//// String PirateReport =
@@ -278,6 +280,16 @@ public abstract class Ship {
 			// update captain currentIsland and currentLocation
 			getCaptain().setCurrentIsland(destination);
 			getCaptain().setCurrentLocation("port");
+		} else if (this.durability != this.defaultDurability) {
+			String eventReport = "You need to fix your ship first!";
+			eventReports.add(eventReport);
+		} else if (this.getCaptain().getRemainingDays() < 
+				   getCaptain().getCurrentIsland().daysToIsland(destination, this)) {
+			String eventReport = "Oh, No! You don't have enough time to sail to the next island.";
+			eventReports.add(eventReport);
+		} else {
+			String eventReport = "Oh, No! You don't have enough money to pay your crew.";
+			eventReports.add(eventReport);
 		}
 		
 		return eventReports;

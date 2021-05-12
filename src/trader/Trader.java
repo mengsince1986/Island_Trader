@@ -180,29 +180,51 @@ public class Trader {
 		}	
 	}
 	
-	public void repairShip() {
+	public String repairShip() {
+		
+		String report = "You have to repair your ship at port";
+		
 		if (getCurrentLocation() == "port") {
 			int repairCost = getCurrentIsland().getPort().getRepairCost();
-			if (repairCost <= getOwnedMoney()) {
+			if (this.getOwndedShip().getDamage() == 0) {
+				report = "Your ship is fine. There's nothing to repair.";
+			} else if (repairCost <= getOwnedMoney()) {
 				getOwndedShip().setDurability(getOwndedShip().getDefaultDurability());
 				subtractMoney(repairCost);
+				report = "The damage is fixed,\nthe ship is ready to sail again!";
 			} else {
-				System.out.println("You money is not enough to repair the ship.");
+				report = "You don't have enough money to repair the ship.";
 			}
 		}
 		
+		return report;
 	}
 	
-	public void upgradeCannons(int cannonNum) {
+	public String upgradeCannons(int cannonNum) {
+		
+		String report = "You have to upgrade cannons at port";
+		int currentCannons = this.getOwndedShip().getCannons();
+		int maxCannons = this.getOwndedShip().getMaxCannons();
+		
 		if (getCurrentLocation() == "port") {
 			int costPerCannon = getCurrentIsland().getPort().getcannonCost();
 			int totalCost = costPerCannon * cannonNum;
-			if (totalCost <= getOwnedMoney() && 
-				getOwndedShip().getCannons() + cannonNum <= getOwndedShip().getMaxCannons()) {
+			if (currentCannons >= maxCannons) {
+				report = "You've got enough cannons on your ship. No space for another one.";
+			} else if (currentCannons + cannonNum > maxCannons) {
+				report = "Captain, you can't equip so many cannons on your ship.\n" +
+						 "You can have at most " + (maxCannons - currentCannons) +
+						 " more cannons to upgrade.";
+			} else if (totalCost <= getOwnedMoney()) {
 				getOwndedShip().addCannons(cannonNum);
 				subtractMoney(totalCost);
+				report = "You now have " + cannonNum + " more cannons equiped on your ship.";
+			} else {
+				report = "Sorry, you don't have enough money to upgrade cannons.";
 			}
 		}	
+		
+		return report;
 	}
 	
 	public String toString() {

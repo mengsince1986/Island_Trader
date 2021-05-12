@@ -9,17 +9,28 @@ public abstract class IO {
 	 * return type: [String command, String argument]
 	 */
 	private static Trader player;
-	private static ArrayList<String> commandsList;
-	private static ArrayList<String> commandArguments;
+	//MZ store prompt as a property
+	private String prompt;
+	
+	//MZ remove static from commandList because
+	// commandList is updated when each IO object is initialized based on
+	// different states. e.g. SailToIO update commandList by different routes
+	// main IOs like PortIO and StoreIO are initialized once only
+	// so the commandList is not updated when IOs are not initialized
+	private ArrayList<String> commandsList; 
+	//MZ initialize static commandArguments directly
+	private static ArrayList<String> commandArguments = new ArrayList<String>();
 	private static final Scanner commandReader = new Scanner(System.in);
 	
 	public IO(Trader trader) {
 		player = trader;
 		commandsList = new ArrayList<String>();
-		commandArguments = new ArrayList<String>();
+		//MZ don't initialize static commandArguments here or it will reset 
+		// commandArguments whenever a new IO is initialized
+		//commandArguments = new ArrayList<String>();
 	}
 	
-	public ArrayList<String> readCommandArguments(String prompt) {
+	public ArrayList<String> readCommandArguments() {
 		
 		int playerChoice;
 		// Validation while loop
@@ -28,8 +39,9 @@ public abstract class IO {
 			//Print available commandsList
 			System.out.println(getCommandsListString());
 			//Prompt for player
-			System.out.println(prompt);
+			System.out.println(this.prompt);
 			
+			//MZ good job!!!
 			try {
 				playerChoice = commandReader.nextInt();
 				if (playerChoice >= 0 && playerChoice <= getCommandsList().size()-1) {
@@ -40,9 +52,9 @@ public abstract class IO {
 				isValid = false;
 			} finally {
 				if (!isValid) {
-					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+					System.out.println("=====================!!!========================");
 					System.out.println("You need to choose a valid number. Choose again.");
-					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+					System.out.println("================================================");
 				}
 			}
 				
@@ -57,16 +69,19 @@ public abstract class IO {
 		return player;
 	}
 	
-	public static ArrayList<String> getCommandsList() {
+	//MZ remove static
+	public ArrayList<String> getCommandsList() {
 		return commandsList;
 	}
 	
-	public static void addCommand(String command) {
+	//MZ remove static
+	public void addCommand(String command) {
 		commandsList.add(command);
 	}
 	
-	public static String getCommandsListString() {
-		String commandList = "=== commandsList ===" + "\n";
+	//MZ remove static
+	public String getCommandsListString() {
+		String commandList = "============== Commands List =================" + "\n\n";
 		for (int i=0; i < commandsList.size(); i++) {
 			commandList += i + ". " + commandsList.get(i) + "\n"; 
 		}
@@ -82,10 +97,19 @@ public abstract class IO {
 		commandArguments.clear();
 	}
 	
-	public static void addCommandArgument(String update) {
-		commandArguments.add(update);
+	public static void addCommandArgument(String arg) {
+		commandArguments.add(arg);
 	}
 	
+	//MZ
+	public void setPromp(String message) {
+		this.prompt = message;
+	}
+	
+	//MZ 
+	public String getPrompt() {
+		return this.prompt;
+	}
 	
 	
 	public static void main(String[] args) {
