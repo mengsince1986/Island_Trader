@@ -18,10 +18,9 @@ public class NewPlayerHomeIO extends NewPlayerIO {
 		HashMap<String, Island> islands = getWorld().getIslands(); 
 		for (String islandName : islands.keySet()) {
 			super.addCommand(islandName);
-			islandsList.add(islandName);
-			
+			islandsList.add(islandName);	
 		}
-		super.addCommand("Cancel");
+		super.addCommand("Cancel"); // 2
 		
 		
 	}
@@ -29,11 +28,20 @@ public class NewPlayerHomeIO extends NewPlayerIO {
 	@Override
 	public void processPlayerInput(String playerChoice) {
 		
-		String chosenIslandName = this.islandsList.get(Integer.parseInt(playerChoice));
-		super.addCommandArgument(chosenIslandName);
-		NewShipIO newShip = new NewShipIO(getWorld());
-		newShip.readCommandArguments();
+		if (Integer.parseInt(playerChoice) == islandsList.size()) {
+			
+			super.addCommandArgument("cancel");
+			
+		} else {
 
+			String chosenIslandName = this.islandsList.get(Integer.parseInt(playerChoice));
+			super.addCommandArgument(chosenIslandName);
+			NewPlayerShipIO newShip = new NewPlayerShipIO(getWorld());
+			newShip.readCommandArguments();
+
+		}
+		
+		
 	}
 
 	public static void main(String[] args) {

@@ -50,11 +50,12 @@ public class PortIO extends IO {
 			
 		case 3: //upgrade cannons
 			super.addCommandArgument("upgrade");
+			setGettingTransactionQuantity(true);
 			UpgradeIO upgrade = new UpgradeIO(getTrader());
 			int upgradeCannonFee = super.getTrader().getCurrentIsland().getPort().getcannonCost();
 			upgrade.readCommandArguments("Yo, Captain! How many cannons do you want?\n" 
-									   + upgradeCannonFee + " dollars for one.\n"
-				                       + "We can install at most two.");
+									   + upgradeCannonFee + " coins for one.\n");
+			setGettingTransactionQuantity(false);
 			break;
 		case 4: //view properties
 			

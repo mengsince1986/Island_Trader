@@ -6,11 +6,11 @@ import java.util.HashMap;
 import map.World;
 import ships.Ship;
 
-public class NewShipIO extends NewPlayerIO {
+public class NewPlayerShipIO extends NewPlayerIO {
 	
 	private ArrayList<String> shipsList = new ArrayList<String>();
 
-	public NewShipIO(World newWorld) {
+	public NewPlayerShipIO(World newWorld) {
 
 		super(newWorld);
 		super.setPromp("Please choose your ship:\n");
@@ -21,15 +21,25 @@ public class NewShipIO extends NewPlayerIO {
 			this.shipsList.add(shipName);
 		}
 		
-		super.addCommand("Cancel");
+		super.addCommand("Cancel"); //4
 
 	}
 
 	@Override
 	public void processPlayerInput(String playerChoice) {
 		
-		String chosenIslandName = this.shipsList.get(Integer.parseInt(playerChoice));
-		super.addCommandArgument(chosenIslandName);
+
+		if (Integer.parseInt(playerChoice) == shipsList.size()) {
+			
+			super.addCommandArgument("cancel");
+			
+		} else {
+			
+			String chosenIslandName = this.shipsList.get(Integer.parseInt(playerChoice));
+			super.addCommandArgument(chosenIslandName);
+			
+		}
+		
 		
 	}
 

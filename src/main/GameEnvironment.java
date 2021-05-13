@@ -112,6 +112,7 @@ public class GameEnvironment {
 			}
 			
 			if (player.getRemainingDays() <= 0 || player.getOwnedMoney() <= 0) {
+				ReportPrinter.printReport("Your Profit is: " + (player.getOwnedMoney() - 1000) + " coins");
 				ReportPrinter.printReport("Game Over");
 				gameOver = true;
 			}

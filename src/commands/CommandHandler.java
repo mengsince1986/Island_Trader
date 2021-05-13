@@ -110,7 +110,7 @@ public class CommandHandler {
 	}
 	
 	public static String quitCommand() {
-		String report = "I can't believe you really quit the game!";
+		String report = "Goodbye!";
 		player.setRemainingDays(0);
 		return report;
 	}

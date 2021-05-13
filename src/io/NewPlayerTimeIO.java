@@ -14,11 +14,19 @@ public class NewPlayerTimeIO extends NewPlayerIO {
 	@Override
 	public void processPlayerInput(String playerInput) {
 		
-		super.addCommandArgument(playerInput);
-		setGettingPlayingTime(false);
-		
-		NewPlayerHomeIO newHome = new NewPlayerHomeIO(getWorld());
-		newHome.readCommandArguments();
+		if (playerInput.matches("0") && Integer.parseInt(playerInput) == 0) {
+			
+			super.addCommandArgument("cancel");
+			setGettingPlayingTime(false);
+			
+		} else {
+			
+			super.addCommandArgument(playerInput);
+			setGettingPlayingTime(false);
+			
+			NewPlayerHomeIO newHome = new NewPlayerHomeIO(getWorld());
+			newHome.readCommandArguments();
+		}
 		
 	}
 

@@ -39,14 +39,17 @@ public abstract class NewPlayerIO {
 			Scanner commandReader = new Scanner(System.in);
 
 			try {
+				
 				playerChoice = commandReader.nextLine();
-
+				//System.out.println("gettingName: " + gettingName);
+				//System.out.println("gettingPlaying: " + gettingPlayingTime);
+				
 				if (gettingName) {
-					if (playerChoice == "0") {
+					
+					if (playerChoice.matches("[0-9]+") && Integer.parseInt(playerChoice) == 0) {
 						processPlayerInput(playerChoice);
 						isValid = true;
-					}
-					else if (!playerChoice.matches("[a-zA-Z]+")) {
+					} else if (!playerChoice.matches("[a-zA-Z]+")) {
 						System.out.println("\nSorry, the name can only include letters.");
 					} else if (playerChoice.length() < 3 || playerChoice.length() > 15 ) {
 						System.out.println("\nThe name should be between 3 and 15 characters.");
@@ -54,8 +57,12 @@ public abstract class NewPlayerIO {
 						processPlayerInput(playerChoice);
 						isValid = true;
 					}
+					
 				} else if (gettingPlayingTime) {
-	                if (Integer.parseInt(playerChoice) < 10 || 
+					if (playerChoice.matches("[0-9]+") && Integer.parseInt(playerChoice) == 0) {
+						processPlayerInput(playerChoice);
+						isValid = true;
+					} else if (Integer.parseInt(playerChoice) < 10 || 
 	                	Integer.parseInt(playerChoice) > 100) {
 	                	System.out.println("\nThe number of the days should be between 10 and 100.");
 	                } else {
@@ -68,12 +75,20 @@ public abstract class NewPlayerIO {
 					processPlayerInput(playerChoice);
 					isValid = true;
 				} else {
+					System.out.println("last else error");
 					System.out.println(errorMessage);
 				}
-			} catch (NumberFormatException e) {
+
+			} catch (InputMismatchException e) {
+
 				System.out.println(errorMessage);
+				
+			} catch (NumberFormatException e) {
+				
+				System.out.println(errorMessage);
+				
 			}
-			
+
 		} while (!isValid);
 		
 		// System.out.println(commandArguments);
