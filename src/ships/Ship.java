@@ -301,7 +301,7 @@ public class Ship {
 				if (randomEvent.getTriggered()) {
 					String eventReport = randomEvent.processImpact(captain);
 					if (!eventReport.isBlank()) {
-						eventReports.add(eventReport);
+						eventReports.add(eventReport + "\n");
 						reportsAllEmpty = false;
 					}
 				}
