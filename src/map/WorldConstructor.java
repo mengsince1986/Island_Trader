@@ -7,7 +7,7 @@ import items.Item;
 import ships.Ship;
 
 public class WorldConstructor {
-	private Map map;
+	private Map newWorld;
 	//private ArrayList<Ship> ships;
 
 	public WorldConstructor() {
@@ -74,24 +74,26 @@ public class WorldConstructor {
 		island2.addRoute(route2to1);
 		
 		// Create Ships
+		Ship fastShip = new Ship("Black Pearl", 10, 2, 1500, 6, 70, "fast");
 		Ship balancedShip = new Ship("Redcoasts", 15, 2, 1500, 8, 75, "normal");
-		
+		Ship battleShip = new Ship("Endeavour", 20, 2, 1000, 18, 90, "slow");
+		Ship baoShip = new Ship("Empress", 16, 2, 1800, 8, 75, "normal");
 		
 		// Create a new Map
-		Map map1 = new Map();
+		Map newWorld1 = new Map();
 		
 		// add islands to new Map
-		map1.addIsland(island1);
-		map1.addIsland(island2);
+		newWorld1.addIsland(island1);
+		newWorld1.addIsland(island2);
 		
 		// add ships to new Map
 		
 		
-		this.map = map1;
+		this.newWorld = newWorld1;
 	}
 	
 	public Map getMap() {
-		return this.map;
+		return this.newWorld;
 	}
 	
 	public static void main(String[] args) {
