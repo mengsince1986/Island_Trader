@@ -14,9 +14,16 @@ public class NewPlayerNameIO extends NewPlayerIO {
 	
 	@Override
 	public void processPlayerInput(String playerInput) {
-		super.addCommandArgument(playerInput);
-		NewPlayerTimeIO newTime = new NewPlayerTimeIO(getWorld());
-		newTime.readCommandArguments();
+		if (playerInput == "0") {
+			super.addCommandArgument("cancel");
+		} else {
+			super.addCommandArgument(playerInput);
+			
+			setGettingName(false);
+			setGettingPlayingTime(true);
+			NewPlayerTimeIO newTime = new NewPlayerTimeIO(getWorld());
+			newTime.readCommandArguments();
+		}
 	}
 
 }

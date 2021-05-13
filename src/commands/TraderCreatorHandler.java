@@ -22,22 +22,30 @@ public class TraderCreatorHandler {
 	
 	public static String createPlayer(ArrayList<String> commandArguments) {
 		
-		String name = commandArguments.get(0);
-		String daysStr = commandArguments.get(1);
-		String homeIslandName = commandArguments.get(2);
-		String shipName = commandArguments.get(3);
+		String report = "No trader created. Please restart the game.";
 		
-		int days = Integer.parseInt(daysStr);
-		Island homeIsland = world.getIsland(homeIslandName);
-		
-		newPlayer = new Trader(days, name, homeIsland);
-		newShip = world.getShip(shipName);
-		newShip.setCaptain(newPlayer);
-		newPlayer.setOwnedShip(newShip);
-		
-		String report = "Congratulations! A new trader has been created.\n\n" 
-		                + newPlayer.toString() + "\n\n" 
-				        + "Let's get started ... ";
+		if (commandArguments.contains("quit")) {
+			report = quitCommand();
+		} else if (commandArguments.contains("cancel")) {
+			report = "You've cancelled it. You can create a new Trader again.";
+		} else {
+			String name = commandArguments.get(0);
+			String daysStr = commandArguments.get(1);
+			String homeIslandName = commandArguments.get(2);
+			String shipName = commandArguments.get(3);
+			
+			int days = Integer.parseInt(daysStr);
+			Island homeIsland = world.getIsland(homeIslandName);
+			
+			newPlayer = new Trader(days, name, homeIsland);
+			newShip = world.getShip(shipName);
+			newShip.setCaptain(newPlayer);
+			newPlayer.setOwnedShip(newShip);
+			
+			report = "Congratulations! A new trader has been created.\n\n" 
+			        + newPlayer.toString() + "\n\n" 
+					+ "Let's get started ... ";
+		}
 		
 		return report;
 	}
@@ -48,5 +56,11 @@ public class TraderCreatorHandler {
 	
 	public static Ship getNewShip() {
 		return newShip;
+	}
+	
+	public static String quitCommand() {
+		String report = "You quit the game.";
+		System.exit(0);;
+		return report;
 	}
 }

@@ -17,9 +17,9 @@ public void processPlayerInput(int playerChoice) {
 		String keyWord = "cancel";
 		addCommandArgument(keyWord);
 	}
-	System.out.println("Transaction keyword " + getCommandArguments().get(0));
-	System.out.println("Transaction argument1 " + getCommandArguments().get(1));
-	System.out.println("Transaction argument2 " + getCommandArguments().get(2));
+	//System.out.println("Transaction keyword " + getCommandArguments().get(0));
+	//System.out.println("Transaction argument1 " + getCommandArguments().get(1));
+	//System.out.println("Transaction argument2 " + getCommandArguments().get(2));
 }
 
 }

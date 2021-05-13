@@ -15,9 +15,11 @@ public class NewPlayerTimeIO extends NewPlayerIO {
 	public void processPlayerInput(String playerInput) {
 		
 		super.addCommandArgument(playerInput);
+		setGettingPlayingTime(false);
+		
 		NewPlayerHomeIO newHome = new NewPlayerHomeIO(getWorld());
 		newHome.readCommandArguments();
-
+		
 	}
 
 }
