@@ -1,10 +1,5 @@
 package io;
 
-import java.util.*;
-
-import map.*;
-import map.World;
-import ships.*;
 import trader.*;
 
 public class PortIO extends IO {
@@ -23,7 +18,7 @@ public class PortIO extends IO {
 		super.addCommand("Repair ship"); 		    //2
 		super.addCommand("Upgrade cannons");        //3
 		super.addCommand("View properties");        //4
-		super.addCommand("\nQuit the game");        //5
+		super.addCommand("Quit the game");          //5
 		
 	}
 	
@@ -63,6 +58,10 @@ public class PortIO extends IO {
 			break;
 		case 4: //view properties
 			
+			break;
+			
+		case 5: // quit game
+			super.addCommandArgument("quit");
 			break;
 		}
 

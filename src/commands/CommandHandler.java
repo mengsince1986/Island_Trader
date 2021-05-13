@@ -1,7 +1,5 @@
 package commands;
 import java.util.ArrayList;
-
-import items.Item;
 import trader.*;
 import ships.*;
 import map.*;
@@ -23,7 +21,7 @@ public class CommandHandler {
 	public static String processCommand(ArrayList<String> commandArguments) {
 		
 		String report = "";
-		//System.out.println(commandArguments);
+		System.out.println(commandArguments);
 		String keyWord = commandArguments.get(0);
 		String argument = commandArguments.get(1);
 		
@@ -56,6 +54,9 @@ public class CommandHandler {
 			case "upgrade":
 				report = upgradeCannonCommand(Integer.parseInt(argument));
 				break;
+				
+			case "quit":
+				report = quitCommand();
 
 			} 
 		} else if (player.getCurrentLocation() == "store") {
@@ -105,6 +106,12 @@ public class CommandHandler {
 	
 	public static String upgradeCannonCommand(int cannonNum) {
 		String report = player.upgradeCannons(cannonNum);
+		return report;
+	}
+	
+	public static String quitCommand() {
+		String report = "I can't believe you really quit the game!";
+		player.setRemainingDays(0);
 		return report;
 	}
 	
