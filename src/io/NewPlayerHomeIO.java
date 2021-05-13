@@ -6,13 +6,15 @@ import java.util.HashMap;
 import map.Island;
 import map.World;
 
-public class NewPlayerHomeIO extends StrIO {
+public class NewPlayerHomeIO extends NewPlayerIO {
 	
 	private ArrayList<String> islandsList = new ArrayList<String>();
 
 	public NewPlayerHomeIO(World newWorld) {
 		
 		super(newWorld);
+		super.setPromp("Please choose your home island:\n");
+				
 		HashMap<String, Island> islands = getWorld().getIslands(); 
 		for (String islandName : islands.keySet()) {
 			super.addCommand(islandName);
@@ -30,7 +32,7 @@ public class NewPlayerHomeIO extends StrIO {
 		String chosenIslandName = this.islandsList.get(Integer.parseInt(playerChoice));
 		super.addCommandArgument(chosenIslandName);
 		NewShipIO newShip = new NewShipIO(getWorld());
-		newShip.readCommandArguments("Please choose your ship:");
+		newShip.readCommandArguments();
 
 	}
 

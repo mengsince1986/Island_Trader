@@ -6,18 +6,21 @@ import java.util.HashMap;
 import map.World;
 import ships.Ship;
 
-public class NewShipIO extends StrIO {
+public class NewShipIO extends NewPlayerIO {
 	
 	private ArrayList<String> shipsList = new ArrayList<String>();
 
 	public NewShipIO(World newWorld) {
 
 		super(newWorld);
+		super.setPromp("Please choose your ship:\n");
+		
 		HashMap<String, Ship> ships = getWorld().getShips();
 		for (String shipName : ships.keySet()) {
 			super.addCommand(shipName);
 			this.shipsList.add(shipName);
 		}
+		
 		super.addCommand("Cancel");
 
 	}

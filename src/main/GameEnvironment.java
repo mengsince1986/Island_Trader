@@ -1,7 +1,7 @@
 package main;
 import java.util.*;
 
-import commands.Commands;
+import commands.TraderCreatorHandler;
 import commands.CommandHandler;
 import io.*;
 import trader.Trader;
@@ -38,15 +38,23 @@ public class GameEnvironment {
 		//Stage 1: Constructing a new world
 		WorldConstructor newWorld = new WorldConstructor();
 		world = newWorld.getMap();
-		NewPlayerConstructorIO newPlayerIO = new NewPlayerConstructorIO(world);
+		
 		
 		//Stage 2: Creating new player and new ship
+		NewPlayerConstructorIO newPlayerConstructorIO = new NewPlayerConstructorIO(world);
+		new TraderCreatorHandler(world);
+		
 		while (!constructed) {
-			newPlayerIO.readCommandArguments("Welcome to the wolrd of Island Trader!\n"
-					 					   + "Before we start,\n"
-				                           + "Let's first create a new player.");
-
-			if (world != null && player != null && ship != null) {
+			
+			ArrayList<String> NewPlayerArguments =  newPlayerConstructorIO.readCommandArguments();
+			String newPlayerReport = TraderCreatorHandler.createPlayer(NewPlayerArguments);
+			
+			player = TraderCreatorHandler.getNewPlayer();
+			ship = TraderCreatorHandler.getNewShip();
+			
+			ReportPrinter.printReport(newPlayerReport);
+			
+			if (player != null && ship != null) {
 				constructed = true;
 			}
 		}

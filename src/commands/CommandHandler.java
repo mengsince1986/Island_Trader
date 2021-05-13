@@ -23,7 +23,7 @@ public class CommandHandler {
 	public static String processCommand(ArrayList<String> commandArguments) {
 		
 		String report = "";
-		System.out.println(commandArguments);
+		//System.out.println(commandArguments);
 		String keyWord = commandArguments.get(0);
 		String argument = commandArguments.get(1);
 		

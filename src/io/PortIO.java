@@ -23,6 +23,7 @@ public class PortIO extends IO {
 		super.addCommand("Repair ship"); 		    //2
 		super.addCommand("Upgrade cannons");        //3
 		super.addCommand("View properties");        //4
+		super.addCommand("\nQuit the game");        //5
 		
 	}
 	

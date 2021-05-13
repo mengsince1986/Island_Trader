@@ -1,11 +1,13 @@
 package io;
 import map.World;
 
-public class NewPlayerTimeIO extends StrIO {
+public class NewPlayerTimeIO extends NewPlayerIO {
 
 	public NewPlayerTimeIO(World newWorld) {
 		
 		super(newWorld);
+		super.setPromp("Please enter the days you want to play for:\n"
+				     + "The number should be between 10 to 100.\n");
 		super.addCommand("Cancel");
 	}
 	
@@ -14,7 +16,7 @@ public class NewPlayerTimeIO extends StrIO {
 		
 		super.addCommandArgument(playerInput);
 		NewPlayerHomeIO newHome = new NewPlayerHomeIO(getWorld());
-		newHome.readCommandArguments("Please choose your home island:");
+		newHome.readCommandArguments();
 
 	}
 
