@@ -6,6 +6,8 @@ import map.*;
 
 public class Commands {
 	
+	// have been replaced by CommandHandler
+	
 	private Map map;
 	private Trader player;
 	private Ship ship;

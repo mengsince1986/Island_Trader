@@ -44,7 +44,7 @@ public class CommandHandler {
 				break;
 			case "sell":
 				report = processSellCommand(argument, quantity);
-				
+				break;
 			case "store":
 				report = processVisitStore();
 				break;
