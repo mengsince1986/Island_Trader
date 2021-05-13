@@ -3,11 +3,11 @@ package io;
 import java.util.HashMap;
 
 import map.Island;
-import map.Map;
+import map.World;
 
 public class NewPlayerHomeIO extends StrIO {
 
-	public NewPlayerHomeIO(Map newWorld) {
+	public NewPlayerHomeIO(World newWorld) {
 		
 		super(newWorld);
 		HashMap<String, Island> islands = getWorld().getIslands(); 

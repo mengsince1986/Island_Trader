@@ -7,7 +7,7 @@ import items.Item;
 import ships.Ship;
 
 public class WorldConstructor {
-	private Map newWorld;
+	private World newWorld;
 	//private ArrayList<Ship> ships;
 
 	public WorldConstructor() {
@@ -80,7 +80,7 @@ public class WorldConstructor {
 		Ship baoShip = new Ship("Empress", 16, 2, 1800, 8, 75, "normal");
 		
 		// Create a new Map
-		Map newWorld1 = new Map();
+		World newWorld1 = new World();
 		
 		// add islands to new Map
 		newWorld1.addIsland(island1);
@@ -92,7 +92,7 @@ public class WorldConstructor {
 		this.newWorld = newWorld1;
 	}
 	
-	public Map getMap() {
+	public World getMap() {
 		return this.newWorld;
 	}
 	

@@ -10,11 +10,11 @@ public class CommandHandler {
 	
 	//MZ Is it necessary to make things static here?
 	// we don't have any subclasses to share information 
-	private static Map map;
+	private static World map;
 	private static Trader player;
 	private static Ship ship;
 	
-	public CommandHandler(Map map, Trader player, Ship ship) {
+	public CommandHandler(World map, Trader player, Ship ship) {
 		CommandHandler.map = map;
 		CommandHandler.player = player;
 		CommandHandler.ship = ship;

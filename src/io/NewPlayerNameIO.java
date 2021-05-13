@@ -1,10 +1,10 @@
 package io;
 
-import map.Map;
+import map.World;
 
 public class NewPlayerNameIO extends StrIO {
 
-	public NewPlayerNameIO(Map newWorld) {
+	public NewPlayerNameIO(World newWorld) {
 		super(newWorld);
 		super.addCommand("Cancel");
 	}

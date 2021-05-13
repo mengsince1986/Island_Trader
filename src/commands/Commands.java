@@ -8,11 +8,11 @@ public class Commands {
 	
 	// have been replaced by CommandHandler
 	
-	private Map map;
+	private World map;
 	private Trader player;
 	private Ship ship;
 	
-	public Commands(Map map, Trader player, Ship ship) {
+	public Commands(World map, Trader player, Ship ship) {
 		this.map = map;
 		this.player = player;
 		this.ship = ship;

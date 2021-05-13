@@ -3,7 +3,7 @@ package io;
 import java.util.*;
 
 import map.*;
-import map.Map;
+import map.World;
 import ships.*;
 import trader.*;
 

@@ -1,9 +1,9 @@
 package io;
-import map.Map;
+import map.World;
 
 public class NewPlayerTimeIO extends StrIO {
 
-	public NewPlayerTimeIO(Map newWorld) {
+	public NewPlayerTimeIO(World newWorld) {
 		
 		super(newWorld);
 		super.addCommand("Cancel");

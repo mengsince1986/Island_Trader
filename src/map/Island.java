@@ -87,7 +87,7 @@ public class Island {
 	}
 	
 	public static void main(String[] args) {
-		Map map = new Map();
+		World map = new World();
 		Island island1 = new Island("island1");
 		Island island2 = new Island("island2");
 		Route route1 = new Route(10, "Looks dicey");

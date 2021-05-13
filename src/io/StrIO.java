@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import map.Map;
+import map.World;
 
 public abstract class StrIO {
 
 	private ArrayList<String> commandsList;
-	private static Map world;
+	private static World world;
 	private static ArrayList<String> commandArguments = new ArrayList<String>();
 	//private static final Scanner commandReader = new Scanner(System.in);
 
-	public StrIO(Map newWorld) {
+	public StrIO(World newWorld) {
 		commandsList = new ArrayList<String>();
 		world = newWorld;
 	}
@@ -62,7 +62,7 @@ public abstract class StrIO {
 
 	public abstract void processPlayerInput(String choice);
 	
-	public static Map getWorld() {
+	public static World getWorld() {
 		return world;
 	}
 

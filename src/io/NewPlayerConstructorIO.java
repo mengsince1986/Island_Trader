@@ -1,10 +1,10 @@
 package io;
 
-import map.Map;
+import map.World;
 
 public class NewPlayerConstructorIO extends StrIO {
 
-	public NewPlayerConstructorIO(Map newWorld) {
+	public NewPlayerConstructorIO(World newWorld) {
 		
 		super(newWorld);
 		super.addCommand("Create a new player"); //0

@@ -3,14 +3,15 @@ package map;
 import exceptions.IslandNotFoundException;
 import java.util.*;
 
-public class Map {
+public class World {
 	
 	// MZ: a HashMap data structure? {"island name": Island object}. 
 	// Quick for getting island object
 	//private ArrayList<Island> islands = new ArrayList<>(); 
 	private HashMap<String, Island> islands = new HashMap<String, Island>(); 
 	
-	public Map(){
+	
+	public World(){
 	}
 	
 	/*

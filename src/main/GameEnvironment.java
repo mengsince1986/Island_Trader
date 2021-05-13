@@ -6,7 +6,7 @@ import commands.CommandHandler;
 import io.*;
 import trader.Trader;
 import map.Island;
-import map.Map;
+import map.World;
 import map.WorldConstructor;
 import ships.BalancedShip;
 import ships.Ship;
@@ -30,15 +30,15 @@ public class GameEnvironment {
 	
 	public static void main(String[] args) {
 		
-		Map map = null;
+		World world = null;
 		Trader player = null;
 		Ship ship = null;
 		boolean constructed = false;
 		
 		//Stage 1: Constructing a new world
 		WorldConstructor newWorld = new WorldConstructor();
-		map = newWorld.getMap();
-		NewPlayerConstructorIO newPlayerIO = new NewPlayerConstructorIO(map);
+		world = newWorld.getMap();
+		NewPlayerConstructorIO newPlayerIO = new NewPlayerConstructorIO(world);
 		
 		//Stage 2: Creating new player and new ship
 		while (!constructed) {
@@ -46,7 +46,7 @@ public class GameEnvironment {
 					 					   + "Before we start,\n"
 				                           + "Let's first create a new player.");
 
-			if (map != null && player != null && ship != null) {
+			if (world != null && player != null && ship != null) {
 				constructed = true;
 			}
 		}
@@ -78,7 +78,7 @@ public class GameEnvironment {
 		
 		// Stage3: Playing
 		
-		new CommandHandler(map, player, ship);
+		new CommandHandler(world, player, ship);
 		StatusLine statusLine = new StatusLine(player, ship);
 		PortIO portIO = new PortIO(player);
 		
