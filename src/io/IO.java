@@ -15,11 +15,17 @@ public abstract class IO {
 	private static boolean gettingTransactionQuantity = false;
 	
 	public IO(Trader trader) {
+		
 		player = trader;
 		commandsList = new ArrayList<String>();
-		//MZ don't initialize static commandArguments here or it will reset 
-		// commandArguments whenever a new IO is initialized
-		//commandArguments = new ArrayList<String>();
+		
+	}
+	
+	// MZ use this constructor for IOs without Trader
+	public IO() {
+
+		commandsList = new ArrayList<String>();
+	
 	}
 	
 	public ArrayList<String> readCommandArguments(String prompt) {

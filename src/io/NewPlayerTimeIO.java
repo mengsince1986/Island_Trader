@@ -1,18 +1,20 @@
 package io;
+import map.Map;
 
-public class NewPlayerTimeIO extends ConstructorIO {
+public class NewPlayerTimeIO extends StrIO {
 
-	public NewPlayerTimeIO() {
+	public NewPlayerTimeIO(Map newWorld) {
 		
-		super.setPromp("Please enter the days you want to play for:");
-		super.addCommand("Quit");
+		super(newWorld);
+		super.addCommand("Cancel");
 	}
 	
 	@Override
 	public void processPlayerInput(String playerInput) {
+		
 		super.addCommandArgument(playerInput);
-		//NewPlayerHomeIO newHome = new NewPlayerHomeIO();
-		//newHome.readCommandArguments();
+		NewPlayerHomeIO newHome = new NewPlayerHomeIO(getWorld());
+		newHome.readCommandArguments("Please choose your home island:");
 
 	}
 

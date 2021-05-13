@@ -1,26 +1,26 @@
 package io;
 
-public class NewPlayerConstructorIO extends ConstructorIO {
+import map.Map;
 
-	public NewPlayerConstructorIO() {
+public class NewPlayerConstructorIO extends StrIO {
+
+	public NewPlayerConstructorIO(Map newWorld) {
 		
-		super.setPromp("Welcome to the wolrd of Island Trader!\n"
-					 + "Before we start,\n"
-				     + "Let's first create a new player.");
+		super(newWorld);
 		super.addCommand("Create a new player"); //0
 		super.addCommand("Quit");                //1
 		
 	}
-	
+
 	@Override
 	public void processPlayerInput(String playerChoice) {
-		// Reset all previous commandArguments!!!
-		resetCommandArguments();
 		
+		resetCommandArguments();
+
 		switch (playerChoice) {
 		case "0": // new player
-			NewPlayerNameIO newName = new NewPlayerNameIO();
-			newName.readCommandArguments();
+			NewPlayerNameIO newName = new NewPlayerNameIO(getWorld());
+			newName.readCommandArguments("Please enter the name for the new trader:");
 			break;
 
 		case "1": // quit
@@ -28,7 +28,7 @@ public class NewPlayerConstructorIO extends ConstructorIO {
 			break;
 
 		}
-
+		
 	}
 
 }

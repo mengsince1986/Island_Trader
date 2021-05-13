@@ -5,7 +5,7 @@ import map.*;
 import items.*;
 import events.*;
 
-public abstract class Ship {
+public class Ship {
 
 	private String name;
 	private Trader captain;

@@ -4,6 +4,7 @@ import events.PirateEvent;
 import events.RescueEvent;
 import events.WeatherEvent;
 import items.Item;
+import ships.Ship;
 
 public class WorldConstructor {
 	private Map map;
@@ -72,10 +73,19 @@ public class WorldConstructor {
 		island1.addRoute(route1to2);
 		island2.addRoute(route2to1);
 		
-		// Create Map
+		// Create Ships
+		Ship balancedShip = new Ship("Redcoasts", 15, 2, 1500, 8, 75, "normal");
+		
+		
+		// Create a new Map
 		Map map1 = new Map();
+		
+		// add islands to new Map
 		map1.addIsland(island1);
 		map1.addIsland(island2);
+		
+		// add ships to new Map
+		
 		
 		this.map = map1;
 	}

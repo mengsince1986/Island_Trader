@@ -4,18 +4,21 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public abstract class ConstructorIO {
+import map.Map;
 
-	private String prompt;
+public abstract class StrIO {
+
 	private ArrayList<String> commandsList;
+	private static Map world;
 	private static ArrayList<String> commandArguments = new ArrayList<String>();
-	private static final Scanner commandReader = new Scanner(System.in);
+	//private static final Scanner commandReader = new Scanner(System.in);
 
-	public ConstructorIO() {
+	public StrIO(Map newWorld) {
 		commandsList = new ArrayList<String>();
+		world = newWorld;
 	}
 
-	public ArrayList<String> readCommandArguments() {
+	public ArrayList<String> readCommandArguments(String prompt) {
 
 		String playerChoice;
 		boolean isValid = false;
@@ -24,11 +27,15 @@ public abstract class ConstructorIO {
 			
 			System.out.println(getCommandsListString());
 
-			System.out.println(this.prompt);
+			System.out.println(prompt);
+			
+			Scanner commandReader = new Scanner(System.in);
 
 			try {
 				playerChoice = commandReader.nextLine();
 				processPlayerInput(playerChoice);
+				
+				//debug test
 				System.out.println("constructor playerChoice: " + playerChoice);
 
 				isValid = true;
@@ -54,6 +61,10 @@ public abstract class ConstructorIO {
 	}
 
 	public abstract void processPlayerInput(String choice);
+	
+	public static Map getWorld() {
+		return world;
+	}
 
 	public ArrayList<String> getCommandsList() {
 		return commandsList;
@@ -83,11 +94,4 @@ public abstract class ConstructorIO {
 		commandArguments.add(arg);
 	}
 
-	public void setPromp(String message) {
-		this.prompt = message;
-	}
-
-	public String getPrompt() {
-		return this.prompt;
-	}
 }

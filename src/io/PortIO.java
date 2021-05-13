@@ -27,16 +27,14 @@ public class PortIO extends IO {
 	}
 	
 	public void processPlayerInput(int playerChoice) {
-		//Reset all previous commandArguments!!!
+	
 		resetCommandArguments();
-		//String keyWord = null; //MZ: update command directly in case
+		//String keyWord = null; //MZ: update command directly
 		String argument = null;
 
 		switch(playerChoice) {
 		case 0: //sail
-			//MZ: it's workable to update "sail" command in sailIO, but is it
-			// more natural update commandArgs in its own processPlyerInput?
-			// and we can just update commandArgs directly with its static setter
+		
 			super.addCommandArgument("sail");
 			SailToIO sailTo = new SailToIO(getTrader());
 			sailTo.readCommandArguments("Where do you wish to sail?");

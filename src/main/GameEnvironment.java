@@ -30,25 +30,29 @@ public class GameEnvironment {
 	
 	public static void main(String[] args) {
 		
-		//Constructing
 		Map map = null;
 		Trader player = null;
 		Ship ship = null;
-		boolean constructed = true;
+		boolean constructed = false;
 		
-		/*
-		NewPlayerConstructorIO newPlayerIO = new NewPlayerConstructorIO();
+		//Stage 1: Constructing a new world
+		WorldConstructor newWorld = new WorldConstructor();
+		map = newWorld.getMap();
+		NewPlayerConstructorIO newPlayerIO = new NewPlayerConstructorIO(map);
 		
+		//Stage 2: Creating new player and new ship
 		while (!constructed) {
-			newPlayerIO.readCommandArguments();
+			newPlayerIO.readCommandArguments("Welcome to the wolrd of Island Trader!\n"
+					 					   + "Before we start,\n"
+				                           + "Let's first create a new player.");
 
 			if (map != null && player != null && ship != null) {
 				constructed = true;
 			}
 		}
-		*/
-	
-		
+
+	    // Manually create a new world, a trader and a ship
+		/*
 		System.out.println("Welcome to the wolrd of Island Trader");
 		System.out.println();
 		// constructing a new map
@@ -70,9 +74,9 @@ public class GameEnvironment {
 		System.out.println();
 		System.out.println("========= All Set. Let's get started!=========");
 		System.out.println();
+		*/
 		
-		
-		// Playing
+		// Stage3: Playing
 		
 		new CommandHandler(map, player, ship);
 		StatusLine statusLine = new StatusLine(player, ship);
