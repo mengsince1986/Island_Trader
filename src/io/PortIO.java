@@ -14,61 +14,73 @@ public class PortIO extends IO {
 	 * sailDestination: String
 	 */
 	
-	
 	public PortIO(Trader player) {
 		
 		super(player);
-		this.addCommand("Sail to another Island"); //0
-		this.addCommand("Go to store");            //1
-		this.addCommand("Repair ship"); 		   //2
-		this.addCommand("Upgrade cannons");        //3
-		this.addCommand("View properties");        //4
+
+		super.addCommand("Sail to another island"); //0
+		super.addCommand("Go to store");            //1
+		super.addCommand("Repair ship"); 		    //2
+		super.addCommand("Upgrade cannons");        //3
+		super.addCommand("View properties");        //4
 		
 	}
 	
 	public void processPlayerInput(int playerChoice) {
+		//Reset all previous commandArguments!!!
 		resetCommandArguments();
-		String keyWord = null;
+		//String keyWord = null; //MZ: update command directly in case
 		String argument = null;
-		Ship ship = getTrader().getOwndedShip();
+
 		switch(playerChoice) {
 		case 0: //sail
-			SailToIO sailToIO = new SailToIO(getTrader());
-			System.out.println(getTrader().getCurrentIsland().getRoutesString(ship));
-			sailToIO.readCommandArguments("To which island do you wish to sail?");
-			//keyWord = getCommandArguments().get(0);
-			//argument = getCommandArguments().get(1);
-			System.out.println("Port keyword " + keyWord);
-			System.out.println("Port argument " + argument);
+			//MZ: it's workable to update "sail" command in sailIO, but is it
+			// more natural update commandArgs in its own processPlyerInput?
+			// and we can just update commandArgs directly with its static setter
+			super.addCommandArgument("sail");
+			SailToIO sailTo = new SailToIO(getTrader());
+			sailTo.readCommandArguments("Where do you wish to sail?");
 			break;
+			
 		case 1: //visit store
-			getTrader().setCurrentLocation("store");
-			StoreIO storeIO = new StoreIO(getTrader());
-			System.out.println(getTrader().getCurrentIsland().getStore().forSale());
-			System.out.println(getTrader().getCurrentIsland().getStore().forPurchase());
-			storeIO.readCommandArguments("What would you like to do?");
-			System.out.println("Store keyword " + keyWord);
-			System.out.println("Store argument " + argument);
+			super.addCommandArgument("store");
 			break;
+			
 		case 2: //repair ship
-			
+			super.addCommandArgument("repair");
+			RepairIO repair = new RepairIO(getTrader());
+			int repairFee = super.getTrader().getCurrentIsland().getPort().getRepairCost();
+			repair.readCommandArguments("Hi, Captain! Wanna repair your ship?\n"
+				       				  + "Only " + repairFee + " dollars.");
 			break;
-		case 3: //upgrade cannons
 			
+		case 3: //upgrade cannons
+			super.addCommandArgument("upgrade");
+			UpgradeIO upgrade = new UpgradeIO(getTrader());
+			int upgradeCannonFee = super.getTrader().getCurrentIsland().getPort().getcannonCost();
+			upgrade.readCommandArguments("Yo, Captain! How many cannons do you want?\n" 
+									   + upgradeCannonFee + " dollars for one.\n"
+				                       + "We can install at most two.");
 			break;
 		case 4: //view properties
 			
 			break;
 		}
-		//addCommandArgument(keyWord);
-		//addCommandArgument(argument);
+
+		// MZ: in case there's only one element in commandArguments
+		// as commandHandler always check the 2nd index of commandArguments
+		if (super.getCommandArguments().size() ==1) {
+			super.addCommandArgument(argument);
+		}
 
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		Map map = new Map();
+		/*
+		Map map;
+>>>>>>> constructorIO
 		Trader player;
 		Ship ship;
 		
@@ -90,7 +102,7 @@ public class PortIO extends IO {
 		player.setOwnedShip(ship);
 		PortIO portIO = new PortIO(player);
 		portIO.processPlayerInput(0);
-		
+		*/
 
 	}
 

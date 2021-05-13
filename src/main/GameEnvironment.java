@@ -31,9 +31,23 @@ public class GameEnvironment {
 	public static void main(String[] args) {
 		
 		//Constructing
-		Map map;
-		Trader player;
-		Ship ship;
+		Map map = null;
+		Trader player = null;
+		Ship ship = null;
+		boolean constructed = true;
+		
+		/*
+		NewPlayerConstructorIO newPlayerIO = new NewPlayerConstructorIO();
+		
+		while (!constructed) {
+			newPlayerIO.readCommandArguments();
+
+			if (map != null && player != null && ship != null) {
+				constructed = true;
+			}
+		}
+		*/
+	
 		
 		System.out.println("Welcome to the wolrd of Island Trader");
 		System.out.println();
@@ -47,14 +61,15 @@ public class GameEnvironment {
 		System.out.println("A new world is created ... ");
 		// create a new player
 		String traderName = "Jon Snow"; // name and time can be read from constructorIO
-		player = new Trader(30, traderName, 10000, map.getIsland("Niawall Haven"), "port");
+		player = new Trader(21, traderName, 10000, map.getIsland("Niawall Haven"), "port");
 		ship = new BalancedShip(); // get user input + loop invoked by exception
 		ship.setCaptain(player);
 		player.setOwnedShip(ship);
 		System.out.println("A new Trader named " + player.getName() + " is created ... ");
 		System.out.println("A new Ship named " + player.getOwndedShip().getName() + " is created ...");
 		System.out.println();
-		System.out.println("===== All Set. Let's get started!=====");
+		System.out.println("========= All Set. Let's get started!=========");
+		System.out.println();
 		
 		
 		// Playing
@@ -65,22 +80,30 @@ public class GameEnvironment {
 		
 		boolean gameOver = false;
 		
-		while (!gameOver) {
+		while (constructed && !gameOver) {
 			
 			statusLine.printStatusLine();
 			StoreIO storeIO = new StoreIO(player);
 			
 			if (player.getCurrentLocation() == "port") {
-				ArrayList<String> commandArguments = portIO.readCommandArguments("Captain, what next?");// read player's input
+				
+				ArrayList<String> commandArguments = portIO.readCommandArguments("Captain, what next?");
 				String report = CommandHandler.processCommand(commandArguments);
 				ReportPrinter.printReport(report);
 				
 			} else if (player.getCurrentLocation() == "store") {
+
 				ArrayList<String> commandArguments = storeIO.readCommandArguments("What would you like to do?");
 				String report = CommandHandler.processCommand(commandArguments);
 				ReportPrinter.printReport(report);
+
 			}
-			//gameOver = true;
+			
+			if (player.getRemainingDays() <= 0 || player.getOwnedMoney() <= 0) {
+				ReportPrinter.printReport("Game Over");
+				gameOver = true;
+			}
+			
 			
 		}
 		

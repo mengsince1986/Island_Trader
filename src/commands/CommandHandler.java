@@ -8,6 +8,8 @@ import map.*;
 
 public class CommandHandler {
 	
+	//MZ Is it necessary to make things static here?
+	// we don't have any subclasses to share information 
 	private static Map map;
 	private static Trader player;
 	private static Ship ship;
@@ -30,15 +32,31 @@ public class CommandHandler {
 			if (commandArguments.size() == 3) {
 				quantity = Integer.parseInt(commandArguments.get(2));
 			}
+
 			switch(keyWord) {
+			
 			case "sail": 
 				report = processSailCommand(argument);
 				break;
+
 			case "buy":
 				report = processBuyCommand(argument, quantity);
 				break;
 			case "sell":
 				report = processSellCommand(argument, quantity);
+				
+			case "store":
+				report = processVisitStore();
+				break;
+				
+			case "repair":
+				report = processRepairCommand();
+				break;
+				
+			case "upgrade":
+				report = upgradeCannonCommand(Integer.parseInt(argument));
+				break;
+
 			} 
 		} else if (player.getCurrentLocation() == "store") {
 			report = "Cancelling...\nBack at storefront!";
@@ -52,7 +70,7 @@ public class CommandHandler {
 	public static String processSailCommand(String destination) {
 		Island island = map.getIsland(destination);
 		ArrayList<String> reportList = ship.sailTo(island);
-		String report = "Sailing ... ...\n";
+		String report = "Sailing ~~~ ~~~ ~~~\n\n";
 		
 		for (String event : reportList) {
 			report += event;
@@ -73,13 +91,25 @@ public class CommandHandler {
 		return report;
 	}
 	
+
+	public static String processVisitStore() {
+		player.setCurrentLocation("store");
+		String report = "You go into the store on the island.";
+		return report;
+	}
 	
+	public static String processRepairCommand() {
+		String report = player.repairShip();
+		return report;
+	}
 	
-	
-	
-	
+	public static String upgradeCannonCommand(int cannonNum) {
+		String report = player.upgradeCannons(cannonNum);
+		return report;
+	}
 	
 	public static void main(String[] args) {
+		/*
 		WorldConstructor newWorld = new WorldConstructor();
 		map = newWorld.getMap();
 		System.out.println("Constructing game environment ...");
@@ -94,7 +124,7 @@ public class CommandHandler {
 		System.out.println("A new Ship named " + player.getOwndedShip().getName() + " is created ...");
 		System.out.println(player.getCurrentIsland().getRoutesString(ship));
 		System.out.println(processSailCommand(player.getCurrentIsland().getRoutes().get(0).getDest().getName()));
-		
+		*/
 	}
 
 }
