@@ -1,11 +1,14 @@
 package io;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import map.Island;
 import map.World;
 
 public class NewPlayerHomeIO extends StrIO {
+	
+	private ArrayList<String> islandsList = new ArrayList<String>();
 
 	public NewPlayerHomeIO(World newWorld) {
 		
@@ -13,6 +16,8 @@ public class NewPlayerHomeIO extends StrIO {
 		HashMap<String, Island> islands = getWorld().getIslands(); 
 		for (String islandName : islands.keySet()) {
 			super.addCommand(islandName);
+			islandsList.add(islandName);
+			
 		}
 		super.addCommand("Cancel");
 		
@@ -22,7 +27,8 @@ public class NewPlayerHomeIO extends StrIO {
 	@Override
 	public void processPlayerInput(String playerChoice) {
 		
-		super.addCommandArgument(playerChoice);
+		String chosenIslandName = this.islandsList.get(Integer.parseInt(playerChoice));
+		super.addCommandArgument(chosenIslandName);
 		NewShipIO newShip = new NewShipIO(getWorld());
 		newShip.readCommandArguments("Please choose your ship:");
 

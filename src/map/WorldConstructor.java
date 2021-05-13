@@ -87,7 +87,10 @@ public class WorldConstructor {
 		newWorld1.addIsland(island2);
 		
 		// add ships to new Map
-		
+		newWorld1.addShip(fastShip);
+		newWorld1.addShip(balancedShip);
+		newWorld1.addShip(battleShip);
+		newWorld1.addShip(baoShip);
 		
 		this.newWorld = newWorld1;
 	}
