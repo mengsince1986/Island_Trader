@@ -21,11 +21,11 @@ public class TradingLog {
 	}
 	
 	public String toString() {
-		String log = this.tradingLocation + " " + 
-					 this.tradingItemName + " " +
+		String log = this.soldOrBought + " " +
 					 this.tradingQuantity + " " +
-					 this.tradingPrice + " " +
-					 this.soldOrBought;
+					 this.tradingItemName + " at " +
+					 this.tradingLocation + " for " +
+					 this.tradingPrice + "\n";
 		return log;
 	}
 }

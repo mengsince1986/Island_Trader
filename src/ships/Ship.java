@@ -71,6 +71,19 @@ public abstract class Ship {
 		return this.cargos;
 	}
 	
+	public String getCargosString() {
+		String cargosString = "Cargo contents:\n\n";
+		if (this.cargos.size() > 0) {
+			for (Item cargoItem : this.cargos) {
+				cargosString += cargoItem.toString() + "\n";
+			}
+		} else {
+			cargosString += "Your ship isn't carrying any cargo.\n";
+		}
+		return cargosString;
+	}
+	
+	
 	public int getCapacity() {
 		return this.remainingCapacity;
 	}
@@ -109,6 +122,18 @@ public abstract class Ship {
 
 	public ArrayList<UpgradeLog> getUpgradeLogs() {
 		return this.upgradeLogs;
+	}
+	
+	public String getUpgradeLogString() {
+		String logString = "Upgrade log:\n\n";
+		if (this.upgradeLogs.size() > 0) {
+			for (UpgradeLog upgrade : this.upgradeLogs) {
+				logString += upgrade.toString();
+			}
+		} else {
+			logString += "Your ship hasn't been upgraded yet!\n";
+		}
+		return logString;
 	}
 	
 	public Item getCargoItem(String itemName) {
@@ -331,7 +356,7 @@ public abstract class Ship {
 							"Cannons: " + getCannons() + "\n" +
 							"Cost per day: " + getCostPerDay() + "\n" +
 							"Remaining capacity: " + getCapacity() + "\n" +
-	                        "Current damage: " + getDamage() + "\n";
+	                        "Damage suffered: " + getDamage() + "\n";
 		return properties;
 	}
 	

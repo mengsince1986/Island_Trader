@@ -39,6 +39,12 @@ public class CommandHandler {
 				break;
 			case "sell":
 				report = processSellCommand(argument, quantity);
+				break;
+			case "logs":
+				report = processViewLogsCommand();
+				break;
+			case "ship":
+				report = processViewShipCommand();
 			} 
 		} else if (player.getCurrentLocation() == "store") {
 			report = "Cancelling...\nBack at storefront!";
@@ -73,6 +79,17 @@ public class CommandHandler {
 		return report;
 	}
 	
+	public static String processViewLogsCommand() {
+		return player.getTradingLogsString();
+	}
+	
+	public static String processViewShipCommand() {
+		Ship playerShip = player.getOwndedShip();
+		String report = playerShip.toString() +
+				playerShip.getCargosString() +
+				playerShip.getUpgradeLogString() + "\n";
+		return report;
+	}
 	
 	
 	

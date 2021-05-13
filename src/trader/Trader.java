@@ -76,12 +76,16 @@ public class Trader {
 	}
 	
 	// print trading logs
-	public String TradingLogsToString() {
-		String logs = "";
-		for (TradingLog log : this.tradingLogs) {
-			logs += log.toString() + "\n";
+	public String getTradingLogsString() {
+		String logsString = "Your trading log:\n\n";
+		if (this.tradingLogs.size() > 0) {
+			for (TradingLog log : this.tradingLogs) {
+				logsString += log.toString() + "\n";
+			}
+		} else {
+			logsString += "You haven't bought or sold anything yet!";
 		}
-		return logs;
+		return logsString;
 	}
 	
 	// setters
@@ -157,7 +161,7 @@ public class Trader {
 				addMoney(priceReceived);
 				
 				//update trading log
-				this.addTradingLog(currentIsland, itemToSell, "sell");
+				this.addTradingLog(currentIsland, itemToSell, "Sold");
 				
 				report = "Success! Return to port to view your trading log.\n" +
 						"Redirecting you to storefront...";
@@ -190,7 +194,7 @@ public class Trader {
 			subtractMoney(priceToPay);
 			
 			//update trading log
-			addTradingLog(currentIsland, itemBought, "bought");
+			addTradingLog(currentIsland, itemBought, "Bought");
 			
 			report = "Success! Return to port to view your trading log.\n" +
 					"Redirecting you to storefront...";
@@ -227,7 +231,7 @@ public class Trader {
 		String status = "Remaining Days: " + this.remainingDays + "\n" +
 						"Name: " + this.name + "\n" +
 						"Money: " + this.ownedMoney + "\n" +
-						"Hometown: " + this.homeIsland.getName() + "\n" +
+						"Home Island: " + this.homeIsland.getName() + "\n" +
 						"Ship: " + this.ownedShip.getName() + "\n" +
 						"Current Island: " + this.currentIsland.getName() + "\n" +
 						"Current Location: " + this.curentLocation;

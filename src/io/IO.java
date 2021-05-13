@@ -11,7 +11,7 @@ public abstract class IO {
 	private static Trader player;
 	private ArrayList<String> commandsList;
 	private static ArrayList<String> commandArguments;
-	private static final Scanner commandReader = new Scanner(System.in);
+	//private static final Scanner commandReader = new Scanner(System.in);
 	private static boolean gettingTransactionQuantity = false;
 	
 	public IO(Trader trader) {
@@ -34,7 +34,7 @@ public abstract class IO {
 			String errorMessage = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
 					"You need to choose a valid number. Choose again.\n" +
 					"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
-			
+			Scanner commandReader = new Scanner(System.in);
 			try {
 				playerChoice = commandReader.nextInt();
 				

@@ -22,7 +22,8 @@ public class PortIO extends IO {
 		this.addCommand("Go to store");            //1
 		this.addCommand("Repair ship"); 		   //2
 		this.addCommand("Upgrade cannons");        //3
-		this.addCommand("View properties");        //4
+		this.addCommand("View trading log");       //4
+		this.addCommand("View ship details");	   //5
 		
 	}
 	
@@ -56,9 +57,14 @@ public class PortIO extends IO {
 		case 3: //upgrade cannons
 			
 			break;
-		case 4: //view properties
-			
+		case 4: //view trading logs
+			addCommandArgument("logs");
+			addCommandArgument(null);
 			break;
+		case 5: //view ship details
+			addCommandArgument("ship");
+			addCommandArgument(null);
+			
 		}
 		//addCommandArgument(keyWord);
 		//addCommandArgument(argument);

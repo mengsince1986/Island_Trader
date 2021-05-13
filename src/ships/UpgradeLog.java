@@ -15,8 +15,8 @@ public class UpgradeLog {
 	
 	public String toString() {
 		
-		String log = this.upgradeLocation + " " + 
-				 this.upgradeService + " " +
+		String log = this.upgradeService + " at " + 
+				 this.upgradeLocation + " for $" +
 				 this.upgradeCost;
 		return log;
 	}
