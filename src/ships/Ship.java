@@ -5,7 +5,7 @@ import map.*;
 import items.*;
 import events.*;
 
-public abstract class Ship {
+public class Ship {
 
 	private String name;
 	private Trader captain;
@@ -35,6 +35,7 @@ public abstract class Ship {
 		this.defaultCapacity = defaultCapacity;
 		this.remainingCapacity = defaultCapacity;
 		this.cannons = cannons;
+		this.maxCannons = cannons + 10;
 		this.defaultDurability = defautDurability;
 		this.durability = defautDurability;
 		this.speed = speed;
@@ -267,6 +268,7 @@ public abstract class Ship {
 
 	// Sailing
 	public boolean readyToSail(Island destination) {
+		
 		boolean isReady;
 
 		// check if Remaining days enough
@@ -275,7 +277,7 @@ public abstract class Ship {
 		int daysToDestination = getCaptain().getCurrentIsland().daysToIsland(destination, this);
 		
 		
-		if ((remainingDays - daysToDestination) <= 0) {
+		if ((remainingDays - daysToDestination) < 0) {
 			isReady = false;
 			// add exceptions
 			return isReady;
@@ -320,10 +322,11 @@ public abstract class Ship {
 			Route route = currentIsland.getRoute(destination);
 			boolean reportsAllEmpty = true;
 			for (RandomEvent randomEvent : route.getEvents()) {
+
 				if (randomEvent.getTriggered()) {
 					String eventReport = randomEvent.processImpact(captain);
 					if (!eventReport.isBlank()) {
-						eventReports.add(eventReport);
+						eventReports.add(eventReport + "\n");
 						reportsAllEmpty = false;
 					}
 				}
@@ -331,6 +334,7 @@ public abstract class Ship {
 			
 			if (route.getEvents().size() == 0 | reportsAllEmpty) {
 				eventReports.add("You had a safe and uneventful journey!\n");
+
 			}
 			//// String PirateReport =
 			//// String WeatherReport =
@@ -340,6 +344,16 @@ public abstract class Ship {
 			// update captain currentIsland and currentLocation
 			getCaptain().setCurrentIsland(destination);
 			getCaptain().setCurrentLocation("port");
+		} else if (this.durability != this.defaultDurability) {
+			String eventReport = "You need to fix your ship first!";
+			eventReports.add(eventReport);
+		} else if (this.getCaptain().getRemainingDays() < 
+				   getCaptain().getCurrentIsland().daysToIsland(destination, this)) {
+			String eventReport = "Oh, No! You don't have enough time to sail to the next island.";
+			eventReports.add(eventReport);
+		} else {
+			String eventReport = "Oh, No! You don't have enough money to pay your crew.";
+			eventReports.add(eventReport);
 		}
 		
 		return eventReports;

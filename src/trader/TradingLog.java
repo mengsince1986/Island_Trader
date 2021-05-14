@@ -28,4 +28,6 @@ public class TradingLog {
 					 this.tradingPrice + "\n";
 		return log;
 	}
+	
+	//readable repr
 }

@@ -13,17 +13,18 @@ public class StatusLine {
 	}
 	
 	public void printStatusLine() {
-		String divider = "---------------------------------------------";
+		String upperDivider = "---------------Trader Status------------------";
+		String lowerDivider = "----------------------------------------------";
 		String remainingDays = "Remaining Days: " + this.player.getRemainingDays();
 		String money = "Money : $" + this.player.getOwnedMoney();
 		String traderName = "Trader: " + this.player.getName();
 		String island = "Island: " + this.player.getCurrentIsland().getName();
 		String location = "Location: " + this.player.getCurrentLocation();
-		String status = divider + "\n" +
+		String status = upperDivider + "\n" + "\n" +
 						remainingDays + "   " + money + "\n" +
 						traderName + "     " + island + "\n" + 
-						//location + "\n" +
-						divider;
+						"\n" +
+						lowerDivider;
 		System.out.println(status);
 	}
 }

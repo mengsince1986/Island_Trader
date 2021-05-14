@@ -1,10 +1,5 @@
 package io;
 
-import java.util.*;
-
-import map.*;
-import map.Map;
-import ships.*;
 import trader.*;
 
 public class PortIO extends IO {
@@ -13,7 +8,6 @@ public class PortIO extends IO {
 	 * read type: get input for playing commands. e.g. commands that match Ship.sailTo(), Trader.buy()... 
 	 * sailDestination: String
 	 */
-	
 	
 	public PortIO(Trader player) {
 		
@@ -24,38 +18,45 @@ public class PortIO extends IO {
 		this.addCommand("Upgrade cannons");        //3
 		this.addCommand("View trading log");       //4
 		this.addCommand("View ship details");	   //5
+		super.addCommand("Quit the game");         //6
+
 		
 	}
 	
 	public void processPlayerInput(int playerChoice) {
+	
 		resetCommandArguments();
-		String keyWord = null;
+		//String keyWord = null; //MZ: update command directly
 		String argument = null;
-		Ship ship = getTrader().getOwndedShip();
+
 		switch(playerChoice) {
 		case 0: //sail
-			SailToIO sailToIO = new SailToIO(getTrader());
-			System.out.println(getTrader().getCurrentIsland().getRoutesString(ship));
-			sailToIO.readCommandArguments("To which island do you wish to sail?");
-			//keyWord = getCommandArguments().get(0);
-			//argument = getCommandArguments().get(1);
-			System.out.println("Port keyword " + keyWord);
-			System.out.println("Port argument " + argument);
+		
+			super.addCommandArgument("sail");
+			SailToIO sailTo = new SailToIO(getTrader());
+			sailTo.readCommandArguments("Where do you wish to sail?");
 			break;
+			
 		case 1: //visit store
-			getTrader().setCurrentLocation("store");
-			StoreIO storeIO = new StoreIO(getTrader());
-			System.out.println(getTrader().getCurrentIsland().getStore().forSale());
-			System.out.println(getTrader().getCurrentIsland().getStore().forPurchase());
-			storeIO.readCommandArguments("What would you like to do?");
-			System.out.println("Store keyword " + keyWord);
-			System.out.println("Store argument " + argument);
+			super.addCommandArgument("store");
 			break;
+			
 		case 2: //repair ship
-			
+			super.addCommandArgument("repair");
+			RepairIO repair = new RepairIO(getTrader());
+			int repairFee = super.getTrader().getCurrentIsland().getPort().getRepairCost();
+			repair.readCommandArguments("Hi, Captain! Wanna repair your ship?\n"
+				       				  + "Only " + repairFee + " dollars.");
 			break;
-		case 3: //upgrade cannons
 			
+		case 3: //upgrade cannons
+			super.addCommandArgument("upgrade");
+			setGettingTransactionQuantity(true);
+			UpgradeIO upgrade = new UpgradeIO(getTrader());
+			int upgradeCannonFee = super.getTrader().getCurrentIsland().getPort().getcannonCost();
+			upgrade.readCommandArguments("Yo, Captain! How many cannons do you want?\n" 
+									   + upgradeCannonFee + " coins for one.\n");
+			setGettingTransactionQuantity(false);
 			break;
 		case 4: //view trading logs
 			addCommandArgument("logs");
@@ -64,17 +65,25 @@ public class PortIO extends IO {
 		case 5: //view ship details
 			addCommandArgument("ship");
 			addCommandArgument(null);
-			
+		case 6: // quit game
+			super.addCommandArgument("quit");
+			break;
 		}
-		//addCommandArgument(keyWord);
-		//addCommandArgument(argument);
+
+		// MZ: in case there's only one element in commandArguments
+		// as commandHandler always check the 2nd index of commandArguments
+		if (super.getCommandArguments().size() == 1) {
+			super.addCommandArgument(argument);
+		}
 
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		Map map = new Map();
+		/*
+		Map map;
+>>>>>>> constructorIO
 		Trader player;
 		Ship ship;
 		
@@ -96,7 +105,7 @@ public class PortIO extends IO {
 		player.setOwnedShip(ship);
 		PortIO portIO = new PortIO(player);
 		portIO.processPlayerInput(0);
-		
+		*/
 
 	}
 

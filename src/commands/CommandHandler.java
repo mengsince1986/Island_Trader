@@ -1,18 +1,18 @@
 package commands;
 import java.util.ArrayList;
-
-import items.Item;
 import trader.*;
 import ships.*;
 import map.*;
 
 public class CommandHandler {
 	
-	private static Map map;
+	//MZ Is it necessary to make things static here?
+	// we don't have any subclasses to share information 
+	private static World map;
 	private static Trader player;
 	private static Ship ship;
 	
-	public CommandHandler(Map map, Trader player, Ship ship) {
+	public CommandHandler(World map, Trader player, Ship ship) {
 		CommandHandler.map = map;
 		CommandHandler.player = player;
 		CommandHandler.ship = ship;
@@ -30,10 +30,13 @@ public class CommandHandler {
 			if (commandArguments.size() == 3) {
 				quantity = Integer.parseInt(commandArguments.get(2));
 			}
+
 			switch(keyWord) {
+			
 			case "sail": 
 				report = processSailCommand(argument);
 				break;
+
 			case "buy":
 				report = processBuyCommand(argument, quantity);
 				break;
@@ -45,6 +48,21 @@ public class CommandHandler {
 				break;
 			case "ship":
 				report = processViewShipCommand();
+			case "store":
+				report = processVisitStore();
+				break;
+				
+			case "repair":
+				report = processRepairCommand();
+				break;
+				
+			case "upgrade":
+				report = upgradeCannonCommand(Integer.parseInt(argument));
+				break;
+				
+			case "quit":
+				report = quitCommand();
+
 			} 
 		} else if (player.getCurrentLocation() == "store") {
 			report = "Cancelling...\nBack at storefront!";
@@ -58,7 +76,7 @@ public class CommandHandler {
 	public static String processSailCommand(String destination) {
 		Island island = map.getIsland(destination);
 		ArrayList<String> reportList = ship.sailTo(island);
-		String report = "Sailing ... ...\n";
+		String report = "Sailing ~~~ ~~~ ~~~\n\n";
 		
 		for (String event : reportList) {
 			report += event;
@@ -79,6 +97,7 @@ public class CommandHandler {
 		return report;
 	}
 	
+
 	public static String processViewLogsCommand() {
 		return player.getTradingLogsString();
 	}
@@ -90,13 +109,31 @@ public class CommandHandler {
 				playerShip.getUpgradeLogString() + "\n";
 		return report;
 	}
+
+	public static String processVisitStore() {
+		player.setCurrentLocation("store");
+		String report = "You go into the store on the island.";
+		return report;
+	}
 	
+	public static String processRepairCommand() {
+		String report = player.repairShip();
+		return report;
+	}
 	
+	public static String upgradeCannonCommand(int cannonNum) {
+		String report = player.upgradeCannons(cannonNum);
+		return report;
+	}
 	
-	
-	
+	public static String quitCommand() {
+		String report = "Goodbye!";
+		player.setRemainingDays(0);
+		return report;
+	}
 	
 	public static void main(String[] args) {
+		/*
 		WorldConstructor newWorld = new WorldConstructor();
 		map = newWorld.getMap();
 		System.out.println("Constructing game environment ...");
@@ -111,7 +148,7 @@ public class CommandHandler {
 		System.out.println("A new Ship named " + player.getOwndedShip().getName() + " is created ...");
 		System.out.println(player.getCurrentIsland().getRoutesString(ship));
 		System.out.println(processSailCommand(player.getCurrentIsland().getRoutes().get(0).getDest().getName()));
-		
+		*/
 	}
 
 }

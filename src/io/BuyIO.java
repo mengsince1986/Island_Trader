@@ -2,8 +2,8 @@ package io;
 
 import java.util.*;
 
-import trader.Trader;
 import items.Item;
+import trader.Trader;
 import ships.Ship;
 
 public class BuyIO extends IO {

@@ -10,14 +10,22 @@ public abstract class IO {
 	 */
 	private static Trader player;
 	private ArrayList<String> commandsList;
-	private static ArrayList<String> commandArguments;
+	private static ArrayList<String> commandArguments = new ArrayList<String>();
 	//private static final Scanner commandReader = new Scanner(System.in);
 	private static boolean gettingTransactionQuantity = false;
 	
 	public IO(Trader trader) {
+		
 		player = trader;
 		commandsList = new ArrayList<String>();
-		commandArguments = new ArrayList<String>();
+		
+	}
+	
+	// MZ use this constructor for IOs without Trader
+	public IO() {
+
+		commandsList = new ArrayList<String>();
+	
 	}
 	
 	public ArrayList<String> readCommandArguments(String prompt) {
@@ -31,10 +39,11 @@ public abstract class IO {
 			//Prompt for player
 			System.out.println(prompt);
 			
-			String errorMessage = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-					"You need to choose a valid number. Choose again.\n" +
-					"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+			String errorMessage = "=====================!!!========================\n" +
+								  "You need to choose a valid number. Choose again.\n" +
+					              "================================================\n";
 			Scanner commandReader = new Scanner(System.in);
+
 			try {
 				playerChoice = commandReader.nextInt();
 				
@@ -52,8 +61,8 @@ public abstract class IO {
 					System.out.println(errorMessage);
 				}
 			} catch (InputMismatchException e) {
+
 					System.out.println(errorMessage);
-					break;
 			}
 				
 		} while(!isValid);
@@ -66,6 +75,7 @@ public abstract class IO {
 	public static Trader getTrader() {
 		return player;
 	}
+
 	
 	public ArrayList<String> getCommandsList() {
 		return commandsList;
@@ -80,7 +90,7 @@ public abstract class IO {
 	}
 	
 	public String getCommandsListString() {
-		String commandList = "=== commandsList ===" + "\n";
+		String commandList = "============== Commands List =================" + "\n\n";
 		for (int i=0; i < commandsList.size(); i++) {
 			commandList += i + ". " + commandsList.get(i) + "\n"; 
 		}
@@ -96,10 +106,9 @@ public abstract class IO {
 		commandArguments.clear();
 	}
 	
-	public static void addCommandArgument(String update) {
-		commandArguments.add(update);
+	public static void addCommandArgument(String arg) {
+		commandArguments.add(arg);
 	}
-	
 	
 	
 	public static void main(String[] args) {

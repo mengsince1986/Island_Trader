@@ -1,12 +1,12 @@
 package main;
 import java.util.*;
 
-import commands.Commands;
+import commands.TraderCreatorHandler;
 import commands.CommandHandler;
 import io.*;
 import trader.Trader;
 import map.Island;
-import map.Map;
+import map.World;
 import map.WorldConstructor;
 import ships.BalancedShip;
 import ships.Ship;
@@ -30,11 +30,37 @@ public class GameEnvironment {
 	
 	public static void main(String[] args) {
 		
-		//Constructing
-		Map map;
-		Trader player;
-		Ship ship;
+		World world = null;
+		Trader player = null;
+		Ship ship = null;
+		boolean constructed = false;
 		
+		//Stage 1: Constructing a new world
+		WorldConstructor newWorld = new WorldConstructor();
+		world = newWorld.getMap();
+		
+		
+		//Stage 2: Creating new player and new ship
+		NewPlayerConstructorIO newPlayerConstructorIO = new NewPlayerConstructorIO(world);
+		new TraderCreatorHandler(world);
+		
+		while (!constructed) {
+			
+			ArrayList<String> NewPlayerArguments =  newPlayerConstructorIO.readCommandArguments();
+			String newPlayerReport = TraderCreatorHandler.createPlayer(NewPlayerArguments);
+			
+			player = TraderCreatorHandler.getNewPlayer();
+			ship = TraderCreatorHandler.getNewShip();
+			
+			ReportPrinter.printReport(newPlayerReport);
+			
+			if (player != null && ship != null) {
+				constructed = true;
+			}
+		}
+
+	    // Manually create a new world, a trader and a ship
+		/*
 		System.out.println("Welcome to the wolrd of Island Trader");
 		System.out.println();
 		// constructing a new map
@@ -47,40 +73,50 @@ public class GameEnvironment {
 		System.out.println("A new world is created ... ");
 		// create a new player
 		String traderName = "Jon Snow"; // name and time can be read from constructorIO
-		player = new Trader(30, traderName, 10000, map.getIsland("Niawall Haven"), "port");
+		player = new Trader(21, traderName, 10000, map.getIsland("Niawall Haven"), "port");
 		ship = new BalancedShip(); // get user input + loop invoked by exception
 		ship.setCaptain(player);
 		player.setOwnedShip(ship);
 		System.out.println("A new Trader named " + player.getName() + " is created ... ");
 		System.out.println("A new Ship named " + player.getOwndedShip().getName() + " is created ...");
 		System.out.println();
-		System.out.println("===== All Set. Let's get started!=====");
+		System.out.println("========= All Set. Let's get started!=========");
+		System.out.println();
+		*/
 		
+		// Stage3: Playing
 		
-		// Playing
-		
-		new CommandHandler(map, player, ship);
+		new CommandHandler(world, player, ship);
 		StatusLine statusLine = new StatusLine(player, ship);
 		PortIO portIO = new PortIO(player);
 		
 		boolean gameOver = false;
 		
-		while (!gameOver) {
+		while (constructed && !gameOver) {
 			
 			statusLine.printStatusLine();
 			StoreIO storeIO = new StoreIO(player);
 			
 			if (player.getCurrentLocation() == "port") {
-				ArrayList<String> commandArguments = portIO.readCommandArguments("Captain, what next?");// read player's input
+				
+				ArrayList<String> commandArguments = portIO.readCommandArguments("Captain, what next?");
 				String report = CommandHandler.processCommand(commandArguments);
 				ReportPrinter.printReport(report);
 				
 			} else if (player.getCurrentLocation() == "store") {
+
 				ArrayList<String> commandArguments = storeIO.readCommandArguments("What would you like to do?");
 				String report = CommandHandler.processCommand(commandArguments);
 				ReportPrinter.printReport(report);
+
 			}
-			//gameOver = true;
+			
+			if (player.getRemainingDays() <= 0 || player.getOwnedMoney() <= 0) {
+				ReportPrinter.printReport("Your Profit is: " + (player.getOwnedMoney() - 1000) + " coins");
+				ReportPrinter.printReport("Game Over");
+				gameOver = true;
+			}
+			
 			
 		}
 		

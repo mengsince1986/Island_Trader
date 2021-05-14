@@ -2,7 +2,7 @@ package main;
 import java.util.*;
 import trader.Trader;
 import map.Island;
-import map.Map;
+import map.World;
 import map.WorldConstructor;
 import ships.BalancedShip;
 import ships.Ship;
@@ -18,7 +18,7 @@ public class GameConsole {
 		
 		// Initialize properties
 		
-		Map map;
+		World map;
 		Trader player;
 		Ship ship;
 		Scanner playerCommands = new Scanner(System.in);
