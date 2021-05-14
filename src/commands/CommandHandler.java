@@ -36,7 +36,6 @@ public class CommandHandler {
 			case "sail": 
 				report = processSailCommand(argument);
 				break;
-
 			case "buy":
 				report = processBuyCommand(argument, quantity);
 				break;
@@ -48,21 +47,19 @@ public class CommandHandler {
 				break;
 			case "ship":
 				report = processViewShipCommand();
+				break;
 			case "store":
 				report = processVisitStore();
 				break;
-				
 			case "repair":
 				report = processRepairCommand();
 				break;
-				
 			case "upgrade":
 				report = upgradeCannonCommand(Integer.parseInt(argument));
 				break;
-				
 			case "quit":
 				report = quitCommand();
-
+				break;
 			} 
 		} else if (player.getCurrentLocation() == "store") {
 			report = "Cancelling...\nBack at storefront!";

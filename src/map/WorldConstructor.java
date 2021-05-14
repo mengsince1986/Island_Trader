@@ -27,8 +27,8 @@ public class WorldConstructor {
 		Item timberLow = new Item("Timber", 1000, 2);
 		Item timberHigh = new Item("Timber", 1000, 3);
 		
-		Item marbleLow = new Item("Marbel", 1000, 4);
-		Item marbleHigh = new Item("Marbel", 1000, 7);
+		Item marbleLow = new Item("Marble", 1000, 4);
+		Item marbleHigh = new Item("Marble", 1000, 7);
 		
 		Item silverLow = new Item("Silver", 1000, 15);
 		Item silverHigh = new Item("Silver", 1000, 19);

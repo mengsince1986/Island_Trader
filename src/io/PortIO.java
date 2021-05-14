@@ -31,7 +31,7 @@ public class PortIO extends IO {
 
 		switch(playerChoice) {
 		case 0: //sail
-		
+			
 			super.addCommandArgument("sail");
 			SailToIO sailTo = new SailToIO(getTrader());
 			sailTo.readCommandArguments("Where do you wish to sail?");
@@ -65,6 +65,7 @@ public class PortIO extends IO {
 		case 5: //view ship details
 			addCommandArgument("ship");
 			addCommandArgument(null);
+			break;
 		case 6: // quit game
 			super.addCommandArgument("quit");
 			break;
