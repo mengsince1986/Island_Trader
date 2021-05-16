@@ -163,11 +163,11 @@ public class WorldConstructor {
 		WeatherEvent storm2 = new WeatherEvent(8);
 		
 		RescueEvent rescue3 = new RescueEvent(2, 1000);
-		PirateEvent pirate3 = new PirateEvent(4, 12, 1000);
+		PirateEvent pirate3 = new PirateEvent(10, 10, 1000);
 		WeatherEvent storm3 = new WeatherEvent(2);
 		
 		RescueEvent rescue4 = new RescueEvent(2, 2000);
-		PirateEvent pirate4 = new PirateEvent(2, 20, 5000);
+		PirateEvent pirate4 = new PirateEvent(2, 17, 5000);
 		WeatherEvent storm4 = new WeatherEvent(2);
 		
 		RescueEvent rescue5 = new RescueEvent(4, 500);

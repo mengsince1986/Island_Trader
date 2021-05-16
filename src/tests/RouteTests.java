@@ -32,7 +32,7 @@ class RouteTests {
 		route1.setSource(island1);
 		route1.setDest(island2);
 			
-		PirateEvent route1Pirates = new PirateEvent(10, 1, 100);
+		PirateEvent route1Pirates = new PirateEvent(10, 10, 100);
 		route1.addEvent(route1Pirates);
 		WeatherEvent route1Weather = new WeatherEvent(0);
 		route1.addEvent(route1Weather);

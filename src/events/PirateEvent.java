@@ -46,19 +46,36 @@ public class PirateEvent extends RandomEvent {
 	
 	public PirateScenarios getFightOutcome(Ship ship, boolean voluntary) {
 		int shipCannons = ship.getCannons();
-		int maxRoll = 2 * Integer.max(shipCannons, pirateCannons);
-		int threshold = Integer.min(shipCannons, pirateCannons);
-		int randomRoll = getRandomInRange(1, maxRoll);
-		if (randomRoll > threshold) {
-			if (voluntary) {
-				return PirateScenarios.FOUGHT_AND_LOST;
+		if (shipCannons > pirateCannons) {
+			int maxRoll = 2 * shipCannons;
+			int threshold = pirateCannons;
+			int randomRoll = getRandomInRange(1, maxRoll);
+			if (randomRoll < threshold) {
+				if (voluntary) {
+					return PirateScenarios.FOUGHT_AND_LOST;
+				} else {
+					return PirateScenarios.FLED_AND_LOST;
+				}
+			} else if (voluntary) {
+				return PirateScenarios.FOUGHT_AND_WON;
 			} else {
-				return PirateScenarios.FLED_AND_LOST;
+				return PirateScenarios.FLED_AND_WON;
 			}
-		} else if (voluntary) {
-			return PirateScenarios.FOUGHT_AND_WON;
 		} else {
-			return PirateScenarios.FLED_AND_WON;
+			int maxRoll = 2 * pirateCannons;
+			int threshold = shipCannons;
+			int randomRoll = getRandomInRange(1, maxRoll);
+			if (randomRoll > threshold) {
+				if (voluntary) {
+					return PirateScenarios.FOUGHT_AND_LOST;
+				} else {
+					return PirateScenarios.FLED_AND_LOST;
+				}
+			} else if (voluntary) {
+				return PirateScenarios.FOUGHT_AND_WON;
+			} else {
+				return PirateScenarios.FLED_AND_WON;
+			}
 		}
 	}
 	
@@ -70,14 +87,14 @@ public class PirateEvent extends RandomEvent {
 		case FLED_AND_LOST:
 			return reportString + "Disaster! Your crew tried to flee but the pirates caught up with you, \ndefeated you in battle, and made off with all your cargo!\n" +
 			"They also took " + this.pirateGreed + " coins.\n" +
-			"Consider upgrading your cannons to have a better chance in future.\n";
+			"Your cannons weren't enough to protect you this time.\n";
 		case FLED_AND_WON:
 			return reportString + "Wow, that was lucky! The pirates caught up with you but you defeated them in battle!\n"
 					+ "Your cannons were enough to protect you this time...\n";
 		case FOUGHT_AND_LOST:
 			return reportString + "OOF! The pirates defeated you in battle and made off with all your cargo!!\n" +
 			"They also took " + this.pirateGreed + " coins.\n" +
-			"Consider upgrading your cannons to have a better chance next time.\n";
+			"Your cannons weren't enough to protect you this time.\n";
 		case FOUGHT_AND_WON:
 			return reportString + "But don't worry; you defeated them in battle.\n" +
 			"Your cannons were enough to protect you this time...\n";
