@@ -18,7 +18,7 @@ public class RescueEvent extends RandomEvent {
 
 	public String getReport(int reward) {
 		return String.format(("Some good news: your crew rescued some sailors!\n" +
-				"They rewarded you with %d coins!"), reward);
+				"They rewarded you with %d coins!\n"), reward);
 	}
 
 	public String processImpact(Trader player) {

@@ -16,8 +16,8 @@ public class UpgradeLog {
 	public String toString() {
 		
 		String log = this.upgradeService + " at " + 
-				 this.upgradeLocation + " for $" +
-				 this.upgradeCost;
+				 this.upgradeLocation + " for " +
+				 this.upgradeCost + " coins";
 		return log;
 	}
 	

@@ -1,5 +1,6 @@
 package io;
 
+import ships.Ship;
 import trader.*;
 
 public class PortIO extends IO {
@@ -33,6 +34,8 @@ public class PortIO extends IO {
 		case 0: //sail
 			
 			super.addCommandArgument("sail");
+			Ship playerShip = getTrader().getOwndedShip();
+			System.out.println(getTrader().getCurrentIsland().getRoutesString(playerShip));
 			SailToIO sailTo = new SailToIO(getTrader());
 			sailTo.readCommandArguments("Where do you wish to sail?");
 			break;
@@ -46,7 +49,7 @@ public class PortIO extends IO {
 			RepairIO repair = new RepairIO(getTrader());
 			int repairFee = super.getTrader().getCurrentIsland().getPort().getRepairCost();
 			repair.readCommandArguments("Hi, Captain! Wanna repair your ship?\n"
-				       				  + "Only " + repairFee + " dollars.");
+				       				  + "Only " + repairFee + " coins.");
 			break;
 			
 		case 3: //upgrade cannons

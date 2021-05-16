@@ -32,7 +32,7 @@ public class BuyIO extends IO {
 			addCommandArgument(argument);
 			setGettingTransactionQuantity(true);
 			quantityIO.readCommandArguments(
-					String.format("You have $%d\n"
+					String.format("You have %d coins.\n"
 							+ "Enter the quantity of %s you wish to buy: \n",
 							getTrader().getOwnedMoney(), 
 							this.getCommandsList().get(playerChoice)));
@@ -42,8 +42,8 @@ public class BuyIO extends IO {
 			addCommandArgument(keyWord);
 			addCommandArgument(argument);
 		}
-		System.out.println("Buy keyword " + keyWord);
-		System.out.println("Buy argument " + argument);
+		//System.out.println("Buy keyword " + keyWord);
+		//System.out.println("Buy argument " + argument);
 	}
 	
 }

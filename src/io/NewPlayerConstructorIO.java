@@ -7,7 +7,7 @@ public class NewPlayerConstructorIO extends NewPlayerIO {
 	public NewPlayerConstructorIO(World newWorld) {
 		
 		super(newWorld);
-		super.setPromp("Welcome to the wolrd of Island Trader!\n"
+		super.setPrompt("Welcome to the wolrd of Island Trader!\n"
 			  	     + "Before we start,\n"
                      + "Let's first create a new player.\n\n"
 				     + "Choose a command in the \"Commands List\",\n"

@@ -13,7 +13,7 @@ public class NewPlayerShipIO extends NewPlayerIO {
 	public NewPlayerShipIO(World newWorld) {
 
 		super(newWorld);
-		super.setPromp("Please choose your ship:\n");
+		super.setPrompt("Please choose your ship:\n");
 		
 		HashMap<String, Ship> ships = getWorld().getShips();
 		for (String shipName : ships.keySet()) {

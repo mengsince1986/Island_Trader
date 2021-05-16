@@ -1,6 +1,8 @@
 package map;
 
 import events.RandomEvent;
+import ships.Ship;
+
 import java.util.ArrayList;
 
 public class Route {
@@ -45,6 +47,9 @@ public class Route {
 		return events;
 	}
 	
+	public int getSailingTime(Ship ship) {
+		return Integer.max(1, this.distance - ship.getShipSailingModifier());
+	}
 	@Override
 	public String toString() {
 		return String.format("from %s to %s\n  Danger level: %s\n", source.getName(), destination.getName(), dangerLevel);

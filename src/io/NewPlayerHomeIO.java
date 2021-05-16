@@ -13,7 +13,7 @@ public class NewPlayerHomeIO extends NewPlayerIO {
 	public NewPlayerHomeIO(World newWorld) {
 		
 		super(newWorld);
-		super.setPromp("Please choose your home island:\n");
+		super.setPrompt("Please choose your home island:\n");
 				
 		HashMap<String, Island> islands = getWorld().getIslands(); 
 		for (String islandName : islands.keySet()) {

@@ -6,8 +6,10 @@ import items.*;
 
 public class Trader {
 	
+	private int selectedDays;
 	private int remainingDays;
 	private String name;
+	private int startingMoney;
 	private int ownedMoney;
 	private Island homeIsland;
 	private Ship ownedShip;
@@ -19,9 +21,10 @@ public class Trader {
 	public Trader(int days, String name, int money,
 			      //Island home, Ship ship, 
 			      Island home, String currentLocation) {
-		
+		this.selectedDays = days;
 		this.remainingDays = days;
 		this.name = name;
+		this.startingMoney = money;
 		this.ownedMoney = money;
 		this.homeIsland = home;
 		//this.ownedShip = ship;
@@ -43,12 +46,21 @@ public class Trader {
 }
 	
 	// getters
+	
+	public int getSelectedDays() {
+		return this.selectedDays;
+	}
+	
 	public int getRemainingDays() {
 		return this.remainingDays;
 	}
 	
 	public String getName() {
 		return this.name;
+	}
+	
+	public int getStartingMoney() {
+		return this.startingMoney;
 	}
 	
 	public int getOwnedMoney() {
@@ -151,7 +163,7 @@ public class Trader {
 		} else {
 			
 				//update store
-				currentStore.buyItem(itemName, quantity);
+				Item itemSold = currentStore.boughtItem(itemName, quantity);
 				
 				//update cargo
 				getOwndedShip().subtractFromCargos(itemToSell, quantity);
@@ -161,10 +173,12 @@ public class Trader {
 				addMoney(priceReceived);
 				
 				//update trading log
-				this.addTradingLog(currentIsland, itemToSell, "Sold");
+				this.addTradingLog(currentIsland, itemSold, "Sold");
 				
-				report = "Success! Return to port to view your trading log.\n" +
-						"Redirecting you to storefront...";
+				report = "Success! Return to port to view your full trading log.\n" +
+						"Most recent: " +
+						this.getTradingLogs().get(this.getTradingLogs().size() - 1).toString() +
+						"\nRedirecting you to storefront...";
 		} 
 		return report;
 	}
@@ -186,7 +200,7 @@ public class Trader {
 					"Redirecting you to storefront...";
 		} else {
 			//update cargo
-			Item itemBought = currentStore.itemToSell(itemName, quantity);
+			Item itemBought = currentStore.soldItem(itemName, quantity);
 			getOwndedShip().addToCargos(itemBought, quantity);
 			
 			//update money
@@ -197,7 +211,7 @@ public class Trader {
 			addTradingLog(currentIsland, itemBought, "Bought");
 			
 			report = "Success! Return to port to view your full trading log.\n" +
-					"Most recent " +
+					"Most recent: " +
 					this.getTradingLogs().get(this.getTradingLogs().size() - 1).toString() +
 					"\nRedirecting you to storefront...";
 		}
@@ -215,9 +229,9 @@ public class Trader {
 			} else if (repairCost <= getOwnedMoney()) {
 				getOwndedShip().setDurability(getOwndedShip().getDefaultDurability());
 				subtractMoney(repairCost);
-				report = "The damage is fixed,\nthe ship is ready to sail again!";
+				report = "The damage is fixed!\nYour ship is ready to sail again!";
 			} else {
-				report = "You don't have enough money to repair the ship.";
+				report = "Oh no! You don't have enough money for the repair!";
 			}
 		}
 		
@@ -249,6 +263,16 @@ public class Trader {
 		}	
 		
 		return report;
+	}
+	
+	public boolean noTimeToSail() {
+		boolean gameOver = true;
+		for (Route route: this.currentIsland.getRoutes()) {
+			if (this.remainingDays > route.getSailingTime(this.ownedShip)) {
+				gameOver = false;
+			}
+		}
+		return gameOver;
 	}
 	
 	public String toString() {

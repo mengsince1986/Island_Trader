@@ -21,7 +21,7 @@ public class CommandHandler {
 	public static String processCommand(ArrayList<String> commandArguments) {
 		
 		String report = "";
-		System.out.println(commandArguments);
+		//System.out.println(commandArguments);
 		String keyWord = commandArguments.get(0);
 		String argument = commandArguments.get(1);
 		
@@ -109,7 +109,9 @@ public class CommandHandler {
 
 	public static String processVisitStore() {
 		player.setCurrentLocation("store");
-		String report = "You go into the store on the island.";
+		String report = "Welcome to the store!\n\n";
+		report += player.getCurrentIsland().getStore().forSale() + "\n";
+		report += player.getCurrentIsland().getStore().forPurchase();
 		return report;
 	}
 	

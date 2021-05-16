@@ -55,22 +55,32 @@ public class Store {
 		}
 		return -1;
 	}
-	
-	
-	// by MZ
-	public Item itemToSell(String itemName, int quantity) {
+
+	public Item soldItem(String itemName, int quantity) {
 		int itemPrice = checkItemPrice(itemName, "toSell");
-		getItem(itemName, "toSell").subtractQuantity(quantity); //update toSell list
-		Item goodsToSell = new Item(itemName, quantity, itemPrice);
-		return goodsToSell;
-	}
-	
-	// by MZ
-	public void buyItem(String itemName, int quantity) {
-		getItem(itemName, "toBuy").subtractQuantity(quantity); //update toBuy list
-		if (getItem(itemName, "toSell") instanceof Item) {
-			getItem(itemName, "toSell").addQuantity(quantity); //update toSell lest
+		Item itemToSell = getItem(itemName, "toSell");
+		if (quantity == itemToSell.getQuantity()) {
+			this.toSell.remove(itemToSell);
+		} else {
+			getItem(itemName, "toSell").subtractQuantity(quantity); //update toSell list
 		}
+		Item itemSold = new Item(itemName, quantity, itemPrice);
+		return itemSold;
+	}
+
+	public Item boughtItem(String itemName, int quantity) {
+		int itemPrice = checkItemPrice(itemName, "toBuy");
+		Item itemToBuy = getItem(itemName, "toBuy");
+		if (quantity == itemToBuy.getQuantity()) {
+			this.toBuy.remove(itemToBuy);
+		} else {
+			itemToBuy.subtractQuantity(quantity); //update toBuy list
+		}
+		if (getItem(itemName, "toSell") instanceof Item) {
+			getItem(itemName, "toSell").addQuantity(quantity); //update toSell list
+		}
+		Item itemBought = new Item(itemName, quantity, itemPrice);
+		return itemBought;
 	}
 	
 	
@@ -130,7 +140,6 @@ public class Store {
 		}
 	}
 	
-	// purchase and sell methods might need to be in Trader?
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

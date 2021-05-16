@@ -41,8 +41,8 @@ public class SellIO extends IO {
 			addCommandArgument(keyWord);
 			addCommandArgument(argument);
 		}
-		System.out.println("Sell keyword " + keyWord);
-		System.out.println("Sell argument " + argument);
+		//System.out.println("Sell keyword " + keyWord);
+		//System.out.println("Sell argument " + argument);
 		
 	}
 	

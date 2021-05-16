@@ -75,7 +75,7 @@ public class GameEnvironment {
 		System.out.println("A new world is created ... ");
 		// create a new player
 		String traderName = "Jon Snow"; // name and time can be read from constructorIO
-		player = new Trader(21, traderName, 10000, world.getIsland("Niawall Haven"), "port");
+		player = new Trader(50, traderName, 10000, world.getIsland("Ceylon"), "port");
 		ship = new BalancedShip(); // get user input + loop invoked by exception
 		ship.setCaptain(player);
 		player.setOwnedShip(ship);
@@ -111,18 +111,14 @@ public class GameEnvironment {
 				ArrayList<String> commandArguments = storeIO.readCommandArguments("What would you like to do?");
 				String report = CommandHandler.processCommand(commandArguments);
 				ReportPrinter.printReport(report);
-
+				
 			}
-			
-			if (player.getRemainingDays() <= 0 || player.getOwnedMoney() <= 0) {
-				ReportPrinter.printReport("Your Profit is: " + (player.getOwnedMoney() - 1000) + " coins");
-				ReportPrinter.printReport("Game Over");
+			if (player.noTimeToSail() || player.getOwnedMoney() <= 0) {
+				statusLine.printGameOverReport();
 				gameOver = true;
 			}
 			
-			
 		}
-		
 
 	}
 

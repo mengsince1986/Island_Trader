@@ -18,7 +18,7 @@ public class WeatherEvent extends RandomEvent {
 
 	public String getReport(int shipDamage) {
 		return String.format(("Your ship struck a storm and took %d damage! " + 
-				"Repair it at the next port."), shipDamage);
+				"You'll have to repair it at the next port.\n"), shipDamage);
 	}
 	
 	public String processImpact(Trader player) {

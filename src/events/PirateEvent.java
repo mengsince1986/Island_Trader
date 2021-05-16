@@ -20,21 +20,21 @@ public class PirateEvent extends RandomEvent {
 		switch (shipSpeed) {
 		case "fast": 
 			int fastRoll = getRandomInRange(0, 2);
-			if (fastRoll > 0) {
+			if (fastRoll > 1) {
 				return PirateScenarios.FLED_AND_ESCAPED;
 			} else {
 				return getFightOutcome(ship, false);
 			}
 		case "normal": 
-			int normalRoll = getRandomInRange(0, 1);
-			if (normalRoll == 1) {
+			int normalRoll = getRandomInRange(0, 3);
+			if (normalRoll > 2) {
 				return PirateScenarios.FLED_AND_ESCAPED;
 			} else {
 				return getFightOutcome(ship, false);
 			}
 		case "slow":
-			int slowRoll = getRandomInRange(0, 3);
-			if (slowRoll < 1) {
+			int slowRoll = getRandomInRange(0, 4);
+			if (slowRoll > 3) {
 				return PirateScenarios.FLED_AND_ESCAPED;
 			} else {
 				return getFightOutcome(ship, false);
@@ -69,12 +69,14 @@ public class PirateEvent extends RandomEvent {
 			return reportString + "Don't worry; your ship was just fast enough to outrun the pirates this time!\n";
 		case FLED_AND_LOST:
 			return reportString + "Disaster! Your crew tried to flee but the pirates caught up with you, \ndefeated you in battle, and made off with all your cargo!\n" +
+			"They also took " + this.pirateGreed + " coins.\n" +
 			"Consider upgrading your cannons to have a better chance in future.\n";
 		case FLED_AND_WON:
 			return reportString + "Wow, that was lucky! The pirates caught up with you but you defeated them in battle!\n"
 					+ "Your cannons were enough to protect you this time...\n";
 		case FOUGHT_AND_LOST:
 			return reportString + "OOF! The pirates defeated you in battle and made off with all your cargo!!\n" +
+			"They also took " + this.pirateGreed + " coins.\n" +
 			"Consider upgrading your cannons to have a better chance next time.\n";
 		case FOUGHT_AND_WON:
 			return reportString + "But don't worry; you defeated them in battle.\n" +
@@ -97,8 +99,10 @@ public class PirateEvent extends RandomEvent {
 			if (pirateGreed >= playerMoney) {
 				player.setOwnedMoney(0);
 				reportString = "Oh no! You were beset by pirates!\n" +
-						"They were greedy enough to make off with all your cargo AND your money!\n" +
-						"Game over!";
+						"They defeated you in battle, took everything of value, and made you and your crew walk the plank!\n" +
+						"Better luck next time!";
+			} else {
+				player.subtractMoney(pirateGreed);
 			}
 		} return reportString;
 	}

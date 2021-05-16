@@ -349,10 +349,10 @@ public class Ship {
 			eventReports.add(eventReport);
 		} else if (this.getCaptain().getRemainingDays() < 
 				   getCaptain().getCurrentIsland().daysToIsland(destination, this)) {
-			String eventReport = "Oh, No! You don't have enough time to sail to the next island.";
+			String eventReport = "Oh no! You don't have enough time to sail to that island!";
 			eventReports.add(eventReport);
 		} else {
-			String eventReport = "Oh, No! You don't have enough money to pay your crew.";
+			String eventReport = "Oh no! You don't have enough money to pay your crew.";
 			eventReports.add(eventReport);
 		}
 		
@@ -364,13 +364,13 @@ public class Ship {
 	public String toString() {
 		String properties = "Name: " + getName() + "\n" +
 							"Speed: " + getSpeed() + "\n" +
-							"Default durability: " + getDurability() + "\n" +
+							"Default durability: " + getDefaultDurability() + "\n" +
+							"Damage suffered: " + getDamage() + "\n" +
 							"Minimum crew number: " + getMinimumCrewNum() + "\n" +
 							"Current crew number: " + getCrewNumber() + "\n" +
 							"Cannons: " + getCannons() + "\n" +
 							"Cost per day: " + getCostPerDay() + "\n" +
-							"Remaining capacity: " + getCapacity() + "\n" +
-	                        "Damage suffered: " + getDamage() + "\n";
+							"Remaining capacity: " + getCapacity() + "\n";
 		return properties;
 	}
 	

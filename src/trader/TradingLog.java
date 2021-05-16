@@ -25,7 +25,7 @@ public class TradingLog {
 					 this.tradingQuantity + " " +
 					 this.tradingItemName + " at " +
 					 this.tradingLocation + " for " +
-					 this.tradingPrice + "\n";
+					 this.tradingPrice + " coins\n";
 		return log;
 	}
 	

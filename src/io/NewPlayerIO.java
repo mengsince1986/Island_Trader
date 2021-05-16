@@ -8,7 +8,7 @@ import map.World;
 
 public abstract class NewPlayerIO {
 
-	private String promp;
+	private String prompt;
 	private ArrayList<String> commandsList;
 	private static World world;
 	private static ArrayList<String> commandArguments = new ArrayList<String>();
@@ -30,10 +30,10 @@ public abstract class NewPlayerIO {
 			//Print available commandList
 			System.out.println(getCommandsListString());
 			//Prompt for player
-			System.out.println(this.promp);
+			System.out.println(this.prompt);
 			
 			String errorMessage = "=====================!!!========================\n" +
-					  			  "The input is invalid. Check the promp and do it again.\n" +
+					  			  "The input is invalid. Check the prompt and do it again.\n" +
 					  			  "================================================\n";
 
 			Scanner commandReader = new Scanner(System.in);
@@ -129,12 +129,12 @@ public abstract class NewPlayerIO {
 		commandArguments.add(arg);
 	}
 	
-	public void setPromp(String newPromp) {
-		this.promp = newPromp;
+	public void setPrompt(String newPrompt) {
+		this.prompt = newPrompt;
 	}
 	
-	public String getPromp() {
-		return this.promp;
+	public String getPrompt() {
+		return this.prompt;
 	}
 
 	public static void setGettingName(boolean value) {
