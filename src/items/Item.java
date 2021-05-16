@@ -47,6 +47,13 @@ public class Item {
 				pricePerUnit);
 	}
 	
+	public String getCargoItemString() {
+		return String.format(
+				"%s\nQuantity: %s\n", 
+				name, 
+				quantity);
+	}
+	
 
 	public static void main(String[] args) {
 		Item fur = new Item("fur", 3, 2);

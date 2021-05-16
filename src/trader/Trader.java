@@ -275,6 +275,17 @@ public class Trader {
 		return gameOver;
 	}
 	
+	public boolean noMoneyToSail() {
+		boolean gameOver = true;
+		for (Route route: this.currentIsland.getRoutes()) {
+			int sailingCost = route.getSailingTime(this.ownedShip) * this.ownedShip.getCostPerDay();
+			if (sailingCost < this.ownedMoney) {
+				gameOver = false;
+			}
+		}
+		return gameOver;
+	}
+	
 	public String toString() {
 		String status = "Remaining Days: " + this.remainingDays + "\n" +
 						"Name: " + this.name + "\n" +

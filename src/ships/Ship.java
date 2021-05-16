@@ -76,7 +76,7 @@ public class Ship {
 		String cargosString = "Cargo contents:\n\n";
 		if (this.cargos.size() > 0) {
 			for (Item cargoItem : this.cargos) {
-				cargosString += cargoItem.toString() + "\n";
+				cargosString += cargoItem.getCargoItemString() + "\n";
 			}
 		} else {
 			cargosString += "Your ship isn't carrying any cargo.\n";
