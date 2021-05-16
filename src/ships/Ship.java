@@ -129,7 +129,7 @@ public class Ship {
 		String logString = "Upgrade log:\n\n";
 		if (this.upgradeLogs.size() > 0) {
 			for (UpgradeLog upgrade : this.upgradeLogs) {
-				logString += upgrade.toString();
+				logString += upgrade.toString() + "\n";
 			}
 		} else {
 			logString += "Your ship hasn't been upgraded yet!\n";

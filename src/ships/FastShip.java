@@ -2,6 +2,8 @@ package ships;
 
 public class FastShip extends Ship {
 	
+	// this class is only for backend test
+	
 	public FastShip() {
 		
 		super("Black Pearl", 10, 2, 1500, 6, 70, "fast");

@@ -2,23 +2,21 @@ package map;
 
 public class Port {
 	
-	private int repairCost;
-	private int cannonCost;
+	private int repairCostPerDamage;
+	private int costPerCannon;
 	
 	public Port(int repairCost, int cannonCost) {
-		this.repairCost = repairCost;
-		this.cannonCost = cannonCost;
+		this.repairCostPerDamage = repairCost;
+		this.costPerCannon = cannonCost;
 	}
 	
 	public int getRepairCost() {
-		return repairCost;
+		return repairCostPerDamage;
 	}
 	
 	public int getcannonCost() {
-		return cannonCost;
+		return costPerCannon;
 	}
-	
-	// repair and upgrade methods might need to be in Ship?
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

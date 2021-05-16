@@ -47,9 +47,12 @@ public class PortIO extends IO {
 		case 2: //repair ship
 			super.addCommandArgument("repair");
 			RepairIO repair = new RepairIO(getTrader());
-			int repairFee = super.getTrader().getCurrentIsland().getPort().getRepairCost();
+			int repairCostPerDamage = super.getTrader().getCurrentIsland().getPort().getRepairCost();
+			int currentDamage = super.getTrader().getOwndedShip().getDamage();
+			int repairCost = currentDamage * repairCostPerDamage;
 			repair.readCommandArguments("Hi, Captain! Wanna repair your ship?\n"
-				       				  + "Only " + repairFee + " coins.");
+				       				  + "Only " + repairCostPerDamage + " coins for each damage.\n"
+				       				  + "It'll cost you " + repairCost + " coins to fix all the cracks and holes.");
 			break;
 			
 		case 3: //upgrade cannons

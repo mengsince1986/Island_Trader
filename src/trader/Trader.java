@@ -223,13 +223,19 @@ public class Trader {
 		String report = "You have to repair your ship at port";
 		
 		if (getCurrentLocation() == "port") {
-			int repairCost = getCurrentIsland().getPort().getRepairCost();
+			
+			int repairCostPerDamage = getCurrentIsland().getPort().getRepairCost();
+			int currentDamage = getOwndedShip().getDamage();
+			int repairCost = currentDamage * repairCostPerDamage; 
 			if (this.getOwndedShip().getDamage() == 0) {
 				report = "Your ship is fine. There's nothing to repair.";
 			} else if (repairCost <= getOwnedMoney()) {
+				// subtract repair cost from trader's owned money
 				getOwndedShip().setDurability(getOwndedShip().getDefaultDurability());
 				subtractMoney(repairCost);
-				report = "The damage is fixed!\nYour ship is ready to sail again!";
+				// log the repair service into upgradelog
+				getOwndedShip().addToUpgradeLogs(currentIsland, "Damage Repair", repairCost);
+				report = "The damage has been fixed!\nYour ship is ready to sail again!";
 			} else {
 				report = "Oh no! You don't have enough money for the repair!";
 			}
@@ -254,8 +260,11 @@ public class Trader {
 						 "You can have at most " + (maxCannons - currentCannons) +
 						 " more cannons to upgrade.";
 			} else if (totalCost <= getOwnedMoney()) {
+				// subtract cannon upgrade cost from trader's owned money
 				getOwndedShip().addCannons(cannonNum);
 				subtractMoney(totalCost);
+				// log the upgrade service into upgradelog
+				getOwndedShip().addToUpgradeLogs(currentIsland, "Cannon Upgrade", totalCost);
 				report = "You now have " + cannonNum + " more cannons equiped on your ship.";
 			} else {
 				report = "Sorry, you don't have enough money to upgrade cannons.";
