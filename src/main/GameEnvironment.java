@@ -39,9 +39,11 @@ public class GameEnvironment {
 		WorldConstructor newWorld = new WorldConstructor();
 		world = newWorld.getMap();
 		
-		/*
+		
 		//Stage 2: Creating new player and new ship
+		/*
 		NewPlayerConstructorIO newPlayerConstructorIO = new NewPlayerConstructorIO(world);
+		
 		new TraderCreatorHandler(world);
 		
 		while (!constructed) {
@@ -75,7 +77,7 @@ public class GameEnvironment {
 		System.out.println("A new world is created ... ");
 		// create a new player
 		String traderName = "Jon Snow"; // name and time can be read from constructorIO
-		player = new Trader(50, traderName, 20000, world.getIsland("Ceylon"), "port");
+		player = new Trader(50, traderName, 10000, world.getIsland("Ceylon"), "port");
 		ship = new BalancedShip(); // get user input + loop invoked by exception
 		ship.setCaptain(player);
 		player.setOwnedShip(ship);

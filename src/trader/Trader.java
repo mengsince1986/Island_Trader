@@ -35,9 +35,11 @@ public class Trader {
 	
 	public Trader(int days, String name, Island home) {
 	
+	this.selectedDays = days;
 	this.remainingDays = days;
 	this.name = name;
-	this.ownedMoney = 1000;
+	this.startingMoney = 15000;
+	this.ownedMoney = 15000;
 	this.homeIsland = home;
 	//this.ownedShip = ship;
 	this.currentIsland = home;
@@ -237,7 +239,8 @@ public class Trader {
 				getOwndedShip().addToUpgradeLogs(currentIsland, "Damage Repair", repairCost);
 				report = "The damage has been fixed!\nYour ship is ready to sail again!";
 			} else {
-				report = "Oh no! You don't have enough money for the repair!";
+				report = "Oh no! You don't have enough money for the repair!\n" + 
+						"You'll need to sell some items!";
 			}
 		}
 		
@@ -291,6 +294,20 @@ public class Trader {
 			if (sailingCost < this.ownedMoney) {
 				gameOver = false;
 			}
+		}
+		Ship playerShip = this.ownedShip;
+		Island currentIsland = this.getCurrentIsland();
+		Store currentStore = currentIsland.getStore();
+		Port currentPort = this.getCurrentIsland().getPort();
+		int repairCost = playerShip.getDamage() * currentPort.getRepairCost();
+		int sellableCargoValue = 0;
+		for (Item sellableItem: currentStore.getSellablePlayerItems(playerShip)) {
+			int salePrice = sellableItem.getPricePerUnit();
+			int quantity = sellableItem.getQuantity();
+			sellableCargoValue += (salePrice * quantity);
+		}
+		if (repairCost > (this.ownedMoney + sellableCargoValue)) {
+			gameOver = true;
 		}
 		return gameOver;
 	}
