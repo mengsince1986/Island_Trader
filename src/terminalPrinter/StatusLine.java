@@ -28,29 +28,30 @@ public class StatusLine {
 		System.out.println(status);
 	}
 	
-	public void printGameOverReport() {
+	public void printGameOverReport(String reason) {
 		String upperDivider = "----------------Game Over!--------------------";
 		String lowerDivider = "----------------------------------------------";
 		int playerProfit = this.player.getOwnedMoney() - this.player.getStartingMoney();
 		int daysPlayed = this.player.getSelectedDays() - this.player.getRemainingDays();
 		int profitPerDay = Math.floorDiv(playerProfit, daysPlayed);
-		String congratulation = "Trader name: " + this.player.getName() +
+		String report = reason + "\n" + 
+				"Trader name: " + this.player.getName() +
 				"\nSelected game duration: " + 
 				this.player.getSelectedDays() + " days" +
 				"\nActual duration: " + daysPlayed + " days" +
 				"\nYou made a profit of " + playerProfit + " coins\n";
 		if (profitPerDay <= 0) {
-			congratulation += "Your score: 0/3 stars. Better luck next time!";
+			report += "Your score: 0/3 stars. Better luck next time!";
 		} else if (profitPerDay <= 500) {
-			congratulation += "Score: 1/3 stars. Good effort! At least you managed to make something!";
+			report += "Score: 1/3 stars. Good effort! At least you managed to make something!";
 		} else if (profitPerDay <= 1000) {
-			congratulation += "Score: 2/3 stars! Either you got lucky or are getting pretty good!";
+			report += "Score: 2/3 stars! Either you got lucky or are getting pretty good!";
 		} else {
-			congratulation += "Score: 3/3 stars! Outstanding! You must be a god gamer!\n" +
+			report += "Score: 3/3 stars! Outstanding! You must be a god gamer!\n" +
 					"Have you considered a career in arbitrage?";
 		}
 		String gameOverReport = upperDivider + "\n" + "\n" +
-				congratulation + "\n" + 
+				report + "\n" + 
 				"\n" +
 				lowerDivider;
 		System.out.println(gameOverReport);

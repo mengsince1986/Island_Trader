@@ -16,6 +16,7 @@ public class Trader {
 	private Island currentIsland;
 	private String curentLocation;
 	private ArrayList<TradingLog> tradingLogs;
+	private boolean killedByPirates = false;
 	
 	// constructor
 	public Trader(int days, String name, int money,
@@ -102,6 +103,10 @@ public class Trader {
 		return logsString;
 	}
 	
+	public boolean getKilledByPirates() {
+		return this.killedByPirates;
+	}
+	
 	// setters
 	public void setRemainingDays(int days) {
 		this.remainingDays = days;
@@ -144,6 +149,10 @@ public class Trader {
 	
 	public void setCurrentLocation(String location) {
 		this.curentLocation = location;
+	}
+	
+	public void setKilledByPirates(boolean value) {
+		this.killedByPirates = value;
 	}
 	
 	// log trading history
@@ -296,20 +305,25 @@ public class Trader {
 			}
 		}
 		Ship playerShip = this.ownedShip;
-		Island currentIsland = this.getCurrentIsland();
-		Store currentStore = currentIsland.getStore();
 		Port currentPort = this.getCurrentIsland().getPort();
 		int repairCost = playerShip.getDamage() * currentPort.getRepairCost();
+		int sellableCargoValue = getSellableCargoValue(playerShip);
+		if (repairCost > (this.ownedMoney + sellableCargoValue)) {
+			gameOver = true;
+		}
+		return gameOver;
+	}
+	
+	public int getSellableCargoValue(Ship playerShip) {
+		Island currentIsland = this.getCurrentIsland();
+		Store currentStore = currentIsland.getStore();
 		int sellableCargoValue = 0;
 		for (Item sellableItem: currentStore.getSellablePlayerItems(playerShip)) {
 			int salePrice = sellableItem.getPricePerUnit();
 			int quantity = sellableItem.getQuantity();
 			sellableCargoValue += (salePrice * quantity);
 		}
-		if (repairCost > (this.ownedMoney + sellableCargoValue)) {
-			gameOver = true;
-		}
-		return gameOver;
+		return sellableCargoValue;
 	}
 	
 	public String toString() {
