@@ -69,11 +69,11 @@ public class SetupWindow {
 		frame.setVisible(true);
 	}
 	
-	public void closeWindow() {
+	public void closeSetupWindow() {
 		frame.dispose();
 	}
 	
-	public void finishedWindow() {
+	public void finishedSetupWindow() {
 		this.manager.closeSetupWindow(this);
 	}
 	
@@ -203,9 +203,7 @@ public class SetupWindow {
 				
 				//get name and days
 				name = nameTextField.getText();
-				System.out.println("name: " + name);
 				days = daysSlider.getValue();
-				System.out.println("days: " + days);
 				
 				// get island name
 				Enumeration<AbstractButton> homes = homeButtonGroup.getElements();
@@ -213,7 +211,6 @@ public class SetupWindow {
 					JRadioButton home = (JRadioButton) homes.nextElement();
 					if(home.isSelected()) {
 						islandName = home.getText();
-						System.out.println("home name: " + islandName);
 					}
 				}
 				
@@ -223,7 +220,6 @@ public class SetupWindow {
 					JRadioButton ship = (JRadioButton) ships.nextElement();
 					if(ship.isSelected()) {
 						shipName = ship.getText();
-						System.out.println("ship name: " + shipName);
 					}
 				}
 				
@@ -237,6 +233,16 @@ public class SetupWindow {
 		frame.getContentPane().add(confirmBtn);
 		
 		JButton startButton = new JButton("Start Game");
+		startButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (manager.getTrader() != null) {
+					finishedSetupWindow();
+				}
+				reportText.setText("You need to create a new player\n"
+						         + "and click \"Confirm\" button first.");
+			}
+		});
 		startButton.setBounds(321, 269, 117, 25);
 		frame.getContentPane().add(startButton);
 		
