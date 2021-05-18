@@ -36,6 +36,7 @@ public class Trader {
 	public Trader(int days, String name, Island home) {
 	
 	this.remainingDays = days;
+	this.selectedDays = days;
 	this.name = name;
 	this.ownedMoney = 1000;
 	this.homeIsland = home;

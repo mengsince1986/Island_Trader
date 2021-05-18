@@ -39,7 +39,7 @@ public class GameEnvironment {
 		WorldConstructor newWorld = new WorldConstructor();
 		world = newWorld.getMap();
 		
-		/*
+		
 		//Stage 2: Creating new player and new ship
 		NewPlayerConstructorIO newPlayerConstructorIO = new NewPlayerConstructorIO(world);
 		new TraderCreatorHandler(world);
@@ -58,9 +58,9 @@ public class GameEnvironment {
 				constructed = true;
 			}
 		}
-		*/
-
 		
+
+		/*
 	    // Manually create a new world, a trader and a ship
 		
 		System.out.println("Welcome to the wolrd of Island Trader");
@@ -85,7 +85,7 @@ public class GameEnvironment {
 		System.out.println("========= All Set. Let's get started!=========");
 		System.out.println();
 		constructed = true;
-		
+		*/
 		
 		// Stage3: Playing
 		
