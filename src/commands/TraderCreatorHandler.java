@@ -60,7 +60,7 @@ public class TraderCreatorHandler {
 	
 	public static String quitCommand() {
 		String report = "You quit the game.";
-		System.exit(0);;
+		System.exit(0);
 		return report;
 	}
 }
