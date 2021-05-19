@@ -82,7 +82,7 @@ public class StoreWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 686, 1089);
+		frame.setBounds(100, 100, 686, 795);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -111,7 +111,7 @@ public class StoreWindow {
 		
 		
 		JScrollPane scrollPane = new JScrollPane(reportText);
-		scrollPane.setBounds(40, 116, 600, 569);
+		scrollPane.setBounds(40, 116, 600, 300);
 		frame.getContentPane().add(scrollPane);
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			   public void run() { 
@@ -178,17 +178,17 @@ public class StoreWindow {
 		JRadioButton saleItem1Button = new JRadioButton("N/A");
 		saleItembuttonGroup.add(saleItem1Button);
 		saleItem1Button.setSelected(true);
-		saleItem1Button.setBounds(198, 725, 120, 23);
+		saleItem1Button.setBounds(198, 442, 120, 23);
 		frame.getContentPane().add(saleItem1Button);
 		
 		JRadioButton saleItem2Button = new JRadioButton("N/A");
 		saleItembuttonGroup.add(saleItem2Button);
-		saleItem2Button.setBounds(339, 725, 120, 23);
+		saleItem2Button.setBounds(339, 442, 120, 23);
 		frame.getContentPane().add(saleItem2Button);
 		
 		JRadioButton saleItem3Button = new JRadioButton("N/A");
 		saleItembuttonGroup.add(saleItem3Button);
-		saleItem3Button.setBounds(481, 725, 120, 23);
+		saleItem3Button.setBounds(481, 442, 120, 23);
 		frame.getContentPane().add(saleItem3Button);
 		
 		// update sale list when initializing
@@ -209,24 +209,24 @@ public class StoreWindow {
 		//===================================
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(40, 760, 600, 2);
+		separator.setBounds(40, 477, 600, 2);
 		frame.getContentPane().add(separator);
 		
 	
 		JRadioButton purchaseItem1Button = new JRadioButton("N/A");
 		purchaseItembuttonGroup.add(purchaseItem1Button);
 		purchaseItem1Button.setSelected(true);
-		purchaseItem1Button.setBounds(198, 778, 120, 23);
+		purchaseItem1Button.setBounds(198, 495, 120, 23);
 		frame.getContentPane().add(purchaseItem1Button);
 		
 		JRadioButton purchaseItem2Button = new JRadioButton("N/A");
 		purchaseItembuttonGroup.add(purchaseItem2Button);
-		purchaseItem2Button.setBounds(339, 778, 120, 23);
+		purchaseItem2Button.setBounds(339, 495, 120, 23);
 		frame.getContentPane().add(purchaseItem2Button);
 		
 		JRadioButton purchaseItem3Button = new JRadioButton("N/A");
 		purchaseItembuttonGroup.add(purchaseItem3Button);
-		purchaseItem3Button.setBounds(481, 778, 120, 23);
+		purchaseItem3Button.setBounds(481, 495, 120, 23);
 		frame.getContentPane().add(purchaseItem3Button);
 		
 		// update purchase list when initializing
@@ -246,7 +246,7 @@ public class StoreWindow {
 		}
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(40, 813, 600, 2);
+		separator_1.setBounds(40, 530, 600, 2);
 		frame.getContentPane().add(separator_1);
 		//===================================
 		
@@ -258,13 +258,13 @@ public class StoreWindow {
 		tradeQuantitySlider.setMajorTickSpacing(1);
 		tradeQuantitySlider.setMinimum(1);
 		tradeQuantitySlider.setMaximum(200);
-		tradeQuantitySlider.setBounds(201, 833, 400, 20);
+		tradeQuantitySlider.setBounds(201, 550, 400, 20);
 		frame.getContentPane().add(tradeQuantitySlider);
 		
 		JLabel tradeQuantityLable = new JLabel("Trading Quantity :");
 		tradeQuantityLable.setFont(new Font("Dialog", Font.BOLD, 14));
 		tradeQuantityLable.setLabelFor(tradeQuantitySlider);
-		tradeQuantityLable.setBounds(40, 830, 150, 20);
+		tradeQuantityLable.setBounds(40, 547, 150, 20);
 		frame.getContentPane().add(tradeQuantityLable);
 		
 		
@@ -272,7 +272,7 @@ public class StoreWindow {
 		QuantityLabel.setLabelFor(tradeQuantitySlider);
 		QuantityLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		QuantityLabel.setFont(new Font("Dialog", Font.BOLD, 13));
-		QuantityLabel.setBounds(371, 856, 70, 20);
+		QuantityLabel.setBounds(371, 573, 70, 20);
 		frame.getContentPane().add(QuantityLabel);
 		QuantityLabel.setText(String.valueOf(tradeQuantitySlider.getValue())); 
 		
@@ -335,7 +335,7 @@ public class StoreWindow {
 			}
 		});
 		buyButton.setBackground(new Color(204, 153, 102));
-		buyButton.setBounds(40, 723, 117, 25);
+		buyButton.setBounds(40, 440, 117, 25);
 		frame.getContentPane().add(buyButton);
 		
 		JButton sellButton = new JButton("Sell");
@@ -374,11 +374,11 @@ public class StoreWindow {
 		});
 		sellButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		sellButton.setBackground(new Color(204, 153, 102));
-		sellButton.setBounds(40, 776, 117, 25);
+		sellButton.setBounds(40, 493, 117, 25);
 		frame.getContentPane().add(sellButton);
 		
 		
-		portButton.setBounds(523, 938, 117, 25);
+		portButton.setBounds(523, 655, 117, 25);
 		frame.getContentPane().add(portButton);
 		
 		JButton viewStoreButton = new JButton("View Store List");
@@ -404,7 +404,7 @@ public class StoreWindow {
 			}
 		});
 		viewStoreButton.setFont(new Font("Dialog", Font.BOLD, 14));
-		viewStoreButton.setBounds(40, 938, 200, 25);
+		viewStoreButton.setBounds(40, 655, 200, 25);
 		frame.getContentPane().add(viewStoreButton);
 		
 		JButton viewTradingLogsButton = new JButton("View Trading Logs");
@@ -424,10 +424,10 @@ public class StoreWindow {
 			}
 		});
 		viewTradingLogsButton.setFont(new Font("Dialog", Font.BOLD, 14));
-		viewTradingLogsButton.setBounds(40, 987, 200, 25);
+		viewTradingLogsButton.setBounds(40, 704, 200, 25);
 		frame.getContentPane().add(viewTradingLogsButton);
 		
-		JButton viewShipCargoesButton = new JButton("View Ship Cargoes");
+		JButton viewShipCargoesButton = new JButton("View Ship Cargos");
 		viewShipCargoesButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -444,7 +444,7 @@ public class StoreWindow {
 		});
 		viewShipCargoesButton.setBackground(new Color(204, 153, 102));
 		viewShipCargoesButton.setFont(new Font("Dialog", Font.BOLD, 14));
-		viewShipCargoesButton.setBounds(264, 938, 200, 25);
+		viewShipCargoesButton.setBounds(264, 655, 200, 25);
 		frame.getContentPane().add(viewShipCargoesButton);
 	}
 }

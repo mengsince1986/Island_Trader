@@ -94,18 +94,21 @@ public class SetupWindow {
 		frame.getContentPane().add(welcomeLabel);
 		
 		JLabel nameLabel = new JLabel("Name: ");
+		nameLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		nameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		nameLabel.setBounds(68, 54, 70, 15);
 		frame.getContentPane().add(nameLabel);
 		
 		nameTextField = new JTextField();
-		nameTextField.setText("Jon Snow");
+		nameTextField.setFont(new Font("Dialog", Font.BOLD, 14));
+		nameTextField.setText("Jon");
 		nameLabel.setLabelFor(nameTextField);
-		nameTextField.setBounds(148, 52, 114, 19);
+		nameTextField.setBounds(148, 52, 120, 25);
 		frame.getContentPane().add(nameTextField);
 		nameTextField.setColumns(10);
 		
 		JLabel dayLabel = new JLabel("Days:");
+		dayLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		dayLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		dayLabel.setBounds(64, 97, 70, 15);
 		frame.getContentPane().add(dayLabel);
@@ -123,43 +126,51 @@ public class SetupWindow {
 		frame.getContentPane().add(daysSlider);
 		
 		JLabel homeLabel = new JLabel("Home:");
+		homeLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		homeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		homeLabel.setBounds(68, 147, 70, 15);
 		frame.getContentPane().add(homeLabel);
 		
 		JRadioButton island1Button = new JRadioButton("Mecca Merchantia");
+		island1Button.setFont(new Font("Dialog", Font.BOLD, 14));
 		island1Button.setSelected(true);
 		homeButtonGroup.add(island1Button);
 		island1Button.setBounds(144, 145, 190, 23);
 		frame.getContentPane().add(island1Button);
 		
 		JRadioButton island2Button = new JRadioButton("Ceylon");
+		island2Button.setFont(new Font("Dialog", Font.BOLD, 14));
 		homeButtonGroup.add(island2Button);
 		island2Button.setBounds(144, 170, 149, 23);
 		frame.getContentPane().add(island2Button);
 		
 		JLabel lblNewLabel = new JLabel("Ship:");
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setBounds(64, 202, 70, 15);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JRadioButton fastShipRadioButton = new JRadioButton("Black Pearl");
+		fastShipRadioButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		shipButtonGroup.add(fastShipRadioButton);
 		fastShipRadioButton.setSelected(true);
 		fastShipRadioButton.setBounds(144, 199, 149, 23);
 		frame.getContentPane().add(fastShipRadioButton);
 		
 		JRadioButton balancedShipRadioButton = new JRadioButton("Redcoasts");
+		balancedShipRadioButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		shipButtonGroup.add(balancedShipRadioButton);
 		balancedShipRadioButton.setBounds(144, 226, 149, 23);
 		frame.getContentPane().add(balancedShipRadioButton);
 		
 		JRadioButton battleShipRadioButton = new JRadioButton("Endeavour");
+		battleShipRadioButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		shipButtonGroup.add(battleShipRadioButton);
 		battleShipRadioButton.setBounds(289, 199, 149, 23);
 		frame.getContentPane().add(battleShipRadioButton);
 		
 		JRadioButton baoShipRadioButton = new JRadioButton("Empress");
+		baoShipRadioButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		shipButtonGroup.add(baoShipRadioButton);
 		baoShipRadioButton.setBounds(289, 226, 149, 23);
 		frame.getContentPane().add(baoShipRadioButton);
@@ -173,19 +184,14 @@ public class SetupWindow {
 				System.exit(0);
 			}
 		});
-	
-		
-		JLabel reportLabel = new JLabel("Report:");
-		reportLabel.setBounds(93, 320, 70, 15);
-		frame.getContentPane().add(reportLabel);
 		
 		JTextArea reportText = new JTextArea();
 		reportText.setWrapStyleWord(true);
 		reportText.setLineWrap(true);
-		reportText.setFont(new Font("Dialog", Font.BOLD, 13));
+		reportText.setFont(new Font("Dialog", Font.BOLD, 14));
 		reportText.setEditable(false);
-		reportText.setText("Let's create a new player!");
-		reportText.setBounds(60, 347, 400, 50);
+		reportText.setText("SENG201 Project\n\nAuthors: Finn & Meng");
+		reportText.setBounds(40, 320, 400, 70);
 		frame.getContentPane().add(reportText);
 		
 		quitBtn.setBounds(50, 269, 80, 25);
@@ -201,32 +207,44 @@ public class SetupWindow {
 				String islandName = "";
 				String shipName = "";
 				
-				//get name and days
+				//get and validate name
 				name = nameTextField.getText();
-				days = daysSlider.getValue();
 				
-				// get island name
-				Enumeration<AbstractButton> homes = homeButtonGroup.getElements();
-				while (homes.hasMoreElements()) {
-					JRadioButton home = (JRadioButton) homes.nextElement();
-					if(home.isSelected()) {
-						islandName = home.getText();
+				if (!name.matches("[a-zA-Z]+")) {
+					reportText.setText("\nSorry, the name can only include letters.\n"
+							         + "Please check if your name include spaces numbers or special characters.");
+				} else if (name.length() < 3 || name.length() > 15 ) {
+					reportText.setText("\nThe name should be between 3 and 15 characters.");
+				} else {
+					
+					// get days
+					days = daysSlider.getValue();
+					
+					// get island name
+					Enumeration<AbstractButton> homes = homeButtonGroup.getElements();
+					while (homes.hasMoreElements()) {
+						JRadioButton home = (JRadioButton) homes.nextElement();
+						if(home.isSelected()) {
+							islandName = home.getText();
+						}
 					}
+					
+					// get ship name
+					Enumeration<AbstractButton> ships = shipButtonGroup.getElements();
+					while (ships.hasMoreElements()) {
+						JRadioButton ship = (JRadioButton) ships.nextElement();
+						if(ship.isSelected()) {
+							shipName = ship.getText();
+						}
+					}
+					
+					
+					String report;
+					report = manager.setTrader(name, days, islandName, shipName);
+					reportText.setText(report);
+					
 				}
 				
-				// get ship name
-				Enumeration<AbstractButton> ships = shipButtonGroup.getElements();
-				while (ships.hasMoreElements()) {
-					JRadioButton ship = (JRadioButton) ships.nextElement();
-					if(ship.isSelected()) {
-						shipName = ship.getText();
-					}
-				}
-				
-				
-				String report;
-				report = manager.setTrader(name, days, islandName, shipName);
-				reportText.setText(report);
 			}
 		});
 		confirmBtn.setBounds(180, 269, 117, 25);

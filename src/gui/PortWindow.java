@@ -84,7 +84,7 @@ public class PortWindow {
 		frame.getContentPane().setLayout(null);
 		
 		JLabel portLabel = new JLabel("Port");
-		portLabel.setFont(new Font("Dialog", Font.BOLD, 18));
+		portLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		portLabel.setBounds(0, 10, 689, 20);
 		portLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		frame.getContentPane().add(portLabel);
@@ -173,16 +173,18 @@ public class PortWindow {
 		// ======================
 		
 		JButton storeButton = new JButton("Go to Store");
+		storeButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		storeButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				finishedPortWindow();
 			}
 		});
-		storeButton.setBounds(500, 730, 117, 25);
+		storeButton.setBounds(450, 730, 180, 25);
 		frame.getContentPane().add(storeButton);
 		
 		JButton repairButton = new JButton("Repair");
+		repairButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		repairButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -197,6 +199,7 @@ public class PortWindow {
 		
 		
 		JButton quitButton = new JButton("Quit");
+		quitButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		quitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -209,6 +212,7 @@ public class PortWindow {
 		});
 		
 		JButton summaryButton = new JButton("Summary");
+		summaryButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		summaryButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -222,6 +226,7 @@ public class PortWindow {
 		summaryButton.setVisible(false);
 		
 		JButton sailButton = new JButton("Sail to");
+		sailButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		sailButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -324,17 +329,20 @@ public class PortWindow {
 		frame.getContentPane().add(sailButton);
 		
 		JRadioButton destRadionButton1 = new JRadioButton("N/A");
+		destRadionButton1.setFont(new Font("Dialog", Font.BOLD, 14));
 		destRadionButton1.setSelected(true);
 		destinationButtonGroup.add(destRadionButton1);
 		destRadionButton1.setBounds(190, 428, 250, 23);
 		frame.getContentPane().add(destRadionButton1);
 		
 		JRadioButton destRadionButton2 = new JRadioButton("N/A");
+		destRadionButton2.setFont(new Font("Dialog", Font.BOLD, 14));
 		destinationButtonGroup.add(destRadionButton2);
 		destRadionButton2.setBounds(190, 455, 250, 23);
 		frame.getContentPane().add(destRadionButton2);
 		
 		JRadioButton destRadionButton3 = new JRadioButton("N/A");
+		destRadionButton3.setFont(new Font("Dialog", Font.BOLD, 14));
 		destinationButtonGroup.add(destRadionButton3);
 		destRadionButton3.setBounds(190, 480, 250, 23);
 		frame.getContentPane().add(destRadionButton3);
