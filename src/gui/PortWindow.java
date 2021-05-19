@@ -30,6 +30,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JScrollBar;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
 
 public class PortWindow {
 
@@ -142,6 +143,8 @@ public class PortWindow {
 		DaysDisplayLabel.setText(String.valueOf(days));
 		moneyDisplayLabel.setText(String.valueOf(money));
 		locationDisplayLabel.setText(islandLocation);
+		
+	
 		// ====================
 		
 		
@@ -154,6 +157,16 @@ public class PortWindow {
 		reportText.setWrapStyleWord(true);
 		reportText.setBounds(50, 127, 600, 276);
 		frame.getContentPane().add(reportText);
+		
+		JScrollPane scrollPane = new JScrollPane(reportText);
+		scrollPane.setBounds(50, 127, 600, 276);
+		frame.getContentPane().add(scrollPane);
+		
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			   public void run() { 
+			       scrollPane.getVerticalScrollBar().setValue(0);
+			   }
+			});
 		
 		// update report when initializing
 		//reportText.setText("Hello, port!");

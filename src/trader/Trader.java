@@ -38,7 +38,7 @@ public class Trader {
 	this.remainingDays = days;
 	this.selectedDays = days;
 	this.name = name;
-	this.ownedMoney = 1000;
+	this.ownedMoney = 10000;
 	this.homeIsland = home;
 	//this.ownedShip = ship;
 	this.currentIsland = home;
@@ -158,7 +158,13 @@ public class Trader {
 		Ship playerShip = getOwndedShip();
 		Item itemToSell = playerShip.getCargoItem(itemName);
 		int pricePerUnit = currentStore.checkItemPrice(itemName, "toBuy");
-		if (itemToSell.getQuantity() < quantity) {
+		
+		//in case itemToSell is null
+		if (itemToSell == null) {
+		
+			report = "You don't own that quantity of the item! Try again.\n";
+			
+		} else if (itemToSell.getQuantity() < quantity) {
 			report = "You don't own that quantity of the item! Try again.\n" +
 					"Redirecting you to storefront...";
 		} else {
@@ -176,7 +182,7 @@ public class Trader {
 				//update trading log
 				this.addTradingLog(currentIsland, itemSold, "Sold");
 				
-				report = "Success! Return to port to view your full trading log.\n" +
+				report = "Success!\n" +
 						"Most recent: " +
 						this.getTradingLogs().get(this.getTradingLogs().size() - 1).toString() +
 						"\nRedirecting you to storefront...";
@@ -211,7 +217,7 @@ public class Trader {
 			//update trading log
 			addTradingLog(currentIsland, itemBought, "Bought");
 			
-			report = "Success! Return to port to view your full trading log.\n" +
+			report = "Success!\n" +
 					"Most recent: " +
 					this.getTradingLogs().get(this.getTradingLogs().size() - 1).toString() +
 					"\nRedirecting you to storefront...";

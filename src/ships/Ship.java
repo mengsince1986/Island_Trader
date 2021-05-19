@@ -73,7 +73,8 @@ public class Ship {
 	}
 	
 	public String getCargosString() {
-		String cargosString = "Cargo contents:\n\n";
+		String  cargosString = "Remaining Capacity: " + this.getCapacity() + "\n\n";
+		cargosString += "Cargo contents:\n\n";
 		if (this.cargos.size() > 0) {
 			for (Item cargoItem : this.cargos) {
 				cargosString += cargoItem.getCargoItemString() + "\n";

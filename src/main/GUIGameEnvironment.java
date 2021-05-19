@@ -86,9 +86,21 @@ public class GUIGameEnvironment {
 	
 	public String repair() {
 		
-		String report = "";
+		String report = player.repairShip();
 		
-		report = player.repairShip();
+		return report;
+	}
+	
+	public String buy(String itemName, int quantity) {
+		
+		String report = player.buy(player.getCurrentIsland(), itemName, quantity);
+		
+		return report;
+	}
+	
+	public String sell(String itemName, int quantity) {
+		
+		String report = player.sell(player.getCurrentIsland(), itemName, quantity);
 		
 		return report;
 	}

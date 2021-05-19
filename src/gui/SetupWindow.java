@@ -127,7 +127,7 @@ public class SetupWindow {
 		homeLabel.setBounds(68, 147, 70, 15);
 		frame.getContentPane().add(homeLabel);
 		
-		JRadioButton island1Button = new JRadioButton("Lord Matheson Island");
+		JRadioButton island1Button = new JRadioButton("Mecca Merchantia");
 		island1Button.setSelected(true);
 		homeButtonGroup.add(island1Button);
 		island1Button.setBounds(144, 145, 190, 23);

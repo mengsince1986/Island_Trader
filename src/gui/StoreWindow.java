@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 import main.GUIGameEnvironment;
+import map.Route;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -16,9 +18,22 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JSeparator;
 import javax.swing.JRadioButton;
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Enumeration;
+
+import javax.swing.JSlider;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import javax.swing.event.ChangeListener;
+
+import items.Item;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.JScrollPane;
 
 public class StoreWindow {
 
@@ -78,12 +93,32 @@ public class StoreWindow {
 		frame.getContentPane().add(storeLabel);
 		
 		JTextArea reportText = new JTextArea();
+		reportText.setEditable(false);
 		reportText.setText("Trading report");
 		reportText.setFont(new Font("Dialog", Font.BOLD, 14));
 		reportText.setLineWrap(true);
 		reportText.setWrapStyleWord(true);
 		reportText.setBounds(40, 127, 600, 559);
 		frame.getContentPane().add(reportText);
+		
+		// update store report when initializing
+		String report = "Welcome to the store!\n\n";
+		report += manager.getTrader().getCurrentIsland().getStore().forSale() + "\n\n";
+		report += "******************************\n\n";
+		report += manager.getTrader().getCurrentIsland().getStore().forPurchase();
+		reportText.setText(report);
+		//======================================
+		
+		
+		JScrollPane scrollPane = new JScrollPane(reportText);
+		scrollPane.setBounds(40, 116, 600, 569);
+		frame.getContentPane().add(scrollPane);
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			   public void run() { 
+			       scrollPane.getVerticalScrollBar().setValue(0);
+			   }
+			});
+	
 		
 		JLabel NameLabel = new JLabel("Name: ");
 		NameLabel.setFont(new Font("Dialog", Font.BOLD, 14));
@@ -138,61 +173,118 @@ public class StoreWindow {
 		locationDisplayLabel.setText(islandLocation);
 		// ====================
 		
-		JButton buyButton = new JButton("Buy");
-		buyButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		buyButton.setBackground(new Color(204, 153, 102));
-		buyButton.setBounds(40, 747, 117, 25);
-		frame.getContentPane().add(buyButton);
-		
-		JButton sellButton = new JButton("Sell");
-		sellButton.setBackground(new Color(204, 153, 102));
-		sellButton.setBounds(40, 808, 117, 25);
-		frame.getContentPane().add(sellButton);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(40, 788, 600, 2);
-		frame.getContentPane().add(separator);
+	
 		
 		JRadioButton saleItem1Button = new JRadioButton("N/A");
 		saleItembuttonGroup.add(saleItem1Button);
 		saleItem1Button.setSelected(true);
-		saleItem1Button.setBounds(198, 749, 120, 23);
+		saleItem1Button.setBounds(198, 725, 120, 23);
 		frame.getContentPane().add(saleItem1Button);
 		
 		JRadioButton saleItem2Button = new JRadioButton("N/A");
 		saleItembuttonGroup.add(saleItem2Button);
-		saleItem2Button.setSelected(true);
-		saleItem2Button.setBounds(339, 749, 120, 23);
+		saleItem2Button.setBounds(339, 725, 120, 23);
 		frame.getContentPane().add(saleItem2Button);
 		
 		JRadioButton saleItem3Button = new JRadioButton("N/A");
 		saleItembuttonGroup.add(saleItem3Button);
-		saleItem3Button.setSelected(true);
-		saleItem3Button.setBounds(481, 749, 120, 23);
+		saleItem3Button.setBounds(481, 725, 120, 23);
 		frame.getContentPane().add(saleItem3Button);
 		
+		// update sale list when initializing
+		ArrayList<String> saleItems = new ArrayList<String>(); 
+		for (Item item : manager.getTrader().getCurrentIsland().getStore().getToSell()) {
+			saleItems.add(item.getName());
+		}
+
+		int i = 0;
+		Enumeration<AbstractButton> saleItemButtons = saleItembuttonGroup.getElements();
+		while (i < saleItems.size() && saleItemButtons.hasMoreElements()) {
+			JRadioButton saleItemButton = (JRadioButton) saleItemButtons.nextElement();
+			
+			saleItemButton.setText(saleItems.get(i));
+			
+			i += 1;
+		}
+		//===================================
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(40, 760, 600, 2);
+		frame.getContentPane().add(separator);
+		
+	
 		JRadioButton purchaseItem1Button = new JRadioButton("N/A");
 		purchaseItembuttonGroup.add(purchaseItem1Button);
 		purchaseItem1Button.setSelected(true);
-		purchaseItem1Button.setBounds(198, 810, 120, 23);
+		purchaseItem1Button.setBounds(198, 778, 120, 23);
 		frame.getContentPane().add(purchaseItem1Button);
 		
 		JRadioButton purchaseItem2Button = new JRadioButton("N/A");
 		purchaseItembuttonGroup.add(purchaseItem2Button);
-		purchaseItem2Button.setSelected(true);
-		purchaseItem2Button.setBounds(339, 810, 120, 23);
+		purchaseItem2Button.setBounds(339, 778, 120, 23);
 		frame.getContentPane().add(purchaseItem2Button);
 		
 		JRadioButton purchaseItem3Button = new JRadioButton("N/A");
 		purchaseItembuttonGroup.add(purchaseItem3Button);
-		purchaseItem3Button.setSelected(true);
-		purchaseItem3Button.setBounds(481, 810, 120, 23);
+		purchaseItem3Button.setBounds(481, 778, 120, 23);
 		frame.getContentPane().add(purchaseItem3Button);
 		
+		// update purchase list when initializing
+		ArrayList<String> purchaseItems = new ArrayList<String>(); 
+		for (Item item : manager.getTrader().getCurrentIsland().getStore().getToBuy()) {
+			purchaseItems.add(item.getName());
+		}
+
+		int j = 0;
+		Enumeration<AbstractButton> purchaseItemButtons = purchaseItembuttonGroup.getElements();
+		while (j < purchaseItems.size() && purchaseItemButtons.hasMoreElements()) {
+			JRadioButton purchaseItemButton = (JRadioButton) purchaseItemButtons.nextElement();
+			
+			purchaseItemButton.setText(purchaseItems.get(j));
+			
+			j += 1;
+		}
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(40, 813, 600, 2);
+		frame.getContentPane().add(separator_1);
+		//===================================
+		
+		JSlider tradeQuantitySlider = new JSlider();
+		
+		
+		tradeQuantitySlider.setValue(15);
+		tradeQuantitySlider.setSnapToTicks(true);
+		tradeQuantitySlider.setMajorTickSpacing(1);
+		tradeQuantitySlider.setMinimum(1);
+		tradeQuantitySlider.setMaximum(200);
+		tradeQuantitySlider.setBounds(201, 833, 400, 20);
+		frame.getContentPane().add(tradeQuantitySlider);
+		
+		JLabel tradeQuantityLable = new JLabel("Trading Quantity :");
+		tradeQuantityLable.setFont(new Font("Dialog", Font.BOLD, 14));
+		tradeQuantityLable.setLabelFor(tradeQuantitySlider);
+		tradeQuantityLable.setBounds(40, 830, 150, 20);
+		frame.getContentPane().add(tradeQuantityLable);
+		
+		
+		JLabel QuantityLabel = new JLabel("N/A");
+		QuantityLabel.setLabelFor(tradeQuantitySlider);
+		QuantityLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		QuantityLabel.setFont(new Font("Dialog", Font.BOLD, 13));
+		QuantityLabel.setBounds(371, 856, 70, 20);
+		frame.getContentPane().add(QuantityLabel);
+		QuantityLabel.setText(String.valueOf(tradeQuantitySlider.getValue())); 
+		
+		
+		tradeQuantitySlider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				QuantityLabel.setText(String.valueOf(tradeQuantitySlider.getValue()));
+			}
+		});
+		
 		JButton portButton = new JButton("Go to Port");
+		portButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		portButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -201,8 +293,158 @@ public class StoreWindow {
 				
 			}
 		});
+		
+		
+		JButton buyButton = new JButton("Buy");
+		buyButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				// get selected sale item
+				String saleItemName = "";
+				
+				Enumeration<AbstractButton> items = saleItembuttonGroup.getElements();
+				while (items.hasMoreElements()) {
+					JRadioButton item = (JRadioButton) items.nextElement();
+					if(item.isSelected()) {
+						saleItemName = item.getText();
+					}
+				}
+				
+				// get quantity
+				int quantity = tradeQuantitySlider.getValue();
+				
+				
+				// call manager to implement buy method
+				if (saleItemName == "N/A") {
+					
+					reportText.setText("The item you choose does not exist,\n"
+								     + "please choose your item again.");
+					
+				} else {
+					
+					String report = manager.buy(saleItemName, quantity);
+					reportText.setText(report);
+					}
+				
+			}
+		});
+		buyButton.setFont(new Font("Dialog", Font.BOLD, 14));
+		buyButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		buyButton.setBackground(new Color(204, 153, 102));
+		buyButton.setBounds(40, 723, 117, 25);
+		frame.getContentPane().add(buyButton);
+		
+		JButton sellButton = new JButton("Sell");
+		sellButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				// get selected purchase item
+				String purchaseItemName = "";
+				
+				Enumeration<AbstractButton> items = purchaseItembuttonGroup.getElements();
+				while (items.hasMoreElements()) {
+					JRadioButton item = (JRadioButton) items.nextElement();
+					if(item.isSelected()) {
+						purchaseItemName = item.getText();
+					}
+				}
+				
+				// get quantity
+				int quantity = tradeQuantitySlider.getValue();
+				
+				
+				// call manager to implement sell method
+				if (purchaseItemName == "N/A") {
+					
+					reportText.setText("The item you choose does not exist,\n"
+								     + "please choose your item again.");
+					
+				} else {
+					
+					String report = manager.sell(purchaseItemName, quantity);
+					reportText.setText(report);
+					}
+				
+			}
+		});
+		sellButton.setFont(new Font("Dialog", Font.BOLD, 14));
+		sellButton.setBackground(new Color(204, 153, 102));
+		sellButton.setBounds(40, 776, 117, 25);
+		frame.getContentPane().add(sellButton);
+		
+		
 		portButton.setBounds(523, 938, 117, 25);
 		frame.getContentPane().add(portButton);
+		
+		JButton viewStoreButton = new JButton("View Store List");
+		viewStoreButton.setBackground(new Color(204, 153, 102));
+		viewStoreButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		viewStoreButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String report = "Welcome to the store!\n\n";
+				report += manager.getTrader().getCurrentIsland().getStore().forSale() + "\n\n";
+				report += "******************************\n\n";
+				report += manager.getTrader().getCurrentIsland().getStore().forPurchase();
+				reportText.setText(report);
+				
+				javax.swing.SwingUtilities.invokeLater(new Runnable() {
+					   public void run() { 
+					       scrollPane.getVerticalScrollBar().setValue(0);
+					   }
+					});
+			}
+		});
+		viewStoreButton.setFont(new Font("Dialog", Font.BOLD, 14));
+		viewStoreButton.setBounds(40, 938, 200, 25);
+		frame.getContentPane().add(viewStoreButton);
+		
+		JButton viewTradingLogsButton = new JButton("View Trading Logs");
+		viewTradingLogsButton.setBackground(new Color(204, 153, 102));
+		viewTradingLogsButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String report = "Here are your trading records";
+				report += manager.getTrader().getTradingLogsString();
+				reportText.setText(report);
+				
+				javax.swing.SwingUtilities.invokeLater(new Runnable() {
+					   public void run() { 
+					       scrollPane.getVerticalScrollBar().setValue(0);
+					   }
+					});
+			}
+		});
+		viewTradingLogsButton.setFont(new Font("Dialog", Font.BOLD, 14));
+		viewTradingLogsButton.setBounds(40, 987, 200, 25);
+		frame.getContentPane().add(viewTradingLogsButton);
+		
+		JButton viewShipCargoesButton = new JButton("View Ship Cargoes");
+		viewShipCargoesButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String report = "";
+				report += manager.getTrader().getOwndedShip().getCargosString();
+				reportText.setText(report);
+				
+				javax.swing.SwingUtilities.invokeLater(new Runnable() {
+					   public void run() { 
+					       scrollPane.getVerticalScrollBar().setValue(0);
+					   }
+					});
+			}
+		});
+		viewShipCargoesButton.setBackground(new Color(204, 153, 102));
+		viewShipCargoesButton.setFont(new Font("Dialog", Font.BOLD, 14));
+		viewShipCargoesButton.setBounds(264, 938, 200, 25);
+		frame.getContentPane().add(viewShipCargoesButton);
 	}
-
 }
