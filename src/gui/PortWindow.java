@@ -176,7 +176,7 @@ public class PortWindow {
 		
 		// update report when initializing
 		reportText.setText("A new advanture has started! What's next captain?\n\n\n"
-				          + manager.getRoutes());
+				          + manager.getTrader().getCurrentIsland().getRoutesString(manager.getShip()));
 		// ======================
 		
 		
@@ -209,7 +209,7 @@ public class PortWindow {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// call repair method from manager
-				String report = manager.repair();
+				String report = manager.getTrader().repairShip();
 				reportText.setText(report);
 				
 				// update status labels
@@ -460,7 +460,7 @@ public class PortWindow {
 				int cannonNum = cannonNumSlider.getValue();
 				
 				// call upgrade method from manager
-				String report = manager.upgradeCannon(cannonNum);
+				String report = manager.getTrader().upgradeCannons(cannonNum);
 				reportText.setText(report);
 				
 				// update status labels
@@ -513,7 +513,7 @@ public class PortWindow {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				String routeReport = manager.getRoutes();
+				String routeReport = manager.getTrader().getCurrentIsland().getRoutesString(manager.getShip());
 				reportText.setText(routeReport);
 				
 				// set scroll bar to top
@@ -535,8 +535,17 @@ public class PortWindow {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				String shipStatus = manager.getShipStatus();
+				String shipStatus = manager.getShip().toString() + "\n" +
+				                    manager.getShip().getCargosString() + "\n" + 
+				                    manager.getShip().getUpgradeLogString();
 				reportText.setText(shipStatus);
+				
+				// set scroll bar to top
+				javax.swing.SwingUtilities.invokeLater(new Runnable() {
+					   public void run() { 
+					       scrollPane.getVerticalScrollBar().setValue(0);
+					   }
+					});
 			}
 		});
 		viewShipButton.setFont(new Font("Dialog", Font.BOLD, 14));
@@ -549,8 +558,16 @@ public class PortWindow {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				String traderStatus = manager.getTraderStatus();
+				String traderStatus = manager.getTrader().toString() + "\n\n" +
+						              manager.getTrader().getTradingLogsString();
 				reportText.setText(traderStatus);
+				
+				// set scroll bar to top
+				javax.swing.SwingUtilities.invokeLater(new Runnable() {
+					   public void run() { 
+					       scrollPane.getVerticalScrollBar().setValue(0);
+					   }
+					});
 				
 			}
 		});

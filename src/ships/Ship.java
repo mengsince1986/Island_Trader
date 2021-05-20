@@ -369,8 +369,7 @@ public class Ship {
 							"Damage suffered: " + getDamage() + "\n\n" +
 							"Current crew number: " + getCrewNumber() + "\n" +
 							"Cannons: " + getCannons() + "\n\n" +
-							"Cost per day: " + getCostPerDay() + "\n" +
-							"Remaining capacity: " + getCapacity() + "\n";
+							"Cost per day: " + getCostPerDay();
 		return properties;
 	}
 	

@@ -441,8 +441,8 @@ public class StoreWindow {
 		viewTradingLogsButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String report = "Here are your trading records";
-				report += manager.getTrader().getTradingLogsString();
+				
+				String report = manager.getTrader().getTradingLogsString();
 				reportText.setText(report);
 				
 				// set scrollbar to top

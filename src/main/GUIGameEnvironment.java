@@ -45,6 +45,10 @@ public class GUIGameEnvironment {
 		return this.player;
 	}
 
+	public Ship getShip() {
+		return this.ship;
+	}
+	
 	// setter methods still return report for GUI report display
 	public String setTrader(String name, int days, String homeName, String shipName) {
 
@@ -55,14 +59,12 @@ public class GUIGameEnvironment {
 		ship.setCaptain(player);
 		player.setOwnedShip(ship);
 
-		String report = "A new trader " + player.getName() + " has been created!" + "\nYour ship is " + ship.getName()
-				+ ".";
+		String report = "A new trader named " + player.getName() + " has been created!" 
+		                + "\nYour ship is " + ship.getName()
+		                + " and you will start from your home island " 
+		                + player.getCurrentIsland().getName() + ".";
 		return report;
 
-	}
-
-	public Ship getShip() {
-		return this.ship;
 	}
 
 	public String sail(String destination) {
@@ -81,40 +83,6 @@ public class GUIGameEnvironment {
 
 	}
 
-	public String repair() {
-
-		String report = player.repairShip();
-
-		return report;
-	}
-
-	public String upgradeCannon(int cannonNum) {
-
-		String report = player.upgradeCannons(cannonNum);
-
-		return report;
-	}
-
-	public String getRoutes() {
-
-		String report = player.getCurrentIsland().getRoutesString(ship);
-
-		return report;
-	}
-
-	public String getTraderStatus() {
-
-		String report = player.toString();
-
-		return report;
-	}
-
-	public String getShipStatus() {
-
-		String report = player.getOwndedShip().toString();
-
-		return report;
-	}
 
 	// store methods
 

@@ -90,7 +90,7 @@ public class Trader {
 	
 	// print trading logs
 	public String getTradingLogsString() {
-		String logsString = "Your trading log:\n\n";
+		String logsString = "Your trading log:\n";
 		if (this.tradingLogs.size() > 0) {
 			for (TradingLog log : this.tradingLogs) {
 				logsString += log.toString() + "\n";
