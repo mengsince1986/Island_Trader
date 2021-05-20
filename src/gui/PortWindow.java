@@ -38,7 +38,7 @@ import javax.swing.event.ChangeEvent;
 
 public class PortWindow {
 
-	private JFrame frame;
+	private JFrame portFrame;
 	private GUIGameEnvironment manager;
 	private final ButtonGroup destinationButtonGroup = new ButtonGroup();
 
@@ -67,11 +67,11 @@ public class PortWindow {
 	public PortWindow(GUIGameEnvironment incomingManager) {
 		this.manager = incomingManager;
 		initialize();
-		frame.setVisible(true);
+		portFrame.setVisible(true);
 	}
 	
 	public void closePortWindow() {
-		frame.dispose();
+		portFrame.dispose();
 	}
 	
 	public void finishedPortWindow() {
@@ -88,59 +88,60 @@ public class PortWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 699, 832);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		portFrame = new JFrame();
+		portFrame.setTitle("Island Trader  - PORT");
+		portFrame.setBounds(100, 100, 752, 901);
+		portFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		portFrame.getContentPane().setLayout(null);
 		
 		JLabel portLabel = new JLabel("Port");
-		portLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		portLabel.setFont(new Font("Dialog", Font.BOLD, 18));
 		portLabel.setBounds(0, 10, 689, 20);
 		portLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		frame.getContentPane().add(portLabel);
+		portFrame.getContentPane().add(portLabel);
 		
 		JLabel NameLabel = new JLabel("Name: ");
 		NameLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		NameLabel.setBounds(61, 54, 70, 15);
-		frame.getContentPane().add(NameLabel);
+		portFrame.getContentPane().add(NameLabel);
 		
 		JLabel nameDisplayLabel = new JLabel("N/A");
 		portLabel.setLabelFor(nameDisplayLabel);
 		nameDisplayLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		nameDisplayLabel.setBounds(130, 54, 200, 15);
-		frame.getContentPane().add(nameDisplayLabel);
+		portFrame.getContentPane().add(nameDisplayLabel);
 		
 		JLabel DaysLabel = new JLabel("Remaining Days:");
 		DaysLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		DaysLabel.setBounds(350, 54, 150, 15);
-		frame.getContentPane().add(DaysLabel);
+		portFrame.getContentPane().add(DaysLabel);
 		
 		JLabel DaysDisplayLabel = new JLabel("N/A");
 		DaysLabel.setLabelFor(DaysDisplayLabel);
 		DaysDisplayLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		DaysDisplayLabel.setBounds(500, 54, 140, 15);
-		frame.getContentPane().add(DaysDisplayLabel);
+		portFrame.getContentPane().add(DaysDisplayLabel);
 		
 		JLabel moneyLabel = new JLabel("Money: ");
 		moneyLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		moneyLabel.setBounds(61, 85, 70, 15);
-		frame.getContentPane().add(moneyLabel);
+		portFrame.getContentPane().add(moneyLabel);
 		
 		JLabel moneyDisplayLabel = new JLabel("N/A");
 		moneyLabel.setLabelFor(moneyDisplayLabel);
 		moneyDisplayLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		moneyDisplayLabel.setBounds(130, 85, 140, 15);
-		frame.getContentPane().add(moneyDisplayLabel);
+		portFrame.getContentPane().add(moneyDisplayLabel);
 		
 		JLabel locationLabel = new JLabel("Location: ");
 		locationLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		locationLabel.setBounds(350, 85, 85, 15);
-		frame.getContentPane().add(locationLabel);
+		portFrame.getContentPane().add(locationLabel);
 		
 		JLabel locationDisplayLabel = new JLabel("N/A");
 		locationDisplayLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		locationDisplayLabel.setBounds(440, 85, 200, 15);
-		frame.getContentPane().add(locationDisplayLabel);
+		portFrame.getContentPane().add(locationDisplayLabel);
 		
 		// update status labels
 		
@@ -166,21 +167,26 @@ public class PortWindow {
 		reportText.setLineWrap(true);
 		reportText.setWrapStyleWord(true);
 		reportText.setBounds(50, 127, 600, 276);
-		frame.getContentPane().add(reportText);
+		portFrame.getContentPane().add(reportText);
 		
 		JScrollPane scrollPane = new JScrollPane(reportText);
-		scrollPane.setBounds(50, 127, 600, 276);
-		frame.getContentPane().add(scrollPane);
+		scrollPane.setBounds(48, 127, 650, 276);
+		portFrame.getContentPane().add(scrollPane);
 		
+		
+		// update report when initializing
+		reportText.setText("A new advanture has started! What's next captain?\n\n\n"
+				          + manager.getRoutes());
+		// ======================
+		
+		
+		// set scroll bar to top
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			   public void run() { 
 			       scrollPane.getVerticalScrollBar().setValue(0);
 			   }
 			});
-		
-		// update report when initializing
-		//reportText.setText("Hello, port!");
-		// ======================
+	
 		
 		JButton storeButton = new JButton("Go to Store");
 		storeButton.setFont(new Font("Dialog", Font.BOLD, 14));
@@ -190,8 +196,8 @@ public class PortWindow {
 				finishedPortWindow();
 			}
 		});
-		storeButton.setBounds(460, 730, 180, 25);
-		frame.getContentPane().add(storeButton);
+		storeButton.setBounds(510, 790, 180, 25);
+		portFrame.getContentPane().add(storeButton);
 		
 		JButton repairButton = new JButton("Repair Ship");
 		repairButton.addActionListener(new ActionListener() {
@@ -218,8 +224,8 @@ public class PortWindow {
 			}
 		});
 		repairButton.setBackground(new Color(204, 153, 102));
-		repairButton.setBounds(50, 540, 180, 25);
-		frame.getContentPane().add(repairButton);
+		repairButton.setBounds(255, 547, 180, 25);
+		portFrame.getContentPane().add(repairButton);
 		
 		
 		JButton quitButton = new JButton("Quit");
@@ -245,11 +251,15 @@ public class PortWindow {
 				reportText.setText(report);
 			}
 		});
-		summaryButton.setBounds(300, 730, 117, 25);
-		frame.getContentPane().add(summaryButton);
+		summaryButton.setBounds(300, 790, 117, 25);
+		portFrame.getContentPane().add(summaryButton);
 		summaryButton.setVisible(false);
 		
 		JButton sailButton = new JButton("Sail to");
+		sailButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		sailButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		sailButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -284,7 +294,7 @@ public class PortWindow {
 						String name = manager.getTrader().getName();
 						int days = manager.getTrader().getRemainingDays();
 						int money = manager.getTrader().getOwnedMoney();
-						String islandLocation =manager.getTrader().getCurrentIsland().getName();
+						String islandLocation = manager.getTrader().getCurrentIsland().getName();
 						
 						nameDisplayLabel.setText(name);
 						DaysDisplayLabel.setText(String.valueOf(days));
@@ -303,6 +313,12 @@ public class PortWindow {
 						
 						// set Summary button visible
 						summaryButton.setVisible(true);
+						
+						javax.swing.SwingUtilities.invokeLater(new Runnable() {
+							   public void run() { 
+							       scrollPane.getVerticalScrollBar().setValue(0);
+							   }
+							});
 						
 					} else {
 						
@@ -339,6 +355,12 @@ public class PortWindow {
 							i += 1;
 						}
 						
+						javax.swing.SwingUtilities.invokeLater(new Runnable() {
+							   public void run() { 
+							       scrollPane.getVerticalScrollBar().setValue(0);
+							   }
+							});
+						
 					}
 					
 				}
@@ -350,26 +372,26 @@ public class PortWindow {
 		
 		sailButton.setBackground(new Color(204, 153, 102));
 		sailButton.setBounds(50, 450, 180, 25);
-		frame.getContentPane().add(sailButton);
+		portFrame.getContentPane().add(sailButton);
 		
 		JRadioButton destRadionButton1 = new JRadioButton("N/A");
 		destRadionButton1.setFont(new Font("Dialog", Font.BOLD, 14));
 		destRadionButton1.setSelected(true);
 		destinationButtonGroup.add(destRadionButton1);
 		destRadionButton1.setBounds(255, 428, 250, 23);
-		frame.getContentPane().add(destRadionButton1);
+		portFrame.getContentPane().add(destRadionButton1);
 		
 		JRadioButton destRadionButton2 = new JRadioButton("N/A");
 		destRadionButton2.setFont(new Font("Dialog", Font.BOLD, 14));
 		destinationButtonGroup.add(destRadionButton2);
 		destRadionButton2.setBounds(255, 455, 250, 23);
-		frame.getContentPane().add(destRadionButton2);
+		portFrame.getContentPane().add(destRadionButton2);
 		
 		JRadioButton destRadionButton3 = new JRadioButton("N/A");
 		destRadionButton3.setFont(new Font("Dialog", Font.BOLD, 14));
 		destinationButtonGroup.add(destRadionButton3);
 		destRadionButton3.setBounds(255, 480, 250, 23);
-		frame.getContentPane().add(destRadionButton3);
+		portFrame.getContentPane().add(destRadionButton3);
 		
 		// update destination radio buttons when initializing PortWindow
 		
@@ -392,21 +414,22 @@ public class PortWindow {
 		// ========================
 		
 		JSeparator separator1 = new JSeparator();
-		separator1.setBounds(50, 515, 600, 2);
-		frame.getContentPane().add(separator1);
+		separator1.setBounds(45, 515, 650, 2);
+		portFrame.getContentPane().add(separator1);
 		quitButton.setBackground(new Color(255, 102, 102));
-		quitButton.setBounds(175, 730, 100, 25);
-		frame.getContentPane().add(quitButton);
+		quitButton.setBounds(175, 790, 100, 25);
+		portFrame.getContentPane().add(quitButton);
 		
-		JLabel costLable = new JLabel("cost:");
+		JLabel costLable = new JLabel("Cost:");
 		costLable.setFont(new Font("Dialog", Font.BOLD, 14));
-		costLable.setBounds(490, 589, 70, 15);
-		frame.getContentPane().add(costLable);
+		costLable.setBounds(491, 636, 70, 15);
+		portFrame.getContentPane().add(costLable);
 		
 		JLabel cannonCostLable = new JLabel("N/A");
+		costLable.setLabelFor(cannonCostLable);
 		cannonCostLable.setFont(new Font("Dialog", Font.BOLD, 14));
-		cannonCostLable.setBounds(540, 589, 90, 15);
-		frame.getContentPane().add(cannonCostLable);
+		cannonCostLable.setBounds(541, 636, 150, 15);
+		portFrame.getContentPane().add(cannonCostLable);
 		
 		JSlider cannonNumSlider = new JSlider();
 		cannonNumSlider.addChangeListener(new ChangeListener() {
@@ -415,7 +438,7 @@ public class PortWindow {
 				// update cannon cost
 				int cannonNum = cannonNumSlider.getValue();
 				int totalCost = cannonNum * manager.getTrader().getCurrentIsland().getPort().getcannonCost();
-				cannonCostLable.setText(String.valueOf(totalCost));
+				cannonCostLable.setText(String.valueOf(totalCost) + " coins");
 			}
 		});
 		cannonNumSlider.setValue(1);
@@ -425,8 +448,8 @@ public class PortWindow {
 		cannonNumSlider.setMajorTickSpacing(1);
 		cannonNumSlider.setMinimum(1);
 		cannonNumSlider.setMaximum(10);
-		cannonNumSlider.setBounds(250, 590, 220, 40);
-		frame.getContentPane().add(cannonNumSlider);
+		cannonNumSlider.setBounds(251, 636, 220, 40);
+		portFrame.getContentPane().add(cannonNumSlider);
 		
 		JButton upgradeCannonsButton = new JButton("Upgrade Cannons");
 		upgradeCannonsButton.addMouseListener(new MouseAdapter() {
@@ -454,18 +477,18 @@ public class PortWindow {
 		});
 		upgradeCannonsButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		upgradeCannonsButton.setBackground(new Color(204, 153, 102));
-		upgradeCannonsButton.setBounds(50, 586, 180, 25);
-		frame.getContentPane().add(upgradeCannonsButton);
+		upgradeCannonsButton.setBounds(51, 632, 180, 25);
+		portFrame.getContentPane().add(upgradeCannonsButton);
 		
 		// update cannon cost when initializing
 		int cannonNum = cannonNumSlider.getValue();
 		int totalCost = cannonNum * manager.getTrader().getCurrentIsland().getPort().getcannonCost();
-		cannonCostLable.setText(String.valueOf(totalCost));
+		cannonCostLable.setText(String.valueOf(totalCost) + " coins");
 		
 		
 		JSeparator separator2 = new JSeparator();
-		separator2.setBounds(50, 640, 600, 2);
-		frame.getContentPane().add(separator2);
+		separator2.setBounds(45, 690, 650, 2);
+		portFrame.getContentPane().add(separator2);
 		
 		JButton restartButton = new JButton("Restart");
 		restartButton.addMouseListener(new MouseAdapter() {
@@ -478,26 +501,67 @@ public class PortWindow {
 		});
 		restartButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		restartButton.setBackground(new Color(255, 102, 102));
-		restartButton.setBounds(50, 730, 100, 25);
-		frame.getContentPane().add(restartButton);
+		restartButton.setBounds(50, 790, 100, 25);
+		portFrame.getContentPane().add(restartButton);
 		
 		JButton viewRoutesButton = new JButton("Available Routes");
+		viewRoutesButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		viewRoutesButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				String routeReport = manager.getRoutes();
+				reportText.setText(routeReport);
+				
+				// set scroll bar to top
+				javax.swing.SwingUtilities.invokeLater(new Runnable() {
+					   public void run() { 
+					       scrollPane.getVerticalScrollBar().setValue(0);
+					   }
+					});
+				
+			}
+		});
 		viewRoutesButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		viewRoutesButton.setBackground(new Color(204, 153, 102));
-		viewRoutesButton.setBounds(50, 665, 180, 25);
-		frame.getContentPane().add(viewRoutesButton);
+		viewRoutesButton.setBounds(50, 547, 180, 25);
+		portFrame.getContentPane().add(viewRoutesButton);
 		
 		JButton viewShipButton = new JButton("Ship Status");
+		viewShipButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				String shipStatus = manager.getShipStatus();
+				reportText.setText(shipStatus);
+			}
+		});
 		viewShipButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		viewShipButton.setBackground(new Color(204, 153, 102));
-		viewShipButton.setBounds(460, 665, 180, 25);
-		frame.getContentPane().add(viewShipButton);
+		viewShipButton.setBounds(255, 720, 180, 25);
+		portFrame.getContentPane().add(viewShipButton);
 		
 		JButton viewTraderButton = new JButton("Trader Status");
+		viewTraderButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				String traderStatus = manager.getTraderStatus();
+				reportText.setText(traderStatus);
+				
+			}
+		});
 		viewTraderButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		viewTraderButton.setBackground(new Color(204, 153, 102));
-		viewTraderButton.setBounds(255, 665, 180, 25);
-		frame.getContentPane().add(viewTraderButton);
+		viewTraderButton.setBounds(50, 720, 180, 25);
+		portFrame.getContentPane().add(viewTraderButton);
+		
+		JSeparator separator2_1 = new JSeparator();
+		separator2_1.setBounds(45, 600, 650, 2);
+		portFrame.getContentPane().add(separator2_1);
 		
 		
 	}

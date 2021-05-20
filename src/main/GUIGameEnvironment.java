@@ -98,6 +98,32 @@ public class GUIGameEnvironment {
 		return report;
 	}
 	
+	
+	public String getRoutes() {
+		
+		String report = player.getCurrentIsland().getRoutesString(ship);
+		
+		return report;
+	}
+	
+	
+	public String getTraderStatus() {
+		
+		String report = player.toString();
+		
+		return report;
+	}
+	
+	public String getShipStatus() {
+		
+		String report = player.getOwndedShip().toString();
+		
+		return report;
+	}
+	
+	
+	// store methods
+	
 	public String buy(String itemName, int quantity) {
 		
 		String report = player.buy(player.getCurrentIsland(), itemName, quantity);

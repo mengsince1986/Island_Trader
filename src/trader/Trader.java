@@ -303,11 +303,10 @@ public class Trader {
 	}
 	
 	public String toString() {
-		String status = "Remaining Days: " + this.remainingDays + "\n" +
-						"Name: " + this.name + "\n" +
-						"Money: " + this.ownedMoney + "\n" +
+		String status = "Name: " + this.name + "\n\n" +
+						"Money Owend: " + this.ownedMoney + "\n\n" +
 						"Home Island: " + this.homeIsland.getName() + "\n" +
-						"Ship: " + this.ownedShip.getName() + "\n" +
+						"Ship Owned: " + this.ownedShip.getName() + "\n\n" +
 						"Current Island: " + this.currentIsland.getName() + "\n" +
 						"Current Location: " + this.curentLocation;
 		return status;

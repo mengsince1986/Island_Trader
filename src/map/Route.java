@@ -52,7 +52,7 @@ public class Route {
 	}
 	@Override
 	public String toString() {
-		return String.format("from %s to %s\n  Danger level: %s\n", source.getName(), destination.getName(), dangerLevel);
+		return String.format("from %s to %s\nDescription: %s\n", source.getName(), destination.getName(), dangerLevel);
 	}
 
 	public static void main(String[] args) {

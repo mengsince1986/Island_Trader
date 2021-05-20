@@ -363,13 +363,12 @@ public class Ship {
 	
 	// print
 	public String toString() {
-		String properties = "Name: " + getName() + "\n" +
+		String properties = "Name: " + getName() + "\n\n" +
 							"Speed: " + getSpeed() + "\n" +
 							"Default durability: " + getDefaultDurability() + "\n" +
-							"Damage suffered: " + getDamage() + "\n" +
-							"Minimum crew number: " + getMinimumCrewNum() + "\n" +
+							"Damage suffered: " + getDamage() + "\n\n" +
 							"Current crew number: " + getCrewNumber() + "\n" +
-							"Cannons: " + getCannons() + "\n" +
+							"Cannons: " + getCannons() + "\n\n" +
 							"Cost per day: " + getCostPerDay() + "\n" +
 							"Remaining capacity: " + getCapacity() + "\n";
 		return properties;

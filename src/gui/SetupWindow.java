@@ -29,10 +29,11 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import java.awt.Color;
+import javax.swing.JSeparator;
 
 public class SetupWindow {
 
-	private JFrame frame;
+	private JFrame setupFrame;
 	private JTextField nameTextField;
 	private final ButtonGroup shipButtonGroup = new ButtonGroup();
 	private GUIGameEnvironment manager;
@@ -66,11 +67,11 @@ public class SetupWindow {
 	public SetupWindow(GUIGameEnvironment incomingManager) {
 		this.manager = incomingManager;
 		initialize();
-		frame.setVisible(true);
+		setupFrame.setVisible(true);
 	}
 	
 	public void closeSetupWindow() {
-		frame.dispose();
+		setupFrame.dispose();
 	}
 	
 	public void finishedSetupWindow() {
@@ -82,36 +83,37 @@ public class SetupWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 494, 455);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		setupFrame = new JFrame();
+		setupFrame.setTitle("Island Trader - New Player");
+		setupFrame.setBounds(100, 100, 631, 579);
+		setupFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setupFrame.getContentPane().setLayout(null);
 		
-		JLabel welcomeLabel = new JLabel("Welcome to Island Trader");
+		JLabel welcomeLabel = new JLabel("Create a new player");
 		welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		welcomeLabel.setFont(new Font("Dialog", Font.BOLD, 18));
-		welcomeLabel.setBounds(100, 12, 300, 15);
-		frame.getContentPane().add(welcomeLabel);
+		welcomeLabel.setBounds(175, 12, 300, 30);
+		setupFrame.getContentPane().add(welcomeLabel);
 		
 		JLabel nameLabel = new JLabel("Name: ");
 		nameLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		nameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		nameLabel.setBounds(68, 54, 70, 15);
-		frame.getContentPane().add(nameLabel);
+		nameLabel.setBounds(87, 70, 70, 15);
+		setupFrame.getContentPane().add(nameLabel);
 		
 		nameTextField = new JTextField();
 		nameTextField.setFont(new Font("Dialog", Font.BOLD, 14));
-		nameTextField.setText("Jon");
+		nameTextField.setText("Alice");
 		nameLabel.setLabelFor(nameTextField);
-		nameTextField.setBounds(148, 52, 120, 25);
-		frame.getContentPane().add(nameTextField);
+		nameTextField.setBounds(175, 68, 205, 25);
+		setupFrame.getContentPane().add(nameTextField);
 		nameTextField.setColumns(10);
 		
 		JLabel dayLabel = new JLabel("Days:");
 		dayLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		dayLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		dayLabel.setBounds(64, 97, 70, 15);
-		frame.getContentPane().add(dayLabel);
+		dayLabel.setBounds(86, 122, 70, 15);
+		setupFrame.getContentPane().add(dayLabel);
 		
 		JSlider daysSlider = new JSlider();
 		daysSlider.setMaximum(90);
@@ -122,58 +124,84 @@ public class SetupWindow {
 		daysSlider.setMinorTickSpacing(20);
 		daysSlider.setMajorTickSpacing(20);
 		dayLabel.setLabelFor(daysSlider);
-		daysSlider.setBounds(139, 89, 200, 48);
-		frame.getContentPane().add(daysSlider);
+		daysSlider.setBounds(166, 117, 205, 40);
+		setupFrame.getContentPane().add(daysSlider);
+		
+		JSeparator separator1 = new JSeparator();
+		separator1.setBounds(90, 175, 450, 2);
+		setupFrame.getContentPane().add(separator1);
 		
 		JLabel homeLabel = new JLabel("Home:");
 		homeLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		homeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		homeLabel.setBounds(68, 147, 70, 15);
-		frame.getContentPane().add(homeLabel);
+		homeLabel.setBounds(86, 195, 70, 15);
+		setupFrame.getContentPane().add(homeLabel);
 		
 		JRadioButton island1Button = new JRadioButton("Mecca Merchantia");
 		island1Button.setFont(new Font("Dialog", Font.BOLD, 14));
 		island1Button.setSelected(true);
 		homeButtonGroup.add(island1Button);
-		island1Button.setBounds(144, 145, 190, 23);
-		frame.getContentPane().add(island1Button);
+		island1Button.setBounds(166, 193, 190, 23);
+		setupFrame.getContentPane().add(island1Button);
 		
 		JRadioButton island2Button = new JRadioButton("Ceylon");
 		island2Button.setFont(new Font("Dialog", Font.BOLD, 14));
 		homeButtonGroup.add(island2Button);
-		island2Button.setBounds(144, 170, 149, 23);
-		frame.getContentPane().add(island2Button);
+		island2Button.setBounds(393, 193, 149, 23);
+		setupFrame.getContentPane().add(island2Button);
 		
-		JLabel lblNewLabel = new JLabel("Ship:");
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(64, 202, 70, 15);
-		frame.getContentPane().add(lblNewLabel);
+		JRadioButton island3Button = new JRadioButton("Lord Matheson Island");
+		homeButtonGroup.add(island3Button);
+		island3Button.setFont(new Font("Dialog", Font.BOLD, 14));
+		island3Button.setBounds(166, 247, 205, 23);
+		setupFrame.getContentPane().add(island3Button);
+		
+		JRadioButton island4Button = new JRadioButton("Niawall's Tear");
+		homeButtonGroup.add(island4Button);
+		island4Button.setFont(new Font("Dialog", Font.BOLD, 14));
+		island4Button.setBounds(393, 221, 155, 23);
+		setupFrame.getContentPane().add(island4Button);
+		
+		JRadioButton island5Button = new JRadioButton("The Isle of Dwarves");
+		homeButtonGroup.add(island5Button);
+		island5Button.setFont(new Font("Dialog", Font.BOLD, 14));
+		island5Button.setBounds(166, 221, 200, 23);
+		setupFrame.getContentPane().add(island5Button);
+		
+		JSeparator separator2 = new JSeparator();
+		separator2.setBounds(90, 285, 450, 2);
+		setupFrame.getContentPane().add(separator2);
+		
+		JLabel shipLabel = new JLabel("Ship:");
+		shipLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		shipLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		shipLabel.setBounds(86, 300, 70, 15);
+		setupFrame.getContentPane().add(shipLabel);
 		
 		JRadioButton fastShipRadioButton = new JRadioButton("Black Pearl");
 		fastShipRadioButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		shipButtonGroup.add(fastShipRadioButton);
 		fastShipRadioButton.setSelected(true);
-		fastShipRadioButton.setBounds(144, 199, 149, 23);
-		frame.getContentPane().add(fastShipRadioButton);
+		fastShipRadioButton.setBounds(166, 297, 149, 23);
+		setupFrame.getContentPane().add(fastShipRadioButton);
 		
 		JRadioButton balancedShipRadioButton = new JRadioButton("Redcoasts");
 		balancedShipRadioButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		shipButtonGroup.add(balancedShipRadioButton);
-		balancedShipRadioButton.setBounds(144, 226, 149, 23);
-		frame.getContentPane().add(balancedShipRadioButton);
+		balancedShipRadioButton.setBounds(166, 324, 149, 23);
+		setupFrame.getContentPane().add(balancedShipRadioButton);
 		
 		JRadioButton battleShipRadioButton = new JRadioButton("Endeavour");
 		battleShipRadioButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		shipButtonGroup.add(battleShipRadioButton);
-		battleShipRadioButton.setBounds(289, 199, 149, 23);
-		frame.getContentPane().add(battleShipRadioButton);
+		battleShipRadioButton.setBounds(315, 297, 149, 23);
+		setupFrame.getContentPane().add(battleShipRadioButton);
 		
 		JRadioButton baoShipRadioButton = new JRadioButton("Empress");
 		baoShipRadioButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		shipButtonGroup.add(baoShipRadioButton);
-		baoShipRadioButton.setBounds(289, 226, 149, 23);
-		frame.getContentPane().add(baoShipRadioButton);
+		baoShipRadioButton.setBounds(315, 324, 149, 23);
+		setupFrame.getContentPane().add(baoShipRadioButton);
 		
 		JButton quitBtn = new JButton("Quit");
 		quitBtn.setBackground(new Color(255, 102, 102));
@@ -190,12 +218,12 @@ public class SetupWindow {
 		reportText.setLineWrap(true);
 		reportText.setFont(new Font("Dialog", Font.BOLD, 14));
 		reportText.setEditable(false);
-		reportText.setText("SENG201 Project\n\nAuthors: Finn & Meng");
-		reportText.setBounds(40, 320, 400, 70);
-		frame.getContentPane().add(reportText);
+		reportText.setText("Welcome to Island Trader!\n\nLet's create a new trader here.");
+		reportText.setBounds(90, 438, 450, 70);
+		setupFrame.getContentPane().add(reportText);
 		
-		quitBtn.setBounds(50, 269, 80, 25);
-		frame.getContentPane().add(quitBtn);
+		quitBtn.setBounds(102, 387, 80, 25);
+		setupFrame.getContentPane().add(quitBtn);
 		
 		JButton confirmBtn = new JButton("Confirm");
 		confirmBtn.addMouseListener(new MouseAdapter() {
@@ -248,8 +276,8 @@ public class SetupWindow {
 				
 			}
 		});
-		confirmBtn.setBounds(180, 269, 117, 25);
-		frame.getContentPane().add(confirmBtn);
+		confirmBtn.setBounds(242, 387, 117, 25);
+		setupFrame.getContentPane().add(confirmBtn);
 		
 		JButton startButton = new JButton("Start Game");
 		startButton.addMouseListener(new MouseAdapter() {
@@ -262,8 +290,8 @@ public class SetupWindow {
 						         + "and click \"Confirm\" button first.");
 			}
 		});
-		startButton.setBounds(321, 269, 117, 25);
-		frame.getContentPane().add(startButton);
+		startButton.setBounds(383, 387, 117, 25);
+		setupFrame.getContentPane().add(startButton);
 		
 		
 	}

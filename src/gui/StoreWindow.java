@@ -37,7 +37,7 @@ import javax.swing.JScrollPane;
 
 public class StoreWindow {
 
-	private JFrame frame;
+	private JFrame storeFrame;
 	private GUIGameEnvironment manager;
 	private final ButtonGroup saleItembuttonGroup = new ButtonGroup();
 	private final ButtonGroup purchaseItembuttonGroup = new ButtonGroup();
@@ -66,11 +66,11 @@ public class StoreWindow {
 	public StoreWindow(GUIGameEnvironment incomingManager) {
 		this.manager = incomingManager;
 		initialize();
-		frame.setVisible(true);
+		storeFrame.setVisible(true);
 	}
 	
 	public void closeStoreWindow() {
-		frame.dispose();
+		storeFrame.dispose();
 	}
 	
 	public void finishedStoreWindow() {
@@ -81,17 +81,18 @@ public class StoreWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.getContentPane().setFont(new Font("Dialog", Font.PLAIN, 14));
-		frame.setBounds(100, 100, 686, 795);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		storeFrame = new JFrame();
+		storeFrame.setTitle("Island Trader - STORE");
+		storeFrame.getContentPane().setFont(new Font("Dialog", Font.PLAIN, 14));
+		storeFrame.setBounds(100, 100, 686, 795);
+		storeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		storeFrame.getContentPane().setLayout(null);
 		
 		JLabel storeLabel = new JLabel("Store");
 		storeLabel.setFont(new Font("Dialog", Font.BOLD, 18));
 		storeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		storeLabel.setBounds(295, 12, 70, 15);
-		frame.getContentPane().add(storeLabel);
+		storeFrame.getContentPane().add(storeLabel);
 		
 		JTextArea reportText = new JTextArea();
 		reportText.setEditable(false);
@@ -100,7 +101,7 @@ public class StoreWindow {
 		reportText.setLineWrap(true);
 		reportText.setWrapStyleWord(true);
 		reportText.setBounds(40, 127, 600, 559);
-		frame.getContentPane().add(reportText);
+		storeFrame.getContentPane().add(reportText);
 		
 		// update store report when initializing
 		String report = "Welcome to the store!\n\n";
@@ -113,7 +114,7 @@ public class StoreWindow {
 		
 		JScrollPane scrollPane = new JScrollPane(reportText);
 		scrollPane.setBounds(40, 116, 600, 300);
-		frame.getContentPane().add(scrollPane);
+		storeFrame.getContentPane().add(scrollPane);
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			   public void run() { 
 			       scrollPane.getVerticalScrollBar().setValue(0);
@@ -124,42 +125,42 @@ public class StoreWindow {
 		JLabel NameLabel = new JLabel("Name: ");
 		NameLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		NameLabel.setBounds(59, 58, 70, 15);
-		frame.getContentPane().add(NameLabel);
+		storeFrame.getContentPane().add(NameLabel);
 		
 		JLabel nameDisplayLabel = new JLabel("<dynamic>");
 		nameDisplayLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		nameDisplayLabel.setBounds(128, 58, 200, 15);
-		frame.getContentPane().add(nameDisplayLabel);
+		storeFrame.getContentPane().add(nameDisplayLabel);
 		
 		JLabel DaysLabel = new JLabel("Remaining Days:");
 		DaysLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		DaysLabel.setBounds(348, 58, 150, 15);
-		frame.getContentPane().add(DaysLabel);
+		storeFrame.getContentPane().add(DaysLabel);
 		
 		JLabel DaysDisplayLabel = new JLabel("0");
 		DaysDisplayLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		DaysDisplayLabel.setBounds(498, 58, 140, 15);
-		frame.getContentPane().add(DaysDisplayLabel);
+		storeFrame.getContentPane().add(DaysDisplayLabel);
 		
 		JLabel moneyLabel = new JLabel("Money: ");
 		moneyLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		moneyLabel.setBounds(59, 89, 70, 15);
-		frame.getContentPane().add(moneyLabel);
+		storeFrame.getContentPane().add(moneyLabel);
 		
 		JLabel moneyDisplayLabel = new JLabel("0");
 		moneyDisplayLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		moneyDisplayLabel.setBounds(128, 89, 140, 15);
-		frame.getContentPane().add(moneyDisplayLabel);
+		storeFrame.getContentPane().add(moneyDisplayLabel);
 		
 		JLabel locationLabel = new JLabel("Location: ");
 		locationLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		locationLabel.setBounds(348, 89, 85, 15);
-		frame.getContentPane().add(locationLabel);
+		storeFrame.getContentPane().add(locationLabel);
 		
 		JLabel locationDisplayLabel = new JLabel("<dynamic>");
 		locationDisplayLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		locationDisplayLabel.setBounds(438, 89, 200, 15);
-		frame.getContentPane().add(locationDisplayLabel);
+		storeFrame.getContentPane().add(locationDisplayLabel);
 		
 	// update status labels
 		
@@ -181,19 +182,19 @@ public class StoreWindow {
 		saleItembuttonGroup.add(saleItem1Button);
 		saleItem1Button.setSelected(true);
 		saleItem1Button.setBounds(198, 442, 120, 23);
-		frame.getContentPane().add(saleItem1Button);
+		storeFrame.getContentPane().add(saleItem1Button);
 		
 		JRadioButton saleItem2Button = new JRadioButton("N/A");
 		saleItem2Button.setFont(new Font("Dialog", Font.BOLD, 14));
 		saleItembuttonGroup.add(saleItem2Button);
 		saleItem2Button.setBounds(339, 442, 120, 23);
-		frame.getContentPane().add(saleItem2Button);
+		storeFrame.getContentPane().add(saleItem2Button);
 		
 		JRadioButton saleItem3Button = new JRadioButton("N/A");
 		saleItem3Button.setFont(new Font("Dialog", Font.BOLD, 14));
 		saleItembuttonGroup.add(saleItem3Button);
 		saleItem3Button.setBounds(481, 442, 120, 23);
-		frame.getContentPane().add(saleItem3Button);
+		storeFrame.getContentPane().add(saleItem3Button);
 		
 		// update sale list when initializing
 		ArrayList<String> saleItems = new ArrayList<String>(); 
@@ -214,7 +215,7 @@ public class StoreWindow {
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(40, 477, 600, 2);
-		frame.getContentPane().add(separator);
+		storeFrame.getContentPane().add(separator);
 		
 	
 		JRadioButton purchaseItem1Button = new JRadioButton("N/A");
@@ -222,19 +223,19 @@ public class StoreWindow {
 		purchaseItembuttonGroup.add(purchaseItem1Button);
 		purchaseItem1Button.setSelected(true);
 		purchaseItem1Button.setBounds(198, 495, 120, 23);
-		frame.getContentPane().add(purchaseItem1Button);
+		storeFrame.getContentPane().add(purchaseItem1Button);
 		
 		JRadioButton purchaseItem2Button = new JRadioButton("N/A");
 		purchaseItem2Button.setFont(new Font("Dialog", Font.BOLD, 14));
 		purchaseItembuttonGroup.add(purchaseItem2Button);
 		purchaseItem2Button.setBounds(339, 495, 120, 23);
-		frame.getContentPane().add(purchaseItem2Button);
+		storeFrame.getContentPane().add(purchaseItem2Button);
 		
 		JRadioButton purchaseItem3Button = new JRadioButton("N/A");
 		purchaseItem3Button.setFont(new Font("Dialog", Font.BOLD, 14));
 		purchaseItembuttonGroup.add(purchaseItem3Button);
 		purchaseItem3Button.setBounds(481, 495, 120, 23);
-		frame.getContentPane().add(purchaseItem3Button);
+		storeFrame.getContentPane().add(purchaseItem3Button);
 		
 		// update purchase list when initializing
 		ArrayList<String> purchaseItems = new ArrayList<String>(); 
@@ -254,7 +255,7 @@ public class StoreWindow {
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(40, 530, 600, 2);
-		frame.getContentPane().add(separator_1);
+		storeFrame.getContentPane().add(separator_1);
 		//===================================
 		
 		JSlider tradeQuantitySlider = new JSlider();
@@ -266,13 +267,13 @@ public class StoreWindow {
 		tradeQuantitySlider.setMinimum(1);
 		tradeQuantitySlider.setMaximum(200);
 		tradeQuantitySlider.setBounds(201, 550, 400, 20);
-		frame.getContentPane().add(tradeQuantitySlider);
+		storeFrame.getContentPane().add(tradeQuantitySlider);
 		
 		JLabel tradeQuantityLable = new JLabel("Trading Quantity :");
 		tradeQuantityLable.setFont(new Font("Dialog", Font.BOLD, 14));
 		tradeQuantityLable.setLabelFor(tradeQuantitySlider);
 		tradeQuantityLable.setBounds(40, 547, 150, 20);
-		frame.getContentPane().add(tradeQuantityLable);
+		storeFrame.getContentPane().add(tradeQuantityLable);
 		
 		
 		JLabel QuantityLabel = new JLabel("N/A");
@@ -280,7 +281,7 @@ public class StoreWindow {
 		QuantityLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		QuantityLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		QuantityLabel.setBounds(371, 573, 70, 20);
-		frame.getContentPane().add(QuantityLabel);
+		storeFrame.getContentPane().add(QuantityLabel);
 		QuantityLabel.setText(String.valueOf(tradeQuantitySlider.getValue())); 
 		
 		
@@ -353,7 +354,7 @@ public class StoreWindow {
 		});
 		buyButton.setBackground(new Color(204, 153, 102));
 		buyButton.setBounds(40, 440, 117, 25);
-		frame.getContentPane().add(buyButton);
+		storeFrame.getContentPane().add(buyButton);
 		
 		JButton sellButton = new JButton("Sell");
 		sellButton.addMouseListener(new MouseAdapter() {
@@ -402,11 +403,11 @@ public class StoreWindow {
 		sellButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		sellButton.setBackground(new Color(204, 153, 102));
 		sellButton.setBounds(40, 493, 117, 25);
-		frame.getContentPane().add(sellButton);
+		storeFrame.getContentPane().add(sellButton);
 		
 		
-		portButton.setBounds(523, 655, 117, 25);
-		frame.getContentPane().add(portButton);
+		portButton.setBounds(523, 640, 117, 25);
+		storeFrame.getContentPane().add(portButton);
 		
 		JButton viewStoreButton = new JButton("View Store List");
 		viewStoreButton.setBackground(new Color(204, 153, 102));
@@ -423,6 +424,7 @@ public class StoreWindow {
 				report += manager.getTrader().getCurrentIsland().getStore().forPurchase();
 				reportText.setText(report);
 				
+				// set scroll bar to top
 				javax.swing.SwingUtilities.invokeLater(new Runnable() {
 					   public void run() { 
 					       scrollPane.getVerticalScrollBar().setValue(0);
@@ -431,8 +433,8 @@ public class StoreWindow {
 			}
 		});
 		viewStoreButton.setFont(new Font("Dialog", Font.BOLD, 14));
-		viewStoreButton.setBounds(40, 655, 200, 25);
-		frame.getContentPane().add(viewStoreButton);
+		viewStoreButton.setBounds(40, 640, 200, 25);
+		storeFrame.getContentPane().add(viewStoreButton);
 		
 		JButton viewTradingLogsButton = new JButton("View Trading Logs");
 		viewTradingLogsButton.setBackground(new Color(204, 153, 102));
@@ -443,6 +445,7 @@ public class StoreWindow {
 				report += manager.getTrader().getTradingLogsString();
 				reportText.setText(report);
 				
+				// set scrollbar to top
 				javax.swing.SwingUtilities.invokeLater(new Runnable() {
 					   public void run() { 
 					       scrollPane.getVerticalScrollBar().setValue(0);
@@ -451,8 +454,8 @@ public class StoreWindow {
 			}
 		});
 		viewTradingLogsButton.setFont(new Font("Dialog", Font.BOLD, 14));
-		viewTradingLogsButton.setBounds(40, 704, 200, 25);
-		frame.getContentPane().add(viewTradingLogsButton);
+		viewTradingLogsButton.setBounds(40, 689, 200, 25);
+		storeFrame.getContentPane().add(viewTradingLogsButton);
 		
 		JButton viewShipCargoesButton = new JButton("View Ship Cargos");
 		viewShipCargoesButton.addMouseListener(new MouseAdapter() {
@@ -462,6 +465,7 @@ public class StoreWindow {
 				report += manager.getTrader().getOwndedShip().getCargosString();
 				reportText.setText(report);
 				
+				// set scroll bar to top
 				javax.swing.SwingUtilities.invokeLater(new Runnable() {
 					   public void run() { 
 					       scrollPane.getVerticalScrollBar().setValue(0);
@@ -471,7 +475,7 @@ public class StoreWindow {
 		});
 		viewShipCargoesButton.setBackground(new Color(204, 153, 102));
 		viewShipCargoesButton.setFont(new Font("Dialog", Font.BOLD, 14));
-		viewShipCargoesButton.setBounds(264, 655, 200, 25);
-		frame.getContentPane().add(viewShipCargoesButton);
+		viewShipCargoesButton.setBounds(264, 640, 200, 25);
+		storeFrame.getContentPane().add(viewShipCargoesButton);
 	}
 }

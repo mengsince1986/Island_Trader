@@ -180,14 +180,14 @@ public class WorldConstructor {
 		
 		// Create routes
 		Route route1to2 = new Route(2, "The Empire is said to have eradicated the pirates from these waters.\n" + 
-				"  However, they are known to produce violent storms");
+				"However, they are known to produce violent storms.");
 		route1to2.setSource(island1);
 		route1to2.setDest(island2);
 		route1to2.addEvent(rescue2);
 		route1to2.addEvent(storm2);
 		
 		Route route2to1 = new Route(3, "The Empire is said to have eradicated the pirates from these waters.\n" + 
-				"  However, they are known to produce violent storms");
+				"However, they are known to produce violent storms.");
 		route2to1.setSource(island2);
 		route2to1.setDest(island1);
 		route2to1.addEvent(rescue2);
@@ -209,7 +209,7 @@ public class WorldConstructor {
 		route3to2.addEvent(pirate3);
 		
 		Route route3to4 = new Route(3, "Rumour has it that the dwarves have cut a deal with a few pirates\n" +
-				"  to steal back their precious materials from unsupecting traders");
+				"to steal back their precious materials from unsupecting traders.");
 		route3to4.setSource(island3);
 		route3to4.setDest(island4);
 		route3to4.addEvent(rescue4);
@@ -217,23 +217,23 @@ public class WorldConstructor {
 		route3to4.addEvent(pirate4);
 		
 		Route route4to3 = new Route(5, "Rumour has it that the dwarves have cut a deal with a few pirates\n" +
-				"  to steal back their precious materials from unsupecting traders");
+				"to steal back their precious materials from unsupecting traders.");
 		route4to3.setSource(island4);
 		route4to3.setDest(island3);
 		route4to3.addEvent(rescue4);
 		route4to3.addEvent(storm4);
 		route4to3.addEvent(pirate4);
 		
-		Route route3to5 = new Route(6, island3.getName() + " is awash with reports about the many sailors from\n  " + 
-				island5.getName() + " who are buying cheap, ill-equipped vessels to get in on the buccaneering boom");
+		Route route3to5 = new Route(6, island3.getName() + " is awash with reports about the many sailors\n" + 
+				"from " + island5.getName() + " who are buying cheap, ill-equipped vessels to get in on the buccaneering boom.");
 		route3to5.setSource(island3);
 		route3to5.setDest(island5);
 		route3to5.addEvent(rescue5);
 		route3to5.addEvent(storm5);
 		route3to5.addEvent(pirate5);
 		
-		Route route5to3 = new Route(8, "Your crew remind you of the reports about the many sailors from\n  " + 
-				island5.getName() + " who are buying cheap, ill-equipped vessels to get in on the buccaneering boom");
+		Route route5to3 = new Route(8, "Your crew remind you of the reports about the many sailors from\n" + 
+				island5.getName() + " who are buying cheap, ill-equipped vessels to get in on the buccaneering boom.");
 		route5to3.setSource(island5);
 		route5to3.setDest(island3);
 		route5to3.addEvent(rescue5);
@@ -241,7 +241,7 @@ public class WorldConstructor {
 		route5to3.addEvent(pirate5);
 		
 		Route route4to5 = new Route(10, "Only the bravest captains dare navigate these open waters,\n" + 
-				"  home to the most fearsome pirate lords of the Seventy Seas");
+				"home to the most fearsome pirate lords of the Seventy Seas.");
 		route4to5.setSource(island4);
 		route4to5.setDest(island5);
 		route4to5.addEvent(rescue6);
@@ -249,7 +249,7 @@ public class WorldConstructor {
 		route4to5.addEvent(pirate6);
 		
 		Route route5to4 = new Route(12, "Only the bravest captains dare navigate these open waters,\n" + 
-				"  home to the most fearsome pirate lords of the Seventy Seas");
+				"home to the most fearsome pirate lords of the Seventy Seas.");
 		route5to4.setSource(island5);
 		route5to4.setDest(island4);
 		route5to4.addEvent(rescue6);
