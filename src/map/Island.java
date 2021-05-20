@@ -58,7 +58,7 @@ public class Island {
 				int sailingTime = routes.get(i).getSailingTime(playerShip);
 				int totalCost = costPerDay * sailingTime;
 				routesString += String.format("\nRoute %s: %sSailing time: %s days\nCost: %s\n", 
-						i, routes.get(i), sailingTime, totalCost);
+						i+1, routes.get(i), sailingTime, totalCost);
 			} 
 			return routesString;
 		} else {
