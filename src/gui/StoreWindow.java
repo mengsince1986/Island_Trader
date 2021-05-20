@@ -82,6 +82,7 @@ public class StoreWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setFont(new Font("Dialog", Font.PLAIN, 14));
 		frame.setBounds(100, 100, 686, 795);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -176,17 +177,20 @@ public class StoreWindow {
 	
 		
 		JRadioButton saleItem1Button = new JRadioButton("N/A");
+		saleItem1Button.setFont(new Font("Dialog", Font.BOLD, 14));
 		saleItembuttonGroup.add(saleItem1Button);
 		saleItem1Button.setSelected(true);
 		saleItem1Button.setBounds(198, 442, 120, 23);
 		frame.getContentPane().add(saleItem1Button);
 		
 		JRadioButton saleItem2Button = new JRadioButton("N/A");
+		saleItem2Button.setFont(new Font("Dialog", Font.BOLD, 14));
 		saleItembuttonGroup.add(saleItem2Button);
 		saleItem2Button.setBounds(339, 442, 120, 23);
 		frame.getContentPane().add(saleItem2Button);
 		
 		JRadioButton saleItem3Button = new JRadioButton("N/A");
+		saleItem3Button.setFont(new Font("Dialog", Font.BOLD, 14));
 		saleItembuttonGroup.add(saleItem3Button);
 		saleItem3Button.setBounds(481, 442, 120, 23);
 		frame.getContentPane().add(saleItem3Button);
@@ -214,17 +218,20 @@ public class StoreWindow {
 		
 	
 		JRadioButton purchaseItem1Button = new JRadioButton("N/A");
+		purchaseItem1Button.setFont(new Font("Dialog", Font.BOLD, 14));
 		purchaseItembuttonGroup.add(purchaseItem1Button);
 		purchaseItem1Button.setSelected(true);
 		purchaseItem1Button.setBounds(198, 495, 120, 23);
 		frame.getContentPane().add(purchaseItem1Button);
 		
 		JRadioButton purchaseItem2Button = new JRadioButton("N/A");
+		purchaseItem2Button.setFont(new Font("Dialog", Font.BOLD, 14));
 		purchaseItembuttonGroup.add(purchaseItem2Button);
 		purchaseItem2Button.setBounds(339, 495, 120, 23);
 		frame.getContentPane().add(purchaseItem2Button);
 		
 		JRadioButton purchaseItem3Button = new JRadioButton("N/A");
+		purchaseItem3Button.setFont(new Font("Dialog", Font.BOLD, 14));
 		purchaseItembuttonGroup.add(purchaseItem3Button);
 		purchaseItem3Button.setBounds(481, 495, 120, 23);
 		frame.getContentPane().add(purchaseItem3Button);
@@ -271,7 +278,7 @@ public class StoreWindow {
 		JLabel QuantityLabel = new JLabel("N/A");
 		QuantityLabel.setLabelFor(tradeQuantitySlider);
 		QuantityLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		QuantityLabel.setFont(new Font("Dialog", Font.BOLD, 13));
+		QuantityLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		QuantityLabel.setBounds(371, 573, 70, 20);
 		frame.getContentPane().add(QuantityLabel);
 		QuantityLabel.setText(String.valueOf(tradeQuantitySlider.getValue())); 
@@ -325,6 +332,16 @@ public class StoreWindow {
 					
 					String report = manager.buy(saleItemName, quantity);
 					reportText.setText(report);
+					
+					// update status labels
+					int days = manager.getTrader().getRemainingDays();
+					int money = manager.getTrader().getOwnedMoney();
+					String islandLocation =manager.getTrader().getCurrentIsland().getName();
+					
+					DaysDisplayLabel.setText(String.valueOf(days));
+					moneyDisplayLabel.setText(String.valueOf(money));
+					locationDisplayLabel.setText(islandLocation);
+					// ====================
 					}
 				
 			}
@@ -368,6 +385,16 @@ public class StoreWindow {
 					
 					String report = manager.sell(purchaseItemName, quantity);
 					reportText.setText(report);
+					
+					// update status labels
+					int days = manager.getTrader().getRemainingDays();
+					int money = manager.getTrader().getOwnedMoney();
+					String islandLocation =manager.getTrader().getCurrentIsland().getName();
+					
+					DaysDisplayLabel.setText(String.valueOf(days));
+					moneyDisplayLabel.setText(String.valueOf(money));
+					locationDisplayLabel.setText(islandLocation);
+					// ====================
 					}
 				
 			}

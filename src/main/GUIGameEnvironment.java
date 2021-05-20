@@ -91,6 +91,13 @@ public class GUIGameEnvironment {
 		return report;
 	}
 	
+	public String upgradeCannon(int cannonNum) {
+		
+		String report = player.upgradeCannons(cannonNum);
+		
+		return report;
+	}
+	
 	public String buy(String itemName, int quantity) {
 		
 		String report = player.buy(player.getCurrentIsland(), itemName, quantity);
@@ -159,6 +166,11 @@ public class GUIGameEnvironment {
 		portWindow.closePortWindow();
 		// launch store window next
 		launchStoreWindow();
+	}
+	
+	public void restartSetupWindow(PortWindow portWindow) {
+		portWindow.closePortWindow();
+		launchSetupWindow();
 	}
 	
 	// StoreWindow

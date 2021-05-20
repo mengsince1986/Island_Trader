@@ -31,6 +31,10 @@ import javax.swing.JScrollBar;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
+import javax.swing.UIManager;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class PortWindow {
 
@@ -72,6 +76,12 @@ public class PortWindow {
 	
 	public void finishedPortWindow() {
 		this.manager.closePortWindow(this);
+	}
+	
+	public void restartSetupWindow() {
+		
+		// close portwindow and start setupWindow
+		this.manager.restartSetupWindow(this);
 	}
 
 	/**
@@ -180,10 +190,14 @@ public class PortWindow {
 				finishedPortWindow();
 			}
 		});
-		storeButton.setBounds(450, 730, 180, 25);
+		storeButton.setBounds(460, 730, 180, 25);
 		frame.getContentPane().add(storeButton);
 		
-		JButton repairButton = new JButton("Repair");
+		JButton repairButton = new JButton("Repair Ship");
+		repairButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		repairButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		repairButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -191,10 +205,20 @@ public class PortWindow {
 				// call repair method from manager
 				String report = manager.repair();
 				reportText.setText(report);
+				
+				// update status labels
+				int days = manager.getTrader().getRemainingDays();
+				int money = manager.getTrader().getOwnedMoney();
+				String islandLocation =manager.getTrader().getCurrentIsland().getName();
+				
+				DaysDisplayLabel.setText(String.valueOf(days));
+				moneyDisplayLabel.setText(String.valueOf(money));
+				locationDisplayLabel.setText(islandLocation);
+				// ====================
 			}
 		});
 		repairButton.setBackground(new Color(204, 153, 102));
-		repairButton.setBounds(50, 530, 117, 25);
+		repairButton.setBounds(50, 540, 180, 25);
 		frame.getContentPane().add(repairButton);
 		
 		
@@ -221,7 +245,7 @@ public class PortWindow {
 				reportText.setText(report);
 			}
 		});
-		summaryButton.setBounds(161, 730, 117, 25);
+		summaryButton.setBounds(300, 730, 117, 25);
 		frame.getContentPane().add(summaryButton);
 		summaryButton.setVisible(false);
 		
@@ -325,26 +349,26 @@ public class PortWindow {
 		
 		
 		sailButton.setBackground(new Color(204, 153, 102));
-		sailButton.setBounds(50, 450, 117, 25);
+		sailButton.setBounds(50, 450, 180, 25);
 		frame.getContentPane().add(sailButton);
 		
 		JRadioButton destRadionButton1 = new JRadioButton("N/A");
 		destRadionButton1.setFont(new Font("Dialog", Font.BOLD, 14));
 		destRadionButton1.setSelected(true);
 		destinationButtonGroup.add(destRadionButton1);
-		destRadionButton1.setBounds(190, 428, 250, 23);
+		destRadionButton1.setBounds(255, 428, 250, 23);
 		frame.getContentPane().add(destRadionButton1);
 		
 		JRadioButton destRadionButton2 = new JRadioButton("N/A");
 		destRadionButton2.setFont(new Font("Dialog", Font.BOLD, 14));
 		destinationButtonGroup.add(destRadionButton2);
-		destRadionButton2.setBounds(190, 455, 250, 23);
+		destRadionButton2.setBounds(255, 455, 250, 23);
 		frame.getContentPane().add(destRadionButton2);
 		
 		JRadioButton destRadionButton3 = new JRadioButton("N/A");
 		destRadionButton3.setFont(new Font("Dialog", Font.BOLD, 14));
 		destinationButtonGroup.add(destRadionButton3);
-		destRadionButton3.setBounds(190, 480, 250, 23);
+		destRadionButton3.setBounds(255, 480, 250, 23);
 		frame.getContentPane().add(destRadionButton3);
 		
 		// update destination radio buttons when initializing PortWindow
@@ -367,12 +391,113 @@ public class PortWindow {
 		
 		// ========================
 		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(50, 505, 600, 2);
-		frame.getContentPane().add(separator);
+		JSeparator separator1 = new JSeparator();
+		separator1.setBounds(50, 515, 600, 2);
+		frame.getContentPane().add(separator1);
 		quitButton.setBackground(new Color(255, 102, 102));
-		quitButton.setBounds(51, 730, 80, 25);
+		quitButton.setBounds(175, 730, 100, 25);
 		frame.getContentPane().add(quitButton);
+		
+		JLabel costLable = new JLabel("cost:");
+		costLable.setFont(new Font("Dialog", Font.BOLD, 14));
+		costLable.setBounds(490, 589, 70, 15);
+		frame.getContentPane().add(costLable);
+		
+		JLabel cannonCostLable = new JLabel("N/A");
+		cannonCostLable.setFont(new Font("Dialog", Font.BOLD, 14));
+		cannonCostLable.setBounds(540, 589, 90, 15);
+		frame.getContentPane().add(cannonCostLable);
+		
+		JSlider cannonNumSlider = new JSlider();
+		cannonNumSlider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				
+				// update cannon cost
+				int cannonNum = cannonNumSlider.getValue();
+				int totalCost = cannonNum * manager.getTrader().getCurrentIsland().getPort().getcannonCost();
+				cannonCostLable.setText(String.valueOf(totalCost));
+			}
+		});
+		cannonNumSlider.setValue(1);
+		cannonNumSlider.setSnapToTicks(true);
+		cannonNumSlider.setPaintTicks(true);
+		cannonNumSlider.setPaintLabels(true);
+		cannonNumSlider.setMajorTickSpacing(1);
+		cannonNumSlider.setMinimum(1);
+		cannonNumSlider.setMaximum(10);
+		cannonNumSlider.setBounds(250, 590, 220, 40);
+		frame.getContentPane().add(cannonNumSlider);
+		
+		JButton upgradeCannonsButton = new JButton("Upgrade Cannons");
+		upgradeCannonsButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				// get upgrade cannon number
+				int cannonNum = cannonNumSlider.getValue();
+				
+				// call upgrade method from manager
+				String report = manager.upgradeCannon(cannonNum);
+				reportText.setText(report);
+				
+				// update status labels
+				int days = manager.getTrader().getRemainingDays();
+				int money = manager.getTrader().getOwnedMoney();
+				String islandLocation =manager.getTrader().getCurrentIsland().getName();
+				
+				DaysDisplayLabel.setText(String.valueOf(days));
+				moneyDisplayLabel.setText(String.valueOf(money));
+				locationDisplayLabel.setText(islandLocation);
+				// ====================
+				
+			}
+		});
+		upgradeCannonsButton.setFont(new Font("Dialog", Font.BOLD, 14));
+		upgradeCannonsButton.setBackground(new Color(204, 153, 102));
+		upgradeCannonsButton.setBounds(50, 586, 180, 25);
+		frame.getContentPane().add(upgradeCannonsButton);
+		
+		// update cannon cost when initializing
+		int cannonNum = cannonNumSlider.getValue();
+		int totalCost = cannonNum * manager.getTrader().getCurrentIsland().getPort().getcannonCost();
+		cannonCostLable.setText(String.valueOf(totalCost));
+		
+		
+		JSeparator separator2 = new JSeparator();
+		separator2.setBounds(50, 640, 600, 2);
+		frame.getContentPane().add(separator2);
+		
+		JButton restartButton = new JButton("Restart");
+		restartButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				restartSetupWindow();
+				
+			}
+		});
+		restartButton.setFont(new Font("Dialog", Font.BOLD, 14));
+		restartButton.setBackground(new Color(255, 102, 102));
+		restartButton.setBounds(50, 730, 100, 25);
+		frame.getContentPane().add(restartButton);
+		
+		JButton viewRoutesButton = new JButton("Available Routes");
+		viewRoutesButton.setFont(new Font("Dialog", Font.BOLD, 14));
+		viewRoutesButton.setBackground(new Color(204, 153, 102));
+		viewRoutesButton.setBounds(50, 665, 180, 25);
+		frame.getContentPane().add(viewRoutesButton);
+		
+		JButton viewShipButton = new JButton("Ship Status");
+		viewShipButton.setFont(new Font("Dialog", Font.BOLD, 14));
+		viewShipButton.setBackground(new Color(204, 153, 102));
+		viewShipButton.setBounds(460, 665, 180, 25);
+		frame.getContentPane().add(viewShipButton);
+		
+		JButton viewTraderButton = new JButton("Trader Status");
+		viewTraderButton.setFont(new Font("Dialog", Font.BOLD, 14));
+		viewTraderButton.setBackground(new Color(204, 153, 102));
+		viewTraderButton.setBounds(255, 665, 180, 25);
+		frame.getContentPane().add(viewTraderButton);
 		
 		
 	}
