@@ -167,7 +167,9 @@ public class CommandHandler {
 	 */
 	public static String processViewShipCommand() {
 		Ship playerShip = player.getOwndedShip();
-		String report = playerShip.toString() + playerShip.getCargosString() + playerShip.getUpgradeLogString() + "\n";
+		String report = playerShip.toString() + "\n\n" + 
+		                playerShip.getCargosString() + "\n" + 
+				        playerShip.getUpgradeLogString();
 		return report;
 	}
 
