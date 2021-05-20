@@ -6,10 +6,10 @@ import ships.*;
 import map.*;
 
 /**
-* The CommandHandler is created for the command line interface. 
-* It gets an ArrayList of commands in string form from IO objects,  
-* invoke matching methods from Trader and Ship objects,
-* and return a report in string to ReportPrinter object. 
+* The CommandHandler is created for the playing part of command line interface. 
+* It gets an ArrayList of commands in string form from the IO object, invoke 
+* matching methods from Trader and Ship objects, and return a report in string 
+* for the ReportPrinter object. 
 * <p>
 * The CommandHandler can be seen as a command processor getting user's inputs 
 * from IO objects of io package and processes the inputs by calling matching 
@@ -38,7 +38,8 @@ public class CommandHandler {
 	private static Ship ship;
 
 	/**
-	 * Class constructor
+	 * The CommandHandler constructor
+	 * 
 	 * @param map
 	 * @param player
 	 * @param ship
@@ -53,7 +54,7 @@ public class CommandHandler {
 	 * This method takes an ArrayList of string commands, separates the command 
 	 * name from its arguments and call their matching methods.
 	 * @param commandArguments
-	 * @return the string report for calling each command
+	 * @return the string report of implementing the command in the argument
 	 */
 	public static String processCommand(ArrayList<String> commandArguments) {
 
@@ -108,9 +109,12 @@ public class CommandHandler {
 	}
 	
 	/**
-	 * This method calls the sailing method of the ship object.
+	 * This method calls the sailing method of the ship object, iterate the
+	 * string reports in the ArrayList returned by the sailing method and
+	 * combine them into a single string. 
 	 * @param destination
-	 * @return a string report of the random events which happened during sailing
+	 * @return a string report of the random events which happen during this 
+	 * sailing
 	 */
 	public static String processSailCommand(String destination) {
 		Island island = map.getIsland(destination);
@@ -128,7 +132,7 @@ public class CommandHandler {
 	 * This method calls the buying method of the Trader object.
 	 * @param itemName
 	 * @param quantity
-	 * @return a string report about the result of the purchase
+	 * @return the string report of the result of this purchase
 	 */
 	public static String processBuyCommand(String itemName, int quantity) {
 		Island currentIsland = player.getCurrentIsland();
@@ -140,7 +144,7 @@ public class CommandHandler {
 	 * This method calls the selling method of the Trader object.
 	 * @param itemName
 	 * @param quantity
-	 * @return a string report about the result of the selling 
+	 * @return the string report of the result of this selling 
 	 */
 	public static String processSellCommand(String itemName, int quantity) {
 		Island currentIsland = player.getCurrentIsland();
@@ -152,7 +156,7 @@ public class CommandHandler {
 	 * This method calls the Trading log getter of the Trader object.
 	 * @param itemName
 	 * @param quantity
-	 * @return a string report including all the trading logs
+	 * @return the string report including all the trading logs
 	 */
 	public static String processViewLogsCommand() {
 		return player.getTradingLogsString();
@@ -160,10 +164,11 @@ public class CommandHandler {
 
 	/**
 	 * This method calls the status getter, cargos getter and upgrade log getter 
-	 * of the Ship object.
+	 * of the Ship object, and combine them together to form a single report.
 	 * @param itemName
 	 * @param quantity
-	 * @return a string report including the ship, cargo status and upgrade logs.
+	 * @return the string report including the ship's basic properties, cargo 
+	 * status and upgrade logs
 	 */
 	public static String processViewShipCommand() {
 		Ship playerShip = player.getOwndedShip();
@@ -173,6 +178,13 @@ public class CommandHandler {
 		return report;
 	}
 
+	/**
+	 * This method calls the for-sale getter and for-purchase getter from the 
+	 * store object on the trader's located island and combine them as a single
+	 * report.
+	 * @return the string report including this store's items for sale list and 
+	 * items to buy list.
+	 */
 	public static String processVisitStore() {
 		player.setCurrentLocation("store");
 		String report = "Welcome to the store!\n\n";
@@ -181,16 +193,31 @@ public class CommandHandler {
 		return report;
 	}
 
+	/**
+	 * This method calls the repairShip method of the Trader object.
+	 * @return the string report of the repair command
+	 */
 	public static String processRepairCommand() {
 		String report = player.repairShip();
 		return report;
 	}
 
+	/**
+	 * This method takes an integer of the cannon number and calls the 
+	 * upgradeCannons method of the Trader object.
+	 * @param cannonNum
+	 * @return the string report of this cannon upgrade
+	 */
 	public static String upgradeCannonCommand(int cannonNum) {
 		String report = player.upgradeCannons(cannonNum);
 		return report;
 	}
 
+	/**
+	 * This method calls the remaining days setter of the Trader object and set 
+	 * it to 0.
+	 * @return a string report saying "Goodbye!"
+	 */
 	public static String quitCommand() {
 		String report = "Goodbye!";
 		player.setRemainingDays(0);

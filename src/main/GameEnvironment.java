@@ -61,7 +61,7 @@ public class GameEnvironment {
 		
 
 		/*
-	    // Manually create a new world, a trader and a ship
+	    // Manually create a new world, a trader and a ship, only for quick test
 		
 		System.out.println("Welcome to the wolrd of Island Trader");
 		System.out.println();
