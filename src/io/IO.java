@@ -1,12 +1,40 @@
 package io;
 import java.util.*;
+
+import commands.CommandHandler;
+import main.GUIGameEnvironment;
+import main.GameEnvironment;
 import trader.*;
+
+/**
+ * The IO (input and output) is an abstract class for creating command line interfaces.
+ * It is the base for {@link PortIO}, {@link SailToIO}, {@link RepairIO}, {@link UpgradeIO},
+ * {@link StoreIO}, {@link BuyIO}, and {@link TransactionQuantityIO}.
+ * <p>
+ * The sub classes created based on IO print prompts for different commands, 
+ * take integer inputs from users, validate the inputs, and pass the inputs as 
+ * an ArrayList to {@link CommandHandler} through {@link GameEnvironment}.
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
 
 public abstract class IO {
 	
 	/**
-	 * read type: String
-	 * return type: [String command, String argument]
+	 * Attribute setupFrame stores the Frame object of this window.
+	 * <p>
+	 * Attribute nameTextField stores the string of the new name entered by 
+	 * users.
+	 * <p>
+	 * Attribute shipButtonGroup stores a ButtonGroup object including all the
+	 * RadioButtons with the name of the available Ship objects.
+	 * <p>
+	 * Attribute homeButtonGroup stores a ButtonGroup object including all the
+	 * RadioButtons with the name of the available Island objects.
+	 * <p>
+	 * Attribute manager is the {@link GUIGameEnvironment} object which maintains the 
+	 * state of the program and makes instances of window classes.
 	 */
 	private static Trader player;
 	private ArrayList<String> commandsList;
@@ -19,13 +47,6 @@ public abstract class IO {
 		player = trader;
 		commandsList = new ArrayList<String>();
 		
-	}
-	
-	// MZ use this constructor for IOs without Trader
-	public IO() {
-
-		commandsList = new ArrayList<String>();
-	
 	}
 	
 	public ArrayList<String> readCommandArguments(String prompt) {
@@ -42,6 +63,7 @@ public abstract class IO {
 			String errorMessage = "=====================!!!========================\n" +
 								  "You need to choose a valid number. Choose again.\n" +
 					              "================================================\n";
+			
 			Scanner commandReader = new Scanner(System.in);
 
 			try {
@@ -110,10 +132,5 @@ public abstract class IO {
 		commandArguments.add(arg);
 	}
 	
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

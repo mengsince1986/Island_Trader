@@ -1,8 +1,5 @@
 package io;
 
-import java.util.*;
-
-import items.Item;
 import map.*;
 import ships.Ship;
 import trader.*;
@@ -21,7 +18,7 @@ public StoreIO(Trader player) {
 	
 	public void processPlayerInput(int playerChoice) {
 		resetCommandArguments();
-		String keyWord = null;
+		//String keyWord = null;
 		String argument = null;
 		Store currentStore = getTrader().getCurrentIsland().getStore();
 		switch(playerChoice) {

@@ -6,18 +6,19 @@ import ships.*;
 import map.*;
 
 /**
-* The CommandHandler is created for the playing part of command line interface. 
-* It gets an ArrayList of commands in string form from the IO object, invokes 
-* matching methods from Trader and Ship objects, and returns a report in string 
-* for the ReportPrinter object. 
-* <p>
-* The CommandHandler can be seen as a command processor getting user's inputs 
-* from IO objects of io package and processes the inputs by calling matching 
-* methods from other objects. 
-* <p>
-* @author  Finn van Dorsser
-* @author  Meng Zhang
-*/
+ * The CommandHandler is created for the playing part of command line interface.
+ * It gets an ArrayList of commands in string form from the IO object, invokes
+ * matching methods from Trader and Ship objects, and returns a report in string
+ * for the ReportPrinter object.
+ * <p>
+ * The CommandHandler is a command processor getting user's inputs from IO
+ * objects of io package and processes the inputs by calling matching methods
+ * from other objects.
+ * <p>
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
 
 public class CommandHandler {
 	

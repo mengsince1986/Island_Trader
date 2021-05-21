@@ -4,7 +4,6 @@ import java.util.*;
 
 import items.Item;
 import trader.Trader;
-import ships.Ship;
 
 public class BuyIO extends IO {
 

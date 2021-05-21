@@ -19,7 +19,7 @@ public class StatusLine {
 		String money = "Money : " + this.player.getOwnedMoney() + " coins";
 		String traderName = "Trader: " + this.player.getName();
 		String island = "Island: " + this.player.getCurrentIsland().getName();
-		String location = "Location: " + this.player.getCurrentLocation();
+		//String location = "Location: " + this.player.getCurrentLocation();
 		String status = upperDivider + "\n" + "\n" +
 						remainingDays + "   " + money + "\n" +
 						traderName + "     " + island + "\n" + 
