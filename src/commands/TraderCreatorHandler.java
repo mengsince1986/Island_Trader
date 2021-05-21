@@ -11,7 +11,7 @@ import trader.Trader;
  * The TraderCreatorHandler is created for setting up a new player in the
  * command line interface. It gets an ArrayList of commands and profile
  * information of a new player in string form from the NewPlayerIO object,
- * invoke matching methods and create a new Trader object and a new Ship project.
+ * invokes matching methods and creates a new Trader object and a new Ship project.
  * It also returns a report of implementing the command in string for the 
  * ReportPrinter object.
  * <p>
@@ -42,8 +42,8 @@ public class TraderCreatorHandler {
 	private static Ship newShip; 
 	
 	/**
-	 * The TraderCreatorHandler constructor
-	 * @param newWorld
+	 * This constructor sets the value of attribute world.
+	 * @param newWorld the current World object 
 	 */
 	public TraderCreatorHandler(World newWorld) {
 		
@@ -57,7 +57,8 @@ public class TraderCreatorHandler {
 	 * doesn't include commands "quit" or "cancel", this method will create a new
 	 * Trader object and a new Ship object and store them in the class 
 	 * attributes.
-	 * @param commandArguments
+	 * @param commandArguments An ArrayList including all the commands and 
+	 * arguments in string form
 	 * @return a string report of implementing the command in the argument
 	 */
 	public static String createPlayer(ArrayList<String> commandArguments) {

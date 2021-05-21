@@ -7,8 +7,8 @@ import map.*;
 
 /**
 * The CommandHandler is created for the playing part of command line interface. 
-* It gets an ArrayList of commands in string form from the IO object, invoke 
-* matching methods from Trader and Ship objects, and return a report in string 
+* It gets an ArrayList of commands in string form from the IO object, invokes 
+* matching methods from Trader and Ship objects, and returns a report in string 
 * for the ReportPrinter object. 
 * <p>
 * The CommandHandler can be seen as a command processor getting user's inputs 
@@ -38,11 +38,11 @@ public class CommandHandler {
 	private static Ship ship;
 
 	/**
-	 * The CommandHandler constructor
-	 * 
-	 * @param map
-	 * @param player
-	 * @param ship
+	 * This constructor sets the values for all the attributes map, player and
+	 * ship.
+	 * @param map the current World object
+	 * @param player the current Trader object
+	 * @param ship the current Ship object
 	 */
 	public CommandHandler(World map, Trader player, Ship ship) {
 		CommandHandler.map = map;
@@ -52,8 +52,9 @@ public class CommandHandler {
 
 	/**
 	 * This method takes an ArrayList of string commands, separates the command 
-	 * name from its arguments and call their matching methods.
-	 * @param commandArguments
+	 * name from its arguments and calls their matching methods.
+	 * @param commandArguments An ArrayList including all the commands and 
+	 * arguments in string form
 	 * @return the string report of implementing the command in the argument
 	 */
 	public static String processCommand(ArrayList<String> commandArguments) {
@@ -112,7 +113,7 @@ public class CommandHandler {
 	 * This method calls the sailing method of the ship object, iterate the
 	 * string reports in the ArrayList returned by the sailing method and
 	 * combine them into a single string. 
-	 * @param destination
+	 * @param destination a string name of the destination island name
 	 * @return a string report of the random events which happen during this 
 	 * sailing
 	 */
@@ -130,8 +131,8 @@ public class CommandHandler {
 
 	/**
 	 * This method calls the buying method of the Trader object.
-	 * @param itemName
-	 * @param quantity
+	 * @param itemName the string name of the item on sale
+	 * @param quantity the integer number of the item quantity
 	 * @return the string report of the result of this purchase
 	 */
 	public static String processBuyCommand(String itemName, int quantity) {
@@ -142,8 +143,8 @@ public class CommandHandler {
 
 	/**
 	 * This method calls the selling method of the Trader object.
-	 * @param itemName
-	 * @param quantity
+	 * @param itemName the string name of the item to sell
+ 	 * @param quantity the integer number of the item quantity
 	 * @return the string report of the result of this selling 
 	 */
 	public static String processSellCommand(String itemName, int quantity) {
@@ -154,8 +155,6 @@ public class CommandHandler {
 
 	/**
 	 * This method calls the Trading log getter of the Trader object.
-	 * @param itemName
-	 * @param quantity
 	 * @return the string report including all the trading logs
 	 */
 	public static String processViewLogsCommand() {
@@ -165,8 +164,6 @@ public class CommandHandler {
 	/**
 	 * This method calls the status getter, cargos getter and upgrade log getter 
 	 * of the Ship object, and combine them together to form a single report.
-	 * @param itemName
-	 * @param quantity
 	 * @return the string report including the ship's basic properties, cargo 
 	 * status and upgrade logs
 	 */
@@ -205,7 +202,7 @@ public class CommandHandler {
 	/**
 	 * This method takes an integer of the cannon number and calls the 
 	 * upgradeCannons method of the Trader object.
-	 * @param cannonNum
+	 * @param cannonNum the integer number of the cannons to be upgraded
 	 * @return the string report of this cannon upgrade
 	 */
 	public static String upgradeCannonCommand(int cannonNum) {
@@ -222,25 +219,6 @@ public class CommandHandler {
 		String report = "Goodbye!";
 		player.setRemainingDays(0);
 		return report;
-	}
-
-	public static void main(String[] args) {
-		/*
-		 * WorldConstructor newWorld = new WorldConstructor(); map = newWorld.getMap();
-		 * System.out.println("Constructing game environment ...");
-		 * System.out.println("A new world is created ... "); // create a new player
-		 * String traderName = "Jon Snow"; // name and time can be read from
-		 * constructorIO player = new Trader(30, traderName, 10000,
-		 * map.getIsland("Niawall Haven"), "port"); ship = new BalancedShip(); // get
-		 * user input + loop invoked by exception ship.setCaptain(player);
-		 * player.setOwnedShip(ship); System.out.println("A new Trader named " +
-		 * player.getName() + " is created ... ");
-		 * System.out.println("A new Ship named " + player.getOwndedShip().getName() +
-		 * " is created ...");
-		 * System.out.println(player.getCurrentIsland().getRoutesString(ship));
-		 * System.out.println(processSailCommand(player.getCurrentIsland().getRoutes().
-		 * get(0).getDest().getName()));
-		 */
 	}
 
 }
