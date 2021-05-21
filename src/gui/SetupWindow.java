@@ -24,11 +24,11 @@ import javax.swing.JSeparator;
 /**
  * The SetupWindow is the GUI interface for setting up a new player. 
  * It gets the name, the number of the remaining days, home island name and ship
- * name chosen by users and pass them to GUIGameEnvironment object to create a
+ * name chosen by users and passes them to GUIGameEnvironment object to create a
  * new Trader object and a new Ship object.
  * <p>
  * The SetupWindow also checks and validates the name input by users and print
- * error reports to help users input a vaid name.
+ * error reports if the input doesn't pass the name validation.
  * <p>
  * @author Finn van Dorsser
  * @author Meng Zhang
