@@ -22,14 +22,19 @@ import java.awt.Color;
 import javax.swing.JSeparator;
 
 /**
- * The SetupWindow is the GUI interface for setting up a new player. 
- * It gets the name, the number of the remaining days, home island name and ship
- * name chosen by users and passes them to GUIGameEnvironment object to create a
- * new Trader object and a new Ship object.
+ * The SetupWindow is the GUI interface for setting up a new player. It gets the
+ * name of the new player, the number of the remaining days, the name of the
+ * home island and the name of the ship chosen by users and passes them to
+ * attribute manager - {@link GUIGameEnvironment} object - to create a new Trader 
+ * object and a new Ship object.
  * <p>
- * The SetupWindow also checks and validates the name input by users and print
- * error reports if the input doesn't pass the name validation.
+ * The SetupWindow checks and validates the name input by users and print
+ * error report if the new name doesn't pass the preset validation.
  * <p>
+ * The SetupWindow also prints the profile of the new created player or an error
+ * message if any of the input information is invalid after users click the
+ * confirm button.
+ * 
  * @author Finn van Dorsser
  * @author Meng Zhang
  */
@@ -37,17 +42,28 @@ import javax.swing.JSeparator;
 public class SetupWindow {
 
 	/**
-	 * 
+	 * Attribute setupFrame stores the Frame object of this window.
+	 * <p>
+	 * Attribute nameTextField stores the string of the new name entered by 
+	 * users.
+	 * <p>
+	 * Attribute shipButtonGroup stores a ButtonGroup object including all the
+	 * RadioButtons with the name of the available Ship objects.
+	 * <p>
+	 * Attribute homeButtonGroup stores a ButtonGroup object including all the
+	 * RadioButtons with the name of the available Island objects.
+	 * <p>
+	 * Attribute manager is the {@link GUIGameEnvironment} object which maintains the 
+	 * state of the program and makes instances of window classes.
 	 */
 	private JFrame setupFrame;
 	private JTextField nameTextField;
 	private final ButtonGroup shipButtonGroup = new ButtonGroup();
-	private GUIGameEnvironment manager;
 	private final ButtonGroup homeButtonGroup = new ButtonGroup();
-
-	/**
-	 * Launch the application.
-	 */
+	private GUIGameEnvironment manager;
+	
+	// This static main method is only used for initializing this window frame
+	// individually for testing
 	/*
 	 * public static void main(String[] args) {
 	 * 
@@ -60,7 +76,9 @@ public class SetupWindow {
 	 */
 
 	/**
-	 * Create the application.
+	 * This constructor sets the value of manager attribute, initializes this
+	 * Frame object and sets this frame to be visible.
+	 * @param incomingManager the current {@link GUIGameEnvironment} object
 	 */
 	public SetupWindow(GUIGameEnvironment incomingManager) {
 		this.manager = incomingManager;
@@ -68,16 +86,24 @@ public class SetupWindow {
 		setupFrame.setVisible(true);
 	}
 
+	/**
+	 * This method disposes this window frame.
+	 */
 	public void closeSetupWindow() {
 		setupFrame.dispose();
 	}
 
+	/**
+	 * This method closes this window frame and launches the PortWindow frame 
+	 * by calling the closeSetupWindow method from manager which is the
+	 * current {@link GUIGameEnvironment} object.
+	 */
 	public void finishedSetupWindow() {
 		this.manager.closeSetupWindow(this);
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * This method initializes the contents of the frame.
 	 */
 	private void initialize() {
 		setupFrame = new JFrame();
@@ -282,7 +308,8 @@ public class SetupWindow {
 				if (manager.getTrader() != null) {
 					finishedSetupWindow();
 				}
-				reportText.setText("You need to create a new player\n" + "and click \"Confirm\" button first.");
+				reportText.setText("You need to create a new player\n" 
+								 + "and click \"Confirm\" button first.");
 			}
 		});
 		startButton.setBounds(383, 387, 117, 25);

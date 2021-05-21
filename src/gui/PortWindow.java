@@ -1,51 +1,62 @@
 package gui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
 import main.GUIGameEnvironment;
-import map.Island;
 import map.Route;
 
 import java.awt.Font;
 import javax.swing.JTextArea;
 import java.awt.Color;
 import javax.swing.JButton;
-import javax.swing.JMenu;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Map;
 
-import javax.swing.JMenuItem;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
-import javax.swing.JScrollBar;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
-import javax.swing.UIManager;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
+/**
+ * The PortWindow is one of the the GUI interface objects for running the game. 
+ * It provides all the available command options at port, gets users choices and
+ * calls the related methods through the attribute manager 
+ * - {@link GUIGameEnvironment} object - to change the state of the game.
+ * <p>
+ * The PortWindow also updates the status bar and prints the report after 
+ * the implementation of each command.
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
+
 public class PortWindow {
 
-	private JFrame portFrame;
-	private GUIGameEnvironment manager;
-	private final ButtonGroup destinationButtonGroup = new ButtonGroup();
-
 	/**
-	 * Launch the application.
+	 * Attribute portFrame stores the Frame object of this window.
+	 * <p>
+	 * Attribute destinationButtonGroup stores a ButtonGroup object including 
+	 * all the RadioButtons with the name of the available Island objects.
+	 * <p>
+	 * Attribute manager is the {@link GUIGameEnvironment} object which maintains the 
+	 * state of the program and makes instances of window classes.
 	 */
+	private JFrame portFrame;
+	private final ButtonGroup destinationButtonGroup = new ButtonGroup();
+	private GUIGameEnvironment manager;
 	
+	// This static main method is only used for initializing this window frame
+	// individually for testing
 	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -62,7 +73,9 @@ public class PortWindow {
 	*/
 
 	/**
-	 * Create the application.
+	 * This constructor sets the value of manager attribute, initializes this
+	 * Frame object and sets this frame to be visible.
+	 * @param incomingManager the current {@link GUIGameEnvironment} object
 	 */
 	public PortWindow(GUIGameEnvironment incomingManager) {
 		this.manager = incomingManager;
@@ -70,22 +83,35 @@ public class PortWindow {
 		portFrame.setVisible(true);
 	}
 	
+	/**
+	 * This method disposes this window frame.
+	 */
 	public void closePortWindow() {
 		portFrame.dispose();
 	}
 	
+	/**
+	 * This method closes this window frame and launches the StoreWindow frame 
+	 * by calling the closeSetupWindow method from manager which is the
+	 * current {@link GUIGameEnvironment} object.
+	 */
 	public void finishedPortWindow() {
 		this.manager.closePortWindow(this);
 	}
 	
+	/**
+	 * This method closes this window frame and launches the SetupWindow frame by
+	 * calling the restartSetupWindow method from manager which is the
+	 * current {@link GUIGameEnvironment} object.
+	 */
 	public void restartSetupWindow() {
 		
-		// close portwindow and start setupWindow
+		// close portWindow and start setupWindow
 		this.manager.restartSetupWindow(this);
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * This method initializes the contents of the frame.
 	 */
 	private void initialize() {
 		portFrame = new JFrame();

@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"commands","l":"CommandHandler"},{"p":"commands","l":"TraderCreatorHandler"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"gui","l":"PortWindow"},{"p":"gui","l":"SetupWindow"}];updateSearchResults();

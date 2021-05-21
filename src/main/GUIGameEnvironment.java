@@ -2,19 +2,14 @@ package main;
 
 import java.util.*;
 
-import commands.TraderCreatorHandler;
 import gui.PortWindow;
 import gui.SetupWindow;
 import gui.StoreWindow;
-import commands.CommandHandler;
-import io.*;
 import trader.Trader;
 import map.Island;
 import map.World;
 import map.WorldConstructor;
-import ships.BalancedShip;
 import ships.Ship;
-import terminalPrinter.*;
 
 /**
  * <h1>SENG201 Project: Island Trader</h1> <br>
@@ -132,6 +127,7 @@ public class GUIGameEnvironment {
 
 	// SetupWindow
 	public void launchSetupWindow() {
+		@SuppressWarnings("unused")
 		SetupWindow setupWindow = new SetupWindow(this);
 	}
 
@@ -142,6 +138,7 @@ public class GUIGameEnvironment {
 
 	// PortWindow
 	public void launchPortWindow() {
+		@SuppressWarnings("unused")
 		PortWindow portWindow = new PortWindow(this);
 	}
 
@@ -158,6 +155,7 @@ public class GUIGameEnvironment {
 
 	// StoreWindow
 	public void launchStoreWindow() {
+		@SuppressWarnings("unused")
 		StoreWindow storeWindow = new StoreWindow(this);
 	}
 

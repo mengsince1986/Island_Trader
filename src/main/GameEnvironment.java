@@ -5,10 +5,8 @@ import commands.TraderCreatorHandler;
 import commands.CommandHandler;
 import io.*;
 import trader.Trader;
-import map.Island;
 import map.World;
 import map.WorldConstructor;
-import ships.BalancedShip;
 import ships.Ship;
 import terminalPrinter.*;
 
