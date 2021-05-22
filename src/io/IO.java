@@ -2,7 +2,6 @@ package io;
 import java.util.*;
 
 import commands.CommandHandler;
-import main.GUIGameEnvironment;
 import main.GameEnvironment;
 import trader.*;
 
@@ -11,9 +10,9 @@ import trader.*;
  * It is the base for {@link PortIO}, {@link SailToIO}, {@link RepairIO}, {@link UpgradeIO},
  * {@link StoreIO}, {@link BuyIO}, and {@link TransactionQuantityIO}.
  * <p>
- * The sub classes created based on IO print prompts for different commands, 
- * take integer inputs from users, validate the inputs, and pass the inputs as 
- * an ArrayList to {@link CommandHandler} through {@link GameEnvironment}.
+ * The sub-classes created based on IO print prompts for different commands, 
+ * take integers inputs from users, validate the inputs, and pass the 
+ * inputs as an ArrayList to {@link CommandHandler} through {@link GameEnvironment}.
  * 
  * @author Finn van Dorsser
  * @author Meng Zhang
@@ -22,26 +21,33 @@ import trader.*;
 public abstract class IO {
 	
 	/**
-	 * Attribute setupFrame stores the Frame object of this window.
+	 * Attribute player stores the current Trader object which is used for
+	 * printing related Trader properties for command line interface. This
+	 * attribute is set static as there's only one Trader object in the game, so
+	 * all command line interface objects share the same player attribute. 
 	 * <p>
-	 * Attribute nameTextField stores the string of the new name entered by 
-	 * users.
+	 * Attribute commandsList stores an ArrayList of available commands in this
+	 * command line interface object. 
 	 * <p>
-	 * Attribute shipButtonGroup stores a ButtonGroup object including all the
-	 * RadioButtons with the name of the available Ship objects.
+	 * Attribute commandArguments stores an ArrayList of commands users choose
+	 * from the command line interface. This attribute is set 
+	 * static so that it can store command inputs from different command line
+	 * interface objects.
 	 * <p>
-	 * Attribute homeButtonGroup stores a ButtonGroup object including all the
-	 * RadioButtons with the name of the available Island objects.
-	 * <p>
-	 * Attribute manager is the {@link GUIGameEnvironment} object which maintains the 
-	 * state of the program and makes instances of window classes.
+	 * Attribute gettingTransactionQuantity stores a boolean value. It is true
+	 * when a command line interface object accepts all positive integer inputs
+	 * from users, e.g. the quantity of items a trader buys or sells.
 	 */
 	private static Trader player;
 	private ArrayList<String> commandsList;
 	private static ArrayList<String> commandArguments = new ArrayList<String>();
-	//private static final Scanner commandReader = new Scanner(System.in);
 	private static boolean gettingTransactionQuantity = false;
 	
+	/**
+	 * This constructor sets the player attribute with the current Trader object and
+	 * initialize a new ArrayList for the commandsList attribute.
+	 * @param trader the current Trader object
+	 */
 	public IO(Trader trader) {
 		
 		player = trader;
@@ -49,11 +55,19 @@ public abstract class IO {
 		
 	}
 	
+	/**
+	 * This is a method which prints the prompt and available command 
+	 * options returned by getCommandsListString(), gets an integer command 
+	 * input from users, and validates the input.
+	 * @param prompt the string prompt for this interface IO object
+	 * @return the whole ArrayList of commandArguments 
+	 */
 	public ArrayList<String> readCommandArguments(String prompt) {
 		
 		int playerChoice;
-		// Validation while loop
 		boolean isValid = false;
+		
+		// A do while loop which keeps running until player enters a valid input
 		do {
 			//Print available commandsList
 			System.out.println(getCommandsListString());
@@ -65,17 +79,19 @@ public abstract class IO {
 					              "================================================\n";
 			
 			Scanner commandReader = new Scanner(System.in);
-
+ 
 			try {
 				playerChoice = commandReader.nextInt();
 				
 				if (playerChoice >= 0) {
+					// if playerChoice is valid
 					if (gettingTransactionQuantity) {
 						processPlayerInput(playerChoice);
 						isValid = true;
 					} else if (playerChoice <= commandsList.size() - 1) {
 						processPlayerInput(playerChoice);
 						isValid = true;
+					// if playerChoice is invalid
 					} else {
 						System.out.println(errorMessage);
 					}
@@ -92,25 +108,51 @@ public abstract class IO {
 		return commandArguments;		
 	}
 	
+	/**
+	 * This is an abstract method which processes an command input from users.
+	 * @param choice a valid integer command input
+	 */
 	public abstract void processPlayerInput(int choice);
 	
+	/**
+	 * This method is the getter for attribute player.
+	 * @return the Trader object stored in attribute player
+	 */
 	public static Trader getTrader() {
 		return player;
 	}
 
-	
+	/**
+	 * This method is the getter for attribute commandsList.
+	 * @return the ArrayList stored in attribute commandsList
+	 */
 	public ArrayList<String> getCommandsList() {
 		return commandsList;
 	}
 	
+	/**
+	 * This method is the setter for attribute gettingTransactionQuantity.
+	 * @param value true if the interface object accepts all natural numbers as
+	 * input, otherwise false   
+	 */
 	public void setGettingTransactionQuantity(boolean value) {
 		gettingTransactionQuantity = value;
 	}
 	
+	/**
+	 * This method adds a single command string to the ArrayList stored in
+	 * attribute commandsList. 
+	 * @param command a string command
+	 */
 	public void addCommand(String command) {
 		commandsList.add(command);
 	}
 	
+	/**
+	 * This method iterates attribute commandsList and concatenates all the
+	 * commands into a string.
+	 * @return a formated string which includes all the command options
+	 */
 	public String getCommandsListString() {
 		String commandList = "============== Commands List =================" + "\n\n";
 		for (int i=0; i < commandsList.size(); i++) {
@@ -119,18 +161,29 @@ public abstract class IO {
 		return commandList;
 	}
 
-	
+	/**
+	 * This method is the getter for attribute commandArguments.
+	 * @return the ArrayList stored in attribute commandArguments
+	 */
 	public static ArrayList<String> getCommandArguments() {
 		return commandArguments;
 	}
 	
+	/**
+	 * This method resets the commandArguments attribute to be an empty
+	 * ArrayList
+	 */
 	public static void resetCommandArguments() {
 		commandArguments.clear();
 	}
 	
+	/**
+	 * This method adds a single command/argument string to attribute 
+	 * commandArguments.
+	 * @param arg a command/argument string
+	 */
 	public static void addCommandArgument(String arg) {
 		commandArguments.add(arg);
 	}
 	
-
 }
