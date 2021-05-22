@@ -264,7 +264,7 @@ public class SetupWindow {
 					reportText.setText("Please enter your name.");
 				} else if (!name.matches("[a-zA-Z]+")) {
 					reportText.setText("Sorry, the name can only include letters.\n"
-							+ "Please check if your name include spaces numbers or special characters.");
+							+ "Please check if your name includes space, numbers or special characters.");
 				} else if (name.length() < 3 || name.length() > 15) {
 					reportText.setText("The name should be between 3 and 15 characters.");
 				} else {

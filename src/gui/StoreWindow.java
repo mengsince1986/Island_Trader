@@ -359,7 +359,10 @@ public class StoreWindow {
 					
 				} else {
 					
-					String report = manager.buy(saleItemName, quantity);
+					//call Trader.buy() through manager
+					String report = manager.getTrader().buy(manager.getTrader().getCurrentIsland(),
+							                                saleItemName, 
+							                                quantity);
 					reportText.setText(report);
 					
 					// update status labels
@@ -412,7 +415,10 @@ public class StoreWindow {
 					
 				} else {
 					
-					String report = manager.sell(purchaseItemName, quantity);
+					//call Trader.sell() method through manager
+					String report = manager.getTrader().sell(manager.getTrader().getCurrentIsland(), 
+															 purchaseItemName, 
+															 quantity);
 					reportText.setText(report);
 					
 					// update status labels

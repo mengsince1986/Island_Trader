@@ -4,8 +4,6 @@ import map.Route; import map.Island;
 import events.*;
 import ships.*;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;

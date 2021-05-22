@@ -78,23 +78,6 @@ public class GUIGameEnvironment {
 
 	}
 
-
-	// store methods
-
-	public String buy(String itemName, int quantity) {
-
-		String report = player.buy(player.getCurrentIsland(), itemName, quantity);
-
-		return report;
-	}
-
-	public String sell(String itemName, int quantity) {
-
-		String report = player.sell(player.getCurrentIsland(), itemName, quantity);
-
-		return report;
-	}
-
 	public String gameOver() {
 
 		String upperDivider = "----------------Game Over!--------------------";
