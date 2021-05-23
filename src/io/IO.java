@@ -6,7 +6,7 @@ import main.GameEnvironment;
 import trader.*;
 
 /**
- * The IO (input and output) is an abstract class for creating command line interfaces.
+ * The IO (input and output) is an abstract class for creating command line interface.
  * It is the base for {@link PortIO}, {@link SailToIO}, {@link RepairIO}, {@link UpgradeIO},
  * {@link StoreIO}, {@link BuyIO}, and {@link TransactionQuantityIO}.
  * <p>
@@ -45,7 +45,7 @@ public abstract class IO {
 	
 	/**
 	 * This constructor sets the player attribute with the current Trader object and
-	 * initialize a new ArrayList for the commandsList attribute.
+	 * initializes a new ArrayList for the commandsList attribute.
 	 * @param trader the current Trader object
 	 */
 	public IO(Trader trader) {
@@ -56,11 +56,17 @@ public abstract class IO {
 	}
 	
 	/**
-	 * This is a method which prints the prompt and available command 
-	 * options returned by getCommandsListString(), gets an integer command 
-	 * input from users, and validates the input.
+	 * This method prints the prompt and available command 
+	 * options returned by getCommandsListString(), gets an input of integer 
+	 * from users, and validates the input. If the input is valid, this method
+	 * will add the command matching the input to attribute commandArguments.
+	 * If the input is invalid, this method will print an error message. 
+	 * <p>
+	 * If attribute gettingTransactionQuantity is true, any positive integer 
+	 * input will be acceptable. Otherwise, only integer inputs matching available
+	 * commands in attribute commandsList are accepted.
 	 * @param prompt the string prompt for this interface IO object
-	 * @return the whole ArrayList of commandArguments 
+	 * @return the ArrayList of commandArguments 
 	 */
 	public ArrayList<String> readCommandArguments(String prompt) {
 		
@@ -69,9 +75,8 @@ public abstract class IO {
 		
 		// A do while loop which keeps running until player enters a valid input
 		do {
-			//Print available commandsList
-			System.out.println(getCommandsListString());
-			//Prompt for player
+	
+			System.out.println(getCommandsListString());	
 			System.out.println(prompt);
 			
 			String errorMessage = "=====================!!!========================\n" +
@@ -84,14 +89,12 @@ public abstract class IO {
 				playerChoice = commandReader.nextInt();
 				
 				if (playerChoice >= 0) {
-					// if playerChoice is valid
 					if (gettingTransactionQuantity) {
 						processPlayerInput(playerChoice);
 						isValid = true;
 					} else if (playerChoice <= commandsList.size() - 1) {
 						processPlayerInput(playerChoice);
 						isValid = true;
-					// if playerChoice is invalid
 					} else {
 						System.out.println(errorMessage);
 					}
@@ -109,8 +112,8 @@ public abstract class IO {
 	}
 	
 	/**
-	 * This is an abstract method which processes an command input from users.
-	 * @param choice a valid integer command input
+	 * This is an abstract method which processes a command input from users.
+	 * @param choice an integer which matches a command in this interface
 	 */
 	public abstract void processPlayerInput(int choice);
 	

@@ -4,10 +4,28 @@ import java.util.*;
 import map.*;
 import trader.*;
 
+/**
+ * The SailToIO is an IO sub-class to create command line interface for the
+ * sailing command.
+ * <p>
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
+
 public class SailToIO extends IO {
 	
+	/**
+	 * Attribute routes stores an ArrayList of {@link Route} objects which are
+	 * available for sailing to.
+	 */
 	private ArrayList<Route> routes;
 
+	/**
+	 * This constructor sets the player attribute with the current Trader object and
+	 * adds all the sailing command options to attribute commandsList. 
+	 * @param trader the current Trader object
+	 */
 	public SailToIO(Trader player) {
 		super(player);
 		this.routes = getTrader().getCurrentIsland().getRoutes();
@@ -17,20 +35,19 @@ public class SailToIO extends IO {
 		addCommand("cancel");
 	}
 	
+	@Override
+	/**
+	 * This method processes an input of sailing command from users and adds the
+	 * command matching users' input to attribute commandArguments.
+	 * 
+	 * @param playerChoice an integer which matches a command in this interface
+	 */
 	public void processPlayerInput(int playerChoice) {
-		//MZ: As we always enter sub IOs from main IOs like PortIO and StoreIO,
-		//and CommandArguments is static. It is ok just reset in PortIO & ScoreIO.
-		//resetCommandArguments();
-		//String keyWord = null;
+		
 		String argument = null;
-		//if (playerChoice < (getCommandsList().size() - 1)) {
-			//keyWord = "sail";
 	    argument = getCommandsList().get(playerChoice);
-		//} else {
-		//	argument = "cancel";
-		//}
-		//super.addCommandArgument(keyWord);
 		super.addCommandArgument(argument);
+		
 	}
 
 }

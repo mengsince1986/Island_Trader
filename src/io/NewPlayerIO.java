@@ -4,23 +4,81 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import commands.TraderCreatorHandler;
+import main.GameEnvironment;
+import map.Island;
 import map.World;
+import ships.Ship;
+import trader.Trader;
+
+/**
+ * The NewPlayerIO is an abstract class for creating command line interface.
+ * It is the base for {@link NewPlayerConstructorIO} {@link NewPlayerNameIO}, 
+ * {@link NewPlayerTimeIO}, {@link NewPlayerHomeIO}, and {@link NewPlayerShipIO}.
+ * <p>
+ * The sub-classes created based on NewPlayerIO print prompts for creating a
+ * new {@link Trader}, take string inputs from users, validate the inputs, 
+ * and pass the inputs as an ArrayList to {@link TraderCreatorHandler} through 
+ * {@link GameEnvironment}.
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
 
 public abstract class NewPlayerIO {
 
+	/**
+	 * Attribute world stores the current World object which stores all the 
+	 * {@link Island} and {@link Ship} objects.
+	 * <p>
+	 * Attribute prompt stores a string prompt for this command line interface 
+	 * object.
+	 * <p>
+	 * Attribute commandsList stores an ArrayList of available commands in this
+	 * command line interface object. 
+	 * <p>
+	 * Attribute commandArguments stores an ArrayList of commands users choose
+	 * from the command line interface. This attribute is set 
+	 * static so that it can store command inputs from different command line
+	 * interface objects.
+	 * <p>
+	 * Attribute gettingName is a boolean value which is set true when the
+	 * command line interface object is expecting a new player's name as the input.
+	 * Otherwise, it is set false.
+	 * <p>
+	 * Attribute gettingPlayingTimes is a boolean value which is set true when the
+	 * command line interface object is expecting the number of the playing days 
+	 * as the input. Otherwise, it is set false.
+	 */
+	private static World world;
 	private String prompt;
 	private ArrayList<String> commandsList;
-	private static World world;
 	private static ArrayList<String> commandArguments = new ArrayList<String>();
 	private static boolean gettingName = false;
 	private static boolean gettingPlayingTime = false;
-	//private static final Scanner commandReader = new Scanner(System.in);
 
+	/**
+	 * This constructor sets the world attribute with the current World object 
+	 * and initializes a new ArrayList for the commandsList attribute.
+	 * @param trader the current World object
+	 */
 	public NewPlayerIO(World newWorld) {
-		commandsList = new ArrayList<String>();
+		
 		world = newWorld;
+		commandsList = new ArrayList<String>();
+		
 	}
 
+	/**
+	 * This method prints the prompt and available command 
+	 * options returned by getCommandsListString(), gets a an input of string 
+	 * from users, and validates the input. If the input is valid, this method
+	 * will add the command matching the input to attribute commandArguments.
+	 * If the input is invalid, this method will print an error message. 
+	 * <p>
+	 * 
+	 * @return the ArrayList of commandArguments 
+	 */
 	public ArrayList<String> readCommandArguments() {
 
 		String playerChoice;
@@ -41,8 +99,6 @@ public abstract class NewPlayerIO {
 			try {
 
 				playerChoice = commandReader.nextLine();
-				// System.out.println("gettingName: " + gettingName);
-				// System.out.println("gettingPlaying: " + gettingPlayingTime);
 
 				if (gettingName) {
 
@@ -90,16 +146,27 @@ public abstract class NewPlayerIO {
 
 		} while (!isValid);
 
-		// System.out.println(commandArguments);
 		return commandArguments;
 	}
 
+	/**
+	 * This is an abstract method which processes a command input from users.
+	 * @param choice a string which matches a command in this interface
+	 */
 	public abstract void processPlayerInput(String choice);
 	
+	/**
+	 * This method is the getter for attribute world.
+	 * @return the World object stored in the world attribute
+	 */
 	public static World getWorld() {
 		return world;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<String> getCommandsList() {
 		return commandsList;
 	}
