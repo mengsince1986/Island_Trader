@@ -33,8 +33,6 @@ public class StatusLine {
 		String lowerDivider = "----------------------------------------------";
 		int playerProfit = this.player.getOwnedMoney() - this.player.getStartingMoney();
 		int daysPlayed = this.player.getSelectedDays() - this.player.getRemainingDays();
-		// MZ: Fixed bug. Update selected days in 2nd constructor of Trader class
-		// or trader.selectedDays is 0 all the time
 		int profitPerDay = Math.floorDiv(playerProfit, daysPlayed);
 		
 		String congratulation = "Trader name: " + this.player.getName() +
