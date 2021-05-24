@@ -6,7 +6,7 @@ import items.Item;
 import trader.Trader;
 
 /**
- * The BuyIO is an IO sub-class to create command line interface for users to 
+ * The BuyIO is an {@link IO} sub-class to create command line interface for users to 
  * buy items in the store
  * <p>
  * 
@@ -32,7 +32,7 @@ public class BuyIO extends IO {
 	 * adds all the buying command options to attribute commandsList,
 	 * initializes a {@link TransactionQuantityIO} object and stores it in the 
 	 * quantityIO attribute. 
-	 * @param trader the current Trader object
+	 * @param player the current Trader object
 	 */
 	public BuyIO(Trader player) {
 		super(player);

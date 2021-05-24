@@ -3,7 +3,7 @@ package io;
 import trader.*;
 
 /**
- * The UpgradeIO is an IO sub-class to create command line interface for the
+ * The UpgradeIO is an {@link IO} sub-class to create command line interface for the
  * cannon upgrade service.
  * <p>
  * 
@@ -17,7 +17,7 @@ public class UpgradeIO extends IO {
 	 * This constructor sets the player attribute with the current Trader object and
 	 * adds all the cannon upgrade command options to attribute commandsList.
 	 * 
-	 * @param trader the current Trader object
+	 * @param player the current Trader object
 	 */
 	public UpgradeIO(Trader player) {
 
@@ -25,7 +25,6 @@ public class UpgradeIO extends IO {
 		super.addCommand("Not now");
 	}
 
-	@Override
 	/**
 	 * This method processes an input of cannon upgrade command from users. It adds
 	 * the command matching users' input or any positive integer to attribute
@@ -34,6 +33,7 @@ public class UpgradeIO extends IO {
 	 * @param playerChoice an integer which matches a command in this interface or
 	 *        any positive integer
 	 */
+	@Override
 	public void processPlayerInput(int playerChoice) {
 
 		if (playerChoice == 0) {

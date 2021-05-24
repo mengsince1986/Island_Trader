@@ -4,7 +4,7 @@ import items.Item;
 import trader.Trader;
 
 /**
- * The TransactionQuantityIO is an IO sub-class to create command line interface
+ * The TransactionQuantityIO is an {@link IO} sub-class to create command line interface
  * for users to input the quantity number of trading items.
  * <p>
  * 
@@ -18,7 +18,7 @@ public class TransactionQuantityIO extends IO {
 	 * This constructor sets the player attribute with the current Trader object,
 	 * adds a cancel option to attribute commandsList.
 	 * 
-	 * @param trader the current Trader object
+	 * @param player the current Trader object
 	 */
 	public TransactionQuantityIO(Trader player) {
 		super(player);

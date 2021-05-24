@@ -8,7 +8,7 @@ import map.Island;
 import ships.Ship;
 
 /**
- * The SellIO is an IO sub-class to create command line interface for users to 
+ * The SellIO is an {@link IO} sub-class to create command line interface for users to 
  * sell items in the store.
  * <p>
  * 
@@ -35,7 +35,7 @@ public class SellIO extends IO {
 	 * adds all the selling command options to attribute commandsList,
 	 * initializes a {@link TransactionQuantityIO} object and stores it in the 
 	 * quantityIO attribute. 
-	 * @param trader the current Trader object
+	 * @param player the current Trader object
 	 */
 	public SellIO(Trader player) {
 		super(player);

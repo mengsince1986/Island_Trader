@@ -5,7 +5,7 @@ import ships.Ship;
 import trader.*;
 
 /**
- * The StoreIO is an IO sub-class to create command line interface for store.
+ * The StoreIO is an {@link IO} sub-class to create command line interface for store.
  * <p>
  * 
  * @author Finn van Dorsser
@@ -17,7 +17,7 @@ public class StoreIO extends IO {
 	/**
 	 * This constructor sets the player attribute with the current Trader object and
 	 * adds all the store command options to attribute commandsList. 
-	 * @param trader the current Trader object
+	 * @param player the current Trader object
 	 */
 	public StoreIO(Trader player) {
 

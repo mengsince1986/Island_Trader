@@ -4,7 +4,7 @@ import ships.Ship;
 import trader.*;
 
 /**
- * The PortIO is an IO sub-class to create command line interface for port.
+ * The PortIO is an {@link IO} sub-class to create command line interface for port.
  * <p>
  * 
  * @author Finn van Dorsser
@@ -17,7 +17,7 @@ public class PortIO extends IO {
 	 * This constructor sets the player attribute with the current Trader object and
 	 * adds all the port command options to attribute commandsList.
 	 * 
-	 * @param trader the current Trader object
+	 * @param player the current Trader object
 	 */
 	public PortIO(Trader player) {
 
@@ -32,7 +32,6 @@ public class PortIO extends IO {
 
 	}
 
-	@Override
 	/**
 	 * This method processes an input of a port command from users. It categorizes the
 	 * commands in attribute commandList with a switch statement and adds the
@@ -41,6 +40,7 @@ public class PortIO extends IO {
 	 * 
 	 * @param playerChoice an integer which matches a command in this interface
 	 */
+	@Override
 	public void processPlayerInput(int playerChoice) {
 
 		resetCommandArguments();

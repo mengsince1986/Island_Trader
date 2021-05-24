@@ -60,7 +60,7 @@ public abstract class NewPlayerIO {
 	/**
 	 * This constructor sets the world attribute with the current World object 
 	 * and initializes a new ArrayList for the commandsList attribute.
-	 * @param trader the current World object
+	 * @param newWorld a World object
 	 */
 	public NewPlayerIO(World newWorld) {
 		
@@ -164,17 +164,27 @@ public abstract class NewPlayerIO {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * This method is the  getter for attribute commandsList.
+	 * @return the ArrayList stored in the commandsList attribute
 	 */
 	public ArrayList<String> getCommandsList() {
 		return commandsList;
 	}
 
+	/**
+	 * This method adds a single command string to the ArrayList stored in
+	 * attribute commandsList. 
+	 * @param command a string command
+	 */
 	public void addCommand(String command) {
 		commandsList.add(command);
 	}
 
+	/**
+	 * This method iterates attribute commandsList and concatenates all the
+	 * commands into a string.
+	 * @return a formated string which includes all the command options
+	 */
 	public String getCommandsListString() {
 		String commandList = "============== Commands List =================" + "\n\n";
 		for (int i = 0; i < commandsList.size(); i++) {
@@ -183,30 +193,61 @@ public abstract class NewPlayerIO {
 		return commandList;
 	}
 
+	/**
+	 * This method is the getter for attribute commandArguments.
+	 * @return the ArrayList stored in attribute commandArguments
+	 */
 	public static ArrayList<String> getCommandArguments() {
 		return commandArguments;
 	}
 
+	/**
+	 * This method resets the commandArguments attribute to be an empty
+	 * ArrayList
+	 */
 	public static void resetCommandArguments() {
 		commandArguments.clear();
 	}
 
+	/**
+	 * This method adds a single command/argument string to attribute 
+	 * commandArguments.
+	 * @param arg a command/argument string
+	 */
 	public static void addCommandArgument(String arg) {
 		commandArguments.add(arg);
 	}
 	
+	/**
+	 * This method is the setter for attribute prompt. 
+	 * @param newPrompt a string prompt for this interface object
+	 */
 	public void setPrompt(String newPrompt) {
 		this.prompt = newPrompt;
 	}
 	
+	/**
+	 * This method is the getter for attribute prompt.
+	 * @return the string stored in attribute prompt
+	 */
 	public String getPrompt() {
 		return this.prompt;
 	}
 
+	/**
+	 * This method is the setter for attribute gettingName.
+	 * @param value true if this interface object is expecting a new player's 
+	 * name as the input. Otherwise, it's false.
+	 */
 	public static void setGettingName(boolean value) {
 		gettingName = value;
 	}
 
+	/**
+	 * This method is the setter for attribute gettingPlayingTime.
+	 * @param value true if this interface object is expecting the number of the 
+	 * playing days as the input. Otherwise, it is set false.
+	 */
 	public static void setGettingPlayingTime(boolean value) {
 		gettingPlayingTime = value;
 	}

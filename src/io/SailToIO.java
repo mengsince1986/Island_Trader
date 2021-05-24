@@ -5,7 +5,7 @@ import map.*;
 import trader.*;
 
 /**
- * The SailToIO is an IO sub-class to create command line interface for the
+ * The SailToIO is an {@link IO} sub-class to create command line interface for the
  * sailing command.
  * <p>
  * 
@@ -24,7 +24,7 @@ public class SailToIO extends IO {
 	/**
 	 * This constructor sets the player attribute with the current Trader object and
 	 * adds all the sailing command options to attribute commandsList. 
-	 * @param trader the current Trader object
+	 * @param player the current Trader object
 	 */
 	public SailToIO(Trader player) {
 		super(player);
@@ -35,13 +35,13 @@ public class SailToIO extends IO {
 		addCommand("cancel");
 	}
 	
-	@Override
 	/**
 	 * This method processes an input of sailing command from users and adds the
 	 * command matching users' input to attribute commandArguments.
 	 * 
 	 * @param playerChoice an integer which matches a command in this interface
 	 */
+	@Override
 	public void processPlayerInput(int playerChoice) {
 		
 		String argument = null;
