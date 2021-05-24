@@ -132,7 +132,6 @@ public abstract class NewPlayerIO {
 					}
 
 				} else if (Integer.parseInt(playerChoice) >= 0
-						&& !playerChoice.matches("00+") 
 						&& Integer.parseInt(playerChoice) <= commandsList.size() - 1) {
 
 					processPlayerInput(playerChoice);

@@ -37,9 +37,8 @@ public class GameEnvironment {
 		WorldConstructor newWorld = new WorldConstructor();
 		world = newWorld.getMap();
 		
-		
 		//Stage 2: Creating new player and new ship
-		/*
+		
 		NewPlayerConstructorIO newPlayerConstructorIO = new NewPlayerConstructorIO(world);
 		
 		new TraderCreatorHandler(world);
@@ -58,39 +57,10 @@ public class GameEnvironment {
 				constructed = true;
 			}
 		}
-		
-
-		/*
-	    // Manually create a new world, a trader and a ship, only for quick test
-		
-		System.out.println("Welcome to the wolrd of Island Trader");
-		System.out.println();
-		// constructing a new map
-		// MZ: can put new world and new player into a big constructor which
-		// returns map, player and ship
-		// print with constructor printer
-		//WorldConstructor newWorld = new WorldConstructor();
-		//world = newWorld.getMap();
-		System.out.println("Constructing game environment ...");
-		System.out.println("A new world is created ... ");
-		// create a new player
-		String traderName = "Alice"; // name and time can be read from constructorIO
-		player = new Trader(50, traderName, 20000, world.getIsland("Ceylon"), "port");
-		ship = new Ship("Black Pearl", 10, 2, 1500, 6, 70, "fast"); 
-		ship.setCaptain(player);
-		player.setOwnedShip(ship);
-		System.out.println("A new Trader named " + player.getName() + " is created ... ");
-		System.out.println("A new Ship named " + player.getOwndedShip().getName() + " is created ...");
-		System.out.println();
-		System.out.println("========= All Set. Let's get started!=========");
-		System.out.println();
-		constructed = true;
-		*/
-		
+				
 		// Stage3: Playing
-		
 		new CommandHandler(world, player, ship);
-		StatusLine statusLine = new StatusLine(player, ship);
+		StatusLine statusLine = new StatusLine(player);
 		PortIO portIO = new PortIO(player);
 		
 		boolean gameOver = false;
@@ -114,14 +84,14 @@ public class GameEnvironment {
 				
 			}
 			if (player.noTimeToSail()) {
-				statusLine.printGameOverReport("You didn't have enough days left to sail anywhere!");
+				System.out.print(statusLine.getGameOverReport("You didn't have enough days left to sail anywhere!"));
 				gameOver = true;
 			} else if (player.noMoneyToSail()) {
 				if (player.getKilledByPirates()) {
-					statusLine.printGameOverReport("You're dead!");
+					System.out.print(statusLine.getGameOverReport("You're dead!"));
 					gameOver = true;
 				} else {
-				statusLine.printGameOverReport("You ran out of money to sail anywhere!");
+					System.out.print(statusLine.getGameOverReport("You ran out of money to sail anywhere!"));
 				gameOver = true;
 				}
 			}

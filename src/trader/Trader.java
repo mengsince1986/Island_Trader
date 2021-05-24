@@ -461,7 +461,7 @@ public class Trader {
 				// subtract cannon upgrade cost from trader's owned money
 				getOwndedShip().addCannons(cannonNum);
 				subtractMoney(totalCost);
-				// log the upgrade service into upgradelog
+				// log the upgrade service into upgradeLog
 				getOwndedShip().addToUpgradeLogs(currentIsland, "Cannon Upgrade", totalCost);
 				report = "You now have " + cannonNum + " more cannons equipped on your ship.";
 			} else {
