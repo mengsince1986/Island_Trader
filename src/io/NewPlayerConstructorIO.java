@@ -34,7 +34,7 @@ public class NewPlayerConstructorIO extends NewPlayerIO {
 	}
 
 	/**
-	 * This method processes an input of a new {@link Trader} setup command 
+	 * This method processes an input of a {@link Trader} setup command 
 	 * from users. It categorizes the commands in attribute commandList with a 
 	 * switch statement and adds the command matching users' input to attribute 
 	 * commandArguments. This method also initializes a {@link NewPlayerNameIO} 
@@ -47,16 +47,17 @@ public class NewPlayerConstructorIO extends NewPlayerIO {
 	public void processPlayerInput(String playerChoice) {
 
 		resetCommandArguments();
-
-		switch (playerChoice) {
+		int intPlayerChoice = Integer.parseInt(playerChoice);
 		
-		case "0": // new player
+		switch (intPlayerChoice) {
+		
+		case 0: // new player
 			NewPlayerNameIO newName = new NewPlayerNameIO(getWorld());
 			setGettingName(true);
 			newName.readCommandArguments();
 			break;
 
-		case "1": // quit
+		case 1: // quit
 			super.addCommandArgument("quit");
 			break;
 
