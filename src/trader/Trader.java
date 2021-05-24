@@ -66,7 +66,11 @@ public class Trader {
 	 */
 	private ArrayList<TradingLog> tradingLogs;
 	
-	
+	/**
+	 * stores a boolean value signifying whether the player has been forced to
+	 * walk the plank by pirates (initialised to false). 
+	 * If true, the game will be over.
+	 */
 	private boolean killedByPirates = false;
 	
 	/**
@@ -198,6 +202,9 @@ public class Trader {
 		return logsString;
 	}
 	
+	/**
+	 * @return the boolean {@link killedByPirates} attribute value
+	 */
 	public boolean getKilledByPirates() {
 		return this.killedByPirates;
 	}
@@ -283,7 +290,11 @@ public class Trader {
 		this.curentLocation = location;
 	}
 	
-	
+	/**
+	 * sets the player's {@link killedByPirates} attribute to the given value.
+	 * (Used to signify whether the player was forced to walk the plank by pirates.)
+	 * @param a boolean value
+	 */
 	public void setKilledByPirates(boolean value) {
 		this.killedByPirates = value;
 	}
@@ -488,8 +499,9 @@ public class Trader {
 	}
 	
 	/**
-	 * checks whether the player has enough {@link ownedMoney} left to sail to another 
-	 * {@link Island}. If not, the game will be over.
+	 * checks whether the player has enough {@link ownedMoney}, including the total value
+	 * of the player's saleable items, to be able to sail to another {@link Island}. 
+	 * If not, the game will be over.
 	 * @return a boolean signifying whether or not the game should be over.
 	 */
 	public boolean noMoneyToSail() {
@@ -503,7 +515,7 @@ public class Trader {
 		Ship playerShip = this.ownedShip;
 		Port currentPort = this.getCurrentIsland().getPort();
 		int repairCost = playerShip.getDamage() * currentPort.getRepairCost();
-		int sellableCargoValue = getSellableCargoValue(playerShip);
+		int sellableCargoValue = getSellableCargoValue();
 		if (repairCost > (this.ownedMoney + sellableCargoValue)) {
 			gameOver = true;
 		}
@@ -511,9 +523,10 @@ public class Trader {
 	}
 	
 	/**
-	 * @return a readable String representation of the player.
+	 * @return the total sale value of the player's owned items.
 	 */
-	public int getSellableCargoValue(Ship playerShip) {
+	public int getSellableCargoValue() {
+		Ship playerShip = this.getOwndedShip();
 		Island currentIsland = this.getCurrentIsland();
 		Store currentStore = currentIsland.getStore();
 		int sellableCargoValue = 0;
