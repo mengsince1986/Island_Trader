@@ -103,7 +103,7 @@ public class PirateEvent extends RandomEvent {
 	}
 	
 	public boolean decideLooted(PirateScenarios outcome) {
-		return (outcome == PirateScenarios.FLED_AND_LOST | outcome == PirateScenarios.FOUGHT_AND_LOST);
+		return (outcome == PirateScenarios.FLED_AND_LOST || outcome == PirateScenarios.FOUGHT_AND_LOST);
 	}
 	
 	public String processImpact(Trader player) {

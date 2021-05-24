@@ -88,7 +88,7 @@ public class Store {
 		String itemString = "Items for sale:\n";
 		if (toSell.size() > 0) {
 			for (int i = 0; i < toSell.size(); i++) {
-				itemString += String.format("\nItem %s: %s", i+1, toSell.get(i));
+				itemString += String.format("\nItem %s: %s", i, toSell.get(i));
 			}
 			return itemString;
 		} else {
@@ -101,7 +101,7 @@ public class Store {
 		String itemString = "Looking to buy:\n";
 		if (toBuy.size() > 0) {
 			for (int i = 0; i < toBuy.size(); i++) {
-				itemString += String.format("\nItem %s: %s", i+1, toBuy.get(i));
+				itemString += String.format("\nItem %s: %s", i, toBuy.get(i));
 			}
 			return itemString;
 		} else {
@@ -114,11 +114,11 @@ public class Store {
 		ArrayList<Item> cargoList = ship.getCargos();
 		ArrayList<Item> sellablePlayerItems = new ArrayList<>();
 		for (Item cargoItem : cargoList) {
-			for (Item offeredItem : this.toBuy) {
+			for (Item itemToBuy : this.toBuy) {
 				String cargoItemName = cargoItem.getName();
-				if (cargoItemName == offeredItem.getName()) {
-					int quantity = cargoItem.getQuantity();
-					int price = offeredItem.getPricePerUnit();
+				if (cargoItemName == itemToBuy.getName()) {
+					int quantity = Integer.min(cargoItem.getQuantity(), itemToBuy.getQuantity());
+					int price = itemToBuy.getPricePerUnit();
 					sellablePlayerItems.add(
 							new Item(cargoItemName, quantity, price));
 				}
