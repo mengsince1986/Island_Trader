@@ -21,12 +21,12 @@ import events.*;
 public class Ship {
 
 	/**
-	 * Attribute name is a string which stores a Ship object's name.
+	 * Attribute name is a string which stores this Ship object's name.
 	 */
 	private String name;
 
 	/**
-	 * Attribute captain is a Trader object who owns this Ship Object.
+	 * Attribute captain is a {@link Trader} object who owns this ship.
 	 */
 	private Trader captain;
 

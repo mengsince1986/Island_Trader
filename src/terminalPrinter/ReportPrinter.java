@@ -1,7 +1,20 @@
 package terminalPrinter;
 
+/**
+ * The terminalPrinter class is used to initialize an object to print formated
+ * string report in the command line interface.
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
 public class ReportPrinter {
 	
+	/**
+	 * This method takes a string report, formats it and and prints it to the
+	 * terminal.
+	 * 
+	 * @param report a string
+	 */
 	public static void printReport(String report) {
 
 		String upperDivider = "-------------------Report---------------------";

@@ -88,7 +88,7 @@ public class GameEnvironment {
 		// Stage3: Playing
 		
 		new CommandHandler(world, player, ship);
-		StatusLine statusLine = new StatusLine(player, ship);
+		StatusLine statusLine = new StatusLine(player);
 		PortIO portIO = new PortIO(player);
 		
 		boolean gameOver = false;

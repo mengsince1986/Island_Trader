@@ -2,3 +2,4 @@ commands
 gui
 io
 ships
+terminalPrinter
