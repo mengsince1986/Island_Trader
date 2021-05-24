@@ -19,12 +19,14 @@ public class BuyIO extends IO {
 	/**
 	 * Attribute forSale is an ArrayList storing all the {@link Item} objects which are
 	 * available for sale in the store of the island where the Trader is located. 
-	 * <p>
+	 */
+	private ArrayList<Item> forSale;
+	
+	/**
 	 * Attribute quantityIO stores a {@link TransactionQuantityIO} object which 
 	 * is a command line interface for the Trader to input the quantity for the
 	 * trading items.
 	 */
-	private ArrayList<Item> forSale;
 	private TransactionQuantityIO quantityIO;
 	
 	/**

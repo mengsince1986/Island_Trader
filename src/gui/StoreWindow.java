@@ -46,19 +46,25 @@ public class StoreWindow {
 
 	/**
 	 * Attribute storeFrame stores the Frame object of this window.
-	 * <p>
+	 */
+	private JFrame storeFrame;
+	
+	/**
 	 * Attribute saleItemButtonGroup stores a ButtonGroup object including 
 	 * all the RadioButtons with the name of the available items on sale.
-	 * <p>
+	 */
+	private final ButtonGroup saleItembuttonGroup = new ButtonGroup();
+	
+	/**
 	 * Attribute purchaseItemButtonGroup stores a ButtonGroup object including 
 	 * all the RadioButtons with the name of the available items to purchase.
-	 * <p>
+	 */
+	private final ButtonGroup purchaseItembuttonGroup = new ButtonGroup();
+	
+	/**
 	 * Attribute manager is the {@link GUIGameEnvironment} object which maintains the 
 	 * state of the program and makes instances of window classes.
 	 */
-	private JFrame storeFrame;
-	private final ButtonGroup saleItembuttonGroup = new ButtonGroup();
-	private final ButtonGroup purchaseItembuttonGroup = new ButtonGroup();
 	private GUIGameEnvironment manager;
 	
 	// This static main method is only used for initializing this window frame

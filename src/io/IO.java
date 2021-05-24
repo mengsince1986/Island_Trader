@@ -25,22 +25,28 @@ public abstract class IO {
 	 * printing related Trader properties for command line interface. This
 	 * attribute is set static as there's only one Trader object in the game, so
 	 * all command line interface objects share the same player attribute. 
-	 * <p>
+	 */
+	private static Trader player;
+	
+	/**
 	 * Attribute commandsList stores an ArrayList of available commands in this
 	 * command line interface object. 
-	 * <p>
+	 */
+	private ArrayList<String> commandsList;
+	
+	/**
 	 * Attribute commandArguments stores an ArrayList of commands users choose
 	 * from the command line interface. This attribute is set 
 	 * static so that it can store command inputs from different command line
 	 * interface objects.
-	 * <p>
+	 */
+	private static ArrayList<String> commandArguments = new ArrayList<String>();
+	
+	/**
 	 * Attribute gettingTransactionQuantity stores a boolean value. It is true
 	 * when a command line interface object accepts all positive integer inputs
 	 * from users, e.g. the quantity of items a trader buys or sells.
 	 */
-	private static Trader player;
-	private ArrayList<String> commandsList;
-	private static ArrayList<String> commandArguments = new ArrayList<String>();
 	private static boolean gettingTransactionQuantity = false;
 	
 	/**

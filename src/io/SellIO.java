@@ -22,12 +22,14 @@ public class SellIO extends IO {
 	 * Attribute sellablePlayerItems is an ArrayList storing all the {@link Item} 
 	 * objects which are available for the {@link Trader} to sell in the store 
 	 * of the {@link Island} where the Trader is located. 
-	 * <p>
+	 */
+	private ArrayList<Item> sellablePlayerItems;
+	
+	/**
 	 * Attribute quantityIO stores a {@link TransactionQuantityIO} object which 
 	 * is a command line interface for the Trader to input the quantity for the
 	 * trading items.
 	 */
-	private ArrayList<Item> sellablePlayerItems;
 	private TransactionQuantityIO quantityIO;
 	
 	/**

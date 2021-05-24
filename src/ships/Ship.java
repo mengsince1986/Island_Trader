@@ -1,14 +1,36 @@
 package ships;
 import java.util.*;
+
 import trader.*;
 import map.*;
 import items.*;
 import events.*;
 
+/**
+ * The Ship class is for creating Ship objects with different properties.
+ * In this game, there are four kinds of Ship objects which are different from
+ * each other by name, speed, maximum cannon number, minimum crew number,
+ * default capacity and default durability. All ship objects are initialized in
+ * {@link WorldConstructor} object.
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
+
 public class Ship {
 
+	/**
+	 * Attribute name is a string which stores a Ship object's name.
+	 */
 	private String name;
+	/**
+	 * Attribute captain is a Trader object who owns this Ship Object.
+	 */
 	private Trader captain;
+	/**
+	 * Attribute crewNum is an integer which stores a Ship object's current crew
+	 * number.
+	 */
 	private int crewNum;
 	private int minimumCrewNum;
 	private int costPerSailor; // how much to pay a sailor per day

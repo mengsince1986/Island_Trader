@@ -43,23 +43,31 @@ public class SetupWindow {
 
 	/**
 	 * Attribute setupFrame stores the Frame object of this window.
-	 * <p>
+	 */
+	private JFrame setupFrame;
+	
+	/**
 	 * Attribute nameTextField stores the string of the new name entered by 
 	 * users.
-	 * <p>
+	 */
+	private JTextField nameTextField;
+	
+	/**
 	 * Attribute shipButtonGroup stores a ButtonGroup object including all the
 	 * RadioButtons with the name of the available Ship objects.
-	 * <p>
+	 */
+	private final ButtonGroup shipButtonGroup = new ButtonGroup();
+	
+	/**
 	 * Attribute homeButtonGroup stores a ButtonGroup object including all the
 	 * RadioButtons with the name of the available Island objects.
-	 * <p>
+	 */
+	private final ButtonGroup homeButtonGroup = new ButtonGroup();
+	
+	/**
 	 * Attribute manager is the {@link GUIGameEnvironment} object which maintains the 
 	 * state of the program and makes instances of window classes.
 	 */
-	private JFrame setupFrame;
-	private JTextField nameTextField;
-	private final ButtonGroup shipButtonGroup = new ButtonGroup();
-	private final ButtonGroup homeButtonGroup = new ButtonGroup();
 	private GUIGameEnvironment manager;
 	
 	// This static main method is only used for initializing this window frame

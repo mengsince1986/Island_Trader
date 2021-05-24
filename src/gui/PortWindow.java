@@ -44,15 +44,19 @@ public class PortWindow {
 
 	/**
 	 * Attribute portFrame stores the Frame object of this window.
-	 * <p>
+	 */
+	private JFrame portFrame;
+	
+	/**
 	 * Attribute destinationButtonGroup stores a ButtonGroup object including 
 	 * all the RadioButtons with the name of the available Island objects.
-	 * <p>
+	 */
+	private final ButtonGroup destinationButtonGroup = new ButtonGroup();
+	
+	/**
 	 * Attribute manager is the {@link GUIGameEnvironment} object which maintains the 
 	 * state of the program and makes instances of window classes.
 	 */
-	private JFrame portFrame;
-	private final ButtonGroup destinationButtonGroup = new ButtonGroup();
 	private GUIGameEnvironment manager;
 	
 	// This static main method is only used for initializing this window frame

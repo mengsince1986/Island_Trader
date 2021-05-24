@@ -26,16 +26,20 @@ public class CommandHandler {
 	 * Attribute map is a World object which stores all the environment objects 
 	 * like Islands, Stores, Ports, Routes and Items. It is used to get 
 	 * arguments for calling sailing method.
-	 * <p>
+	 */ 
+	private static World map;
+	
+	/**
 	 * Attribute player is the current player object. It is used to call 
 	 * trading methods, repair method, cannon upgrade method and viewing status 
 	 * methods.
-	 * <p>
+	 */ 
+	private static Trader player;
+	
+	/**
 	 * Attribute ship is the current player's ship object. It is used to call
 	 * sailing method, trading methods and Ship status viewing methods.
 	 */ 
-	private static World map;
-	private static Trader player;
 	private static Ship ship;
 
 	/**

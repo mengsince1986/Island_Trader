@@ -20,9 +20,9 @@ class RouteTests {
 	static Island island1 = new Island("Island1");
 	static Island island2 = new Island("Island2");
 	static Route route1 = new Route(10, "Looks dicey");
-	static Ship normalShip = new BalancedShip();
-	static Ship fastShip = new FastShip();
-	static Ship slowShip = new BattleShip();
+	static Ship normalShip = new Ship("Redcoasts", 15, 2, 1500, 8, 75, "normal");
+	static Ship fastShip = new Ship("Black Pearl", 10, 2, 1500, 6, 70, "fast");
+	static Ship slowShip = new Ship("Endeavour", 20, 2, 1000, 18, 90, "slow");
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {

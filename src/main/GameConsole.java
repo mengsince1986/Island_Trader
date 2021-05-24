@@ -4,14 +4,13 @@ import trader.Trader;
 import map.Island;
 import map.World;
 import map.WorldConstructor;
-import ships.BalancedShip;
 import ships.Ship;
 
 
 public class GameConsole {
 	
    /**
-   * Use this class to test the backend of the game
+   * Only use this class to quickly test the backend of the game
    */
 	
 	public static void main(String[] args) {
@@ -28,8 +27,8 @@ public class GameConsole {
 		// constructing a new map
 		WorldConstructor newWorld = new WorldConstructor();
 		map = newWorld.getMap();
-		Island island1 = map.getIsland("Niawall Haven");
-		Island island2 = map.getIsland("The Lobster Key");
+		Island island1 = map.getIsland("Lord Matheson Island");
+		Island island2 = map.getIsland("Ceylon");
 		System.out.println("Constructing game environment ...");
 		System.out.println("A new world is created ... ");
 		
@@ -37,7 +36,7 @@ public class GameConsole {
 		String traderName = "Jon Snow"; // get user input + loop invoked by exception
 		player = new Trader(30, traderName, 10000, 
 							island1, "port");
-		ship = new BalancedShip(); // get user input + loop invoked by exception
+		ship = new Ship("Black Pearl", 10, 2, 1500, 6, 70, "fast"); // get user input + loop invoked by exception
 		ship.setCaptain(player);
 		player.setOwnedShip(ship);
 		System.out.println("A new Trader named " + player.getName() + " is created ... ");
@@ -60,6 +59,7 @@ public class GameConsole {
 		*/
 		
 		// test random events
+		/*
 		player.setCurrentLocation("port");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("Captain Pre-Report: ");
@@ -86,6 +86,7 @@ public class GameConsole {
 		System.out.println("Ship Post-Report: ");
 		System.out.println(player.getOwndedShip());
 		System.out.println("==================");
+		*/
 		
 		/*
 		player.setCurrentLocation("store");

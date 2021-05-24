@@ -72,9 +72,9 @@ public class GameEnvironment {
 		System.out.println("Constructing game environment ...");
 		System.out.println("A new world is created ... ");
 		// create a new player
-		String traderName = "Jon Snow"; // name and time can be read from constructorIO
+		String traderName = "Alice"; // name and time can be read from constructorIO
 		player = new Trader(50, traderName, 20000, world.getIsland("Ceylon"), "port");
-		ship = new BalancedShip(); // get user input + loop invoked by exception
+		ship = new Ship("Black Pearl", 10, 2, 1500, 6, 70, "fast"); 
 		ship.setCaptain(player);
 		player.setOwnedShip(ship);
 		System.out.println("A new Trader named " + player.getName() + " is created ... ");

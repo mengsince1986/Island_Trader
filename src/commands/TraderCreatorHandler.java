@@ -30,15 +30,19 @@ public class TraderCreatorHandler {
 	 * objects like Islands, Stores, Ports, Routes and Items. It is used to get 
 	 * the Island object with the name storing in the ArrayList of 
 	 * commandArguments. 
-	 * <p>
+	 */ 
+	private static World world;
+	
+	/**
 	 * Attribute newPlayer stores the new created Trader object. It will be passed
 	 * to the GameEnvironment as the player object.
-	 * <p>
+	 */ 
+	private static Trader newPlayer;
+	
+	/**
 	 * Attribute newShip stores the new created ship object. It will be passed
 	 * to the GameEnvironment as the ship object.
 	 */ 
-	private static World world;
-	private static Trader newPlayer;
 	private static Ship newShip; 
 	
 	/**
