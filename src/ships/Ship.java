@@ -127,14 +127,12 @@ public class Ship {
 	 * @param sailorCost       the cost of each sailor per day on this Ship object
 	 * @param defaultCapacity  the number of this Ship object's default capacity
 	 * @param cannons          the number of this Ship object's cannons
-	 * @param defautDurability the number of this Ship object's default durability
+	 * @param defaultDurability the number of this Ship object's default durability
 	 * @param speed            a string describing this Ship object's speed which
 	 *                         can be set as "fast", "normal", or "slow".
 	 */
-	
-	public Ship(String name, int minCrewNum, int sailorCost,
-			    int defaultCapacity, int cannons, 
-			    int defaultDurability, String speed) {
+	public Ship(String name, int minCrewNum, int sailorCost, int defaultCapacity, int cannons, int defaultDurability,
+			String speed) {
 
 		this.name = name;
 		this.minimumCrewNum = minCrewNum;
@@ -212,11 +210,10 @@ public class Ship {
 	}
 
 	/**
-	 * This method formats a string report of the cargos on this {@link Ship} object
-	 * by iterating all the {@link Item}s stored in cargos attribute.
+	 * This method formats a string report of the cargos on this Ship object by
+	 * iterating all the {@link Item}s stored in cargos attribute.
 	 * 
-	 * @return a string describing the contents of the cargos on this {@link Ship}
-	 *         object.
+	 * @return a string describing the contents of the cargos on this Ship object.
 	 */
 	public String getCargosString() {
 		String cargosString = "Remaining Capacity: " + this.getCapacity() + "\n\n";
@@ -286,8 +283,7 @@ public class Ship {
 	}
 
 	/**
-	 * This method calculates the damage value this {@link Ship} object has
-	 * suffered.
+	 * This method calculates the damage value this Ship object has suffered.
 	 * 
 	 * @return the integer value of the damage
 	 */
@@ -298,7 +294,7 @@ public class Ship {
 	/**
 	 * This method is the getter for speed attribute
 	 * 
-	 * @return a string describing this {@link Ship} object's speed
+	 * @return a string describing this Ship object's speed
 	 */
 	public String getSpeed() {
 		return this.speed;
@@ -323,12 +319,11 @@ public class Ship {
 	}
 
 	/**
-	 * This method formats a string report of the upgrade logs of this {@link Ship}
-	 * object by iterating all the {@link UpgradeLog}s stored in upgradeLogs
-	 * attribute.
+	 * This method formats a string report of the upgrade logs of this Ship object
+	 * by iterating all the {@link UpgradeLog}s stored in upgradeLogs attribute.
 	 * 
-	 * @return a string describing the contents of the upgrade logs of this
-	 *         {@link Ship} object.
+	 * @return a string describing the contents of the upgrade logs of this Ship
+	 *         object.
 	 */
 	public String getUpgradeLogString() {
 		String logString = "Upgrade log:\n\n";
@@ -362,7 +357,7 @@ public class Ship {
 	/**
 	 * This method is the setter of name attribute.
 	 * 
-	 * @param name a string describing the name of this {@link Ship} object
+	 * @param name a string describing the name of this Ship object
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -380,7 +375,7 @@ public class Ship {
 	/**
 	 * This method is the setter of creNum attribute.
 	 * 
-	 * @param num the value of the crew number for this {@link Ship} object
+	 * @param num the value of the crew number for this Ship object
 	 */
 	public void setCrewNumber(int num) {
 		this.crewNum = num;
@@ -390,8 +385,7 @@ public class Ship {
 	 * This method adds an integer num to the crewNum attribute and updates the
 	 * costPerDay attribute according to the value of the new crewNum.
 	 * 
-	 * @param num the value to add to the current crew number of this {@link Ship}
-	 *            object.
+	 * @param num the value to add to the current crew number of this Ship object.
 	 */
 	public void addCrewNumber(int num) {
 		this.crewNum += num;
@@ -401,8 +395,7 @@ public class Ship {
 	/**
 	 * This method is the setter of minimumCrewNum attribute.
 	 * 
-	 * @param num an integer to set the minimum crew number of this {@link Ship}
-	 *            object
+	 * @param num an integer to set the minimum crew number of this Ship object
 	 */
 	public void setMinimumCrewNumber(int num) {
 		this.minimumCrewNum = num;
@@ -411,8 +404,8 @@ public class Ship {
 	/**
 	 * This method is the setter of costPerDay attribute.
 	 * 
-	 * @param amount an integer value for the total cost per day of this
-	 *               {@link Ship} object.
+	 * @param amount an integer value for the total cost per day of this Ship
+	 *               object.
 	 */
 	public void setCostPerDay(int amount) {
 		this.costPerDay = amount;
@@ -444,9 +437,13 @@ public class Ship {
 
 	/**
 	 * This method removes a specific quantity of {@link Item} out of cargos and
+	 * updates the capacity attribute. If the quantity of the item to remove is
+	 * higher than the soldItem quantity, only the quantity of the item to remove
+	 * will be updated. Otherwise the item object itself will be removed from the
+	 * cargos attribute.
 	 * 
-	 * @param soldItem
-	 * @param quantity
+	 * @param soldItem an {@link Item} object
+	 * @param quantity the value of the quantity of the soldItem
 	 */
 	public void subtractFromCargos(Item soldItem, int quantity) {
 		boolean toDelete = false;
@@ -468,14 +465,40 @@ public class Ship {
 		addCapacity(soldItem.getQuantity());
 	}
 
+	/**
+	 * This method adds an integer amount to the remainingCapacity attribute. If the
+	 * amount plus current remainingCapacity is larger than the default capacity of
+	 * this Ship object, the remainingCapacity will be set to the same with the
+	 * value of defaultCapacity.
+	 * 
+	 * @param amount an integer value to add to the remainingCapacity of this Ship
+	 *               object
+	 */
 	public void addCapacity(int amount) {
 		this.remainingCapacity = Integer.min(this.defaultCapacity, this.remainingCapacity + amount);
 	}
 
+	/**
+	 * This method subtracts an integer amount from the remainingCapacity attribute.
+	 * If the current remainingCapacity minus the amount equal to or less than 0,
+	 * the remainingCapacity will be set 0.
+	 * 
+	 * @param amount an integer value to subtract from the remainingCapacity of this
+	 *               Ship object
+	 */
 	public void subtractCapacity(int amount) {
 		this.remainingCapacity = Integer.max(0, this.remainingCapacity - amount);
 	}
 
+	/**
+	 * This method checks if the value of capacity attribute is less than 0 after a
+	 * specific amount is reduced from it.
+	 * 
+	 * @param toReduce an integer amount to be reduced from capacity of this Ship
+	 *                 object.
+	 * @return true if the value of capacity is greater or equal to 0 after a
+	 *         specific amount is reduced from it. Otherwise, false.
+	 */
 	public boolean checkCapacityOK(int toReduce) {
 		if (getCapacity() - toReduce < 0) {
 			return false;
@@ -483,18 +506,40 @@ public class Ship {
 		return true;
 	}
 
+	/**
+	 * This method is the setter of durability attribute.
+	 * 
+	 * @param num an integer to set durability of this Ship object
+	 */
 	public void setDurability(int num) {
 		this.durability = num;
 	}
 
+	/**
+	 * This method is the setter of defaultDurability attribute.
+	 * 
+	 * @param num an integer to set defaultDurability of this Ship object
+	 */
 	public void setDefaultDurability(int num) {
 		this.defaultDurability = num;
 	}
 
+	/**
+	 * This method is the setter of cannons attribute.
+	 * 
+	 * @param num an integer to set the number of cannons of this Ship object
+	 */
 	public void setCannons(int num) {
 		this.cannons = num;
 	}
 
+	/**
+	 * This method adds a specific number of cannons to the cannons attribute. If
+	 * the current cannon number plus the number to be added to it is greater than
+	 * the value of maxCannons, an error message is printed out.
+	 * 
+	 * @param num the number of cannons to be added
+	 */
 	public void addCannons(int num) {
 		if (this.cannons + num <= this.maxCannons) {
 			this.cannons += num;
@@ -503,6 +548,13 @@ public class Ship {
 		}
 	}
 
+	/**
+	 * This methods subtracts a damage value from the durability attribute. If the
+	 * durability is less than 0 after the subtraction, it will be set to be 0.
+	 * 
+	 * @param damage an integer value to be subtracted from the durability of this
+	 *               Ship object
+	 */
 	public void sufferDamage(int damage) {
 		if (this.durability - damage > 0) {
 			this.durability -= damage;
@@ -511,24 +563,64 @@ public class Ship {
 		}
 	}
 
+	/**
+	 * This methods is the setter of speed attribute.
+	 * 
+	 * @param speed a string ("fast", "normal", or "slow") that describes the speed
+	 *              of this Ship object
+	 */
 	public void setSpeed(String speed) {
 		this.speed = speed;
 	}
 
+	/**
+	 * This method is the setter of shipSailingModifier attribute.
+	 * 
+	 * @param shipSailingModifier an integer to set the value of
+	 *                            shipSaillingModifier for this Ship object
+	 */
 	public void setShipSailingModifier(int shipSailingModifier) {
 		this.shipSailingModifier = shipSailingModifier;
 	}
 
+	/**
+	 * This method resets the cargos attribute to be an empty ArrayList.
+	 */
 	public void emptyCargos() {
 		this.cargos = new ArrayList<Item>();
 	}
 
+	/**
+	 * This method adds an {@link UpgradeLog} to the upgradeLogs attribute. An
+	 * {@link UpgradeLog} includes a piece of upgrade/repair log recording the
+	 * location, service name and corresponding cost.
+	 * 
+	 * @param location an {@link Island} object
+	 * @param service  the string name of the upgrade service ("Damage Repair" or
+	 *                 "Cannon Upgrade")
+	 * @param cost     the integer value of the upgrade/repair cost
+	 */
 	public void addToUpgradeLogs(Island location, String service, int cost) {
 		UpgradeLog log = new UpgradeLog(location, service, cost);
 		this.upgradeLogs.add(log);
 	}
 
-	// Sailing
+	/**
+	 * This method checks if the sailing conditions to sail to another
+	 * {@link Island} are met.
+	 * <p>
+	 * To sail to another Island:
+	 * <ul>
+	 * <li>the remaining days of the ship's captain should be greater or equal to
+	 * the days to the destination island;</li>
+	 * <li>the ship's captain should own enough money (at least the same with the
+	 * cost to the destination island) to pay the crew to finish the sailing;</li>
+	 * <li>the ship should not have any damage.</li>
+	 * </ul>
+	 * 
+	 * @param destination an {@link Island} object
+	 * @return true if the sailing conditions are met. Otherwise, false.
+	 */
 	public boolean readyToSail(Island destination) {
 
 		boolean isReady;
@@ -562,6 +654,18 @@ public class Ship {
 		return true;
 	}
 
+	/**
+	 * This method changes the location {@link Island} of this Ship object and its
+	 * captain {@link Trader} object to be the destination {@link Island} if the
+	 * sailing methods are met. Otherwise, the ship and its captain stay where they
+	 * are.
+	 * 
+	 * @param destination an Island object
+	 * @return an array list of string reports on sailing. If the sailing conditions
+	 *         are met, the reports include all the consequences of the random
+	 *         events which happens on the way. If not, the reports include the
+	 *         messages of unsatisfied sailing conditions.
+	 */
 	public ArrayList<String> sailTo(Island destination) {
 
 		ArrayList<String> eventReports = new ArrayList<String>();
@@ -597,10 +701,6 @@ public class Ship {
 				eventReports.add("You had a safe and uneventful journey!\n");
 
 			}
-			//// String PirateReport =
-			//// String WeatherReport =
-			//// String RescueReport =
-			// return array of report strings for further processing in GameEnvironment?
 
 			// update captain currentIsland and currentLocation
 			getCaptain().setCurrentIsland(destination);
@@ -620,7 +720,10 @@ public class Ship {
 		return eventReports;
 	}
 
-	// print
+	/**
+	 * This methods modifies the string representation of this ship object.
+	 */
+	@Override
 	public String toString() {
 		String properties = "Name: " + getName() + "\n\n" + "Speed: " + getSpeed() + "\n" + "Default durability: "
 				+ getDefaultDurability() + "\n" + "Damage suffered: " + getDamage() + "\n\n" + "Current crew number: "
@@ -628,5 +731,4 @@ public class Ship {
 		return properties;
 	}
 
-	// Abstract methods
 }
