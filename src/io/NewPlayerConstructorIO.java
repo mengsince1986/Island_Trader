@@ -49,6 +49,7 @@ public class NewPlayerConstructorIO extends NewPlayerIO {
 		resetCommandArguments();
 
 		switch (playerChoice) {
+		
 		case "0": // new player
 			NewPlayerNameIO newName = new NewPlayerNameIO(getWorld());
 			setGettingName(true);
