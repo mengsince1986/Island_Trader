@@ -66,6 +66,9 @@ public class Trader {
 	 */
 	private ArrayList<TradingLog> tradingLogs;
 	
+	
+	private boolean killedByPirates = false;
+	
 	/**
 	 * provides customisation of the initial values of all starting attributes.
 	 * Convenient for testing.
@@ -96,14 +99,17 @@ public class Trader {
 	 * @param home the player's starting island
 	 */
 	public Trader(int days, String name, Island home) {
-	this.remainingDays = days;
-	this.selectedDays = days;
-	this.name = name;
-	this.ownedMoney = 10000;
-	this.homeIsland = home;
-	this.currentIsland = home;
-	this.curentLocation = "port";
-	this.tradingLogs = new ArrayList<TradingLog>();	
+		this.selectedDays = days;
+		this.remainingDays = days;
+		this.selectedDays = days;
+		this.name = name;
+		this.ownedMoney = 10000;
+		this.startingMoney = 15000;
+		this.ownedMoney = 15000;
+		this.homeIsland = home;
+		this.currentIsland = home;
+		this.curentLocation = "port";
+		this.tradingLogs = new ArrayList<TradingLog>();	
 }
 	
 	// getters
@@ -192,6 +198,10 @@ public class Trader {
 		return logsString;
 	}
 	
+	public boolean getKilledByPirates() {
+		return this.killedByPirates;
+	}
+	
 	// setters
 	/**
 	 * sets a new value for the player's {@link remainingDays}.
@@ -271,6 +281,11 @@ public class Trader {
 	 */
 	public void setCurrentLocation(String location) {
 		this.curentLocation = location;
+	}
+	
+	
+	public void setKilledByPirates(boolean value) {
+		this.killedByPirates = value;
 	}
 	
 	/**
@@ -410,7 +425,8 @@ public class Trader {
 				getOwndedShip().addToUpgradeLogs(currentIsland, "Damage Repair", repairCost);
 				report = "The damage has been fixed!\nYour ship is ready to sail again!";
 			} else {
-				report = "Oh no! You don't have enough money for the repair!";
+				report = "Oh no! You don't have enough money for the repair!\n" + 
+						"You'll need to sell some items!";
 			}
 		}
 		
@@ -484,12 +500,34 @@ public class Trader {
 				gameOver = false;
 			}
 		}
+		Ship playerShip = this.ownedShip;
+		Port currentPort = this.getCurrentIsland().getPort();
+		int repairCost = playerShip.getDamage() * currentPort.getRepairCost();
+		int sellableCargoValue = getSellableCargoValue(playerShip);
+		if (repairCost > (this.ownedMoney + sellableCargoValue)) {
+			gameOver = true;
+		}
 		return gameOver;
 	}
 	
 	/**
 	 * @return a readable String representation of the player.
 	 */
+	public int getSellableCargoValue(Ship playerShip) {
+		Island currentIsland = this.getCurrentIsland();
+		Store currentStore = currentIsland.getStore();
+		int sellableCargoValue = 0;
+		for (Item sellableItem: currentStore.getSellablePlayerItems(playerShip)) {
+			int salePrice = sellableItem.getPricePerUnit();
+			int quantity = sellableItem.getQuantity();
+			sellableCargoValue += (salePrice * quantity);
+		}
+		return sellableCargoValue;
+	}
+			
+	/**
+	* @return a readable String representation of the player.
+	*/
 	public String toString() {
 		String status = "Name: " + this.name + "\n\n" +
 						"Money Owend: " + this.ownedMoney + "\n\n" +

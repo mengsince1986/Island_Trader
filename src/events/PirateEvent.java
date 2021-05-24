@@ -115,6 +115,7 @@ public class PirateEvent extends RandomEvent {
 			player.getOwndedShip().emptyCargos();
 			if (pirateGreed >= playerMoney) {
 				player.setOwnedMoney(0);
+				player.setKilledByPirates(true);
 				reportString = "Oh no! You were beset by pirates!\n" +
 						"They defeated you in battle, took everything of value, and made you and your crew walk the plank!\n" +
 						"Better luck next time!";

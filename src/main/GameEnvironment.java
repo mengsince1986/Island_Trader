@@ -39,7 +39,9 @@ public class GameEnvironment {
 		
 		
 		//Stage 2: Creating new player and new ship
+		/*
 		NewPlayerConstructorIO newPlayerConstructorIO = new NewPlayerConstructorIO(world);
+		
 		new TraderCreatorHandler(world);
 		
 		while (!constructed) {
@@ -111,9 +113,17 @@ public class GameEnvironment {
 				ReportPrinter.printReport(report);
 				
 			}
-			if (player.noTimeToSail() || player.noMoneyToSail()) {
-				statusLine.printGameOverReport();
+			if (player.noTimeToSail()) {
+				statusLine.printGameOverReport("You didn't have enough days left to sail anywhere!");
 				gameOver = true;
+			} else if (player.noMoneyToSail()) {
+				if (player.getKilledByPirates()) {
+					statusLine.printGameOverReport("You're dead!");
+					gameOver = true;
+				} else {
+				statusLine.printGameOverReport("You ran out of money to sail anywhere!");
+				gameOver = true;
+				}
 			}
 			
 		}

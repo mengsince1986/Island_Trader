@@ -567,7 +567,8 @@ public class Ship {
 			String eventReport = "Oh no! You don't have enough time to sail to that island!";
 			eventReports.add(eventReport);
 		} else {
-			String eventReport = "Oh no! You don't have enough money to pay your crew.";
+			String eventReport = "Oh no! You don't have enough money to pay your crew.\n" +
+					"You will have to sell some of your items!";
 			eventReports.add(eventReport);
 		}
 		
