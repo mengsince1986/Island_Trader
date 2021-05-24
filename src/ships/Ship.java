@@ -47,7 +47,7 @@ public class Ship {
 	private ArrayList<UpgradeLog> upgradeLogs;
 	
 	public Ship(String name, int minCrewNum, int sailorCost,
-			    int defaultCapacity, int cannons, int defautDurability, String speed) {
+			    int defaultCapacity, int cannons, int defaultDurability, String speed) {
 		this.name = name;
 		this.minimumCrewNum = minCrewNum;
 		this.crewNum = minCrewNum;
@@ -58,8 +58,8 @@ public class Ship {
 		this.remainingCapacity = defaultCapacity;
 		this.cannons = cannons;
 		this.maxCannons = cannons + 10;
-		this.defaultDurability = defautDurability;
-		this.durability = defautDurability;
+		this.defaultDurability = defaultDurability;
+		this.durability = defaultDurability;
 		this.speed = speed;
 		if (speed == "fast") {
 			this.shipSailingModifier = 1; // save 1 day for fast speed

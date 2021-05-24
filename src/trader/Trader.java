@@ -159,14 +159,14 @@ public class Trader {
 		Item itemToSell = playerShip.getCargoItem(itemName);
 		int pricePerUnit = currentStore.checkItemPrice(itemName, "toBuy");
 		
-		//in case itemToSell is null
-		if (itemToSell == null) {
+		if (currentStore.getItem(itemName, "toBuy").getQuantity() < quantity) {
+			report = "The store won't buy that many! Try again.\n" +
+					"Redirecting you to storefront...";
 		
-			report = "You don't own that quantity of the item! Try again.\n";
-			
 		} else if (itemToSell.getQuantity() < quantity) {
 			report = "You don't own that quantity of the item! Try again.\n" +
 					"Redirecting you to storefront...";
+			
 		} else {
 			
 				//update store
@@ -183,6 +183,7 @@ public class Trader {
 				this.addTradingLog(currentIsland, itemSold, "Sold");
 				
 				report = "Success!\n" +
+						"Return to port to view your trading logs\n" +
 						"Most recent: " +
 						this.getTradingLogs().get(this.getTradingLogs().size() - 1).toString() +
 						"\nRedirecting you to storefront...";
@@ -218,6 +219,7 @@ public class Trader {
 			addTradingLog(currentIsland, itemBought, "Bought");
 			
 			report = "Success!\n" +
+					"Return to port to view your trading logs\n" +
 					"Most recent: " +
 					this.getTradingLogs().get(this.getTradingLogs().size() - 1).toString() +
 					"\nRedirecting you to storefront...";

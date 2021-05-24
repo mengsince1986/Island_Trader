@@ -39,7 +39,6 @@ class RouteTests {
 		
 		island1.addRoute(route1);
 		
-		
 	}
 		
 		
@@ -55,12 +54,6 @@ class RouteTests {
 
 	@AfterEach
 	void tearDown() throws Exception {
-	}
-
-	@Test
-	void toStringTest() {
-		assertEquals("from Island1 to Island2\n  Danger level: Looks dicey\n", route1.toString());
-		
 	}
 	
 	@RepeatedTest(1000)

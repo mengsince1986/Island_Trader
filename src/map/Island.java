@@ -15,7 +15,7 @@ public class Island {
 	private Port port;
 	
 	
-	//to help with MapTests.java
+	//to help with testing
 	public Island(String name) {
 		this.name = name;
 	}
