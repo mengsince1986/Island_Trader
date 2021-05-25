@@ -676,11 +676,11 @@ public class Ship {
 
 			// update remaining days
 			int daysToDestination = currentIsland.daysToIsland(destination, this);
-			getCaptain().subtractRemainingDays(daysToDestination);
+			captain.subtractRemainingDays(daysToDestination);
 
 			// pay crew and update captain ownedMoney
 			int costToDestination = getCostPerDay() * daysToDestination;
-			getCaptain().subtractMoney(costToDestination);
+			captain.subtractMoney(costToDestination);
 
 			// call random events on the route:
 

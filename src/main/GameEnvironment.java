@@ -84,16 +84,25 @@ public class GameEnvironment {
 				
 			}
 			if (player.noTimeToSail()) {
+				
 				System.out.print(statusLine.getGameOverReport("You didn't have enough days left to sail anywhere!"));
 				gameOver = true;
-			} else if (player.noMoneyToSail()) {
-				if (player.getKilledByPirates()) {
-					System.out.print(statusLine.getGameOverReport("You're dead!"));
-					gameOver = true;
-				} else {
-					System.out.print(statusLine.getGameOverReport("You ran out of money to sail anywhere!"));
+				
+			} else if (player.getKilledByPirates()) {
+				
+				System.out.print(statusLine.getGameOverReport("You're dead!"));
 				gameOver = true;
-				}
+				
+			} else if (player.noMoneyToSail()) {
+				
+				System.out.print(statusLine.getGameOverReport("You ran out of money to sail anywhere!"));
+				gameOver = true;
+				
+			} else if (player.getHasQuit()) {
+				
+				System.out.print(statusLine.getGameOverReport("You quit the game!"));
+				gameOver = true;
+				
 			}
 			
 		}

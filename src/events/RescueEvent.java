@@ -8,7 +8,7 @@ public class RescueEvent extends RandomEvent {
 
 	public RescueEvent(int chanceLevel, int maxSailorGenerosity) {
 		setChanceLevel(chanceLevel);
-		this.maxSailorGenerosity =  maxSailorGenerosity;
+		this.maxSailorGenerosity =  Integer.max(1, maxSailorGenerosity);
 	}
 	
 	public int getReward() {

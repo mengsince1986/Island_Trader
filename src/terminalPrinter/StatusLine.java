@@ -57,14 +57,14 @@ public class StatusLine {
 		String upperDivider = "----------------Game Over!--------------------";
 		String lowerDivider = "----------------------------------------------";
 		int playerProfit = this.player.getOwnedMoney() - this.player.getStartingMoney();
-		int daysPlayed = this.player.getSelectedDays() - this.player.getRemainingDays();
+		int daysPlayed = Integer.max(1, this.player.getSelectedDays() - this.player.getRemainingDays());
 		int profitPerDay = Math.floorDiv(playerProfit, daysPlayed);
 
 		String report = reason + "\n" + 
 				"Trader name: " + this.player.getName() +
 				"\nSelected game duration: " + 
 				this.player.getSelectedDays() + " days" +
-				"\nActual duration: " + daysPlayed + " days" +
+				"\nActual duration: " + daysPlayed + " day(s)" +
 				"\nYou made a profit of " + playerProfit + " coins\n";
 		
 		if (profitPerDay <= 0) {

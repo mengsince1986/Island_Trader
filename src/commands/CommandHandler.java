@@ -93,16 +93,16 @@ public class CommandHandler {
 				report = processViewShipCommand();
 				break;
 			case "store":
-				report = processVisitStore();
+				report = processVisitStoreCommand();
 				break;
 			case "repair":
 				report = processRepairCommand();
 				break;
 			case "upgrade":
-				report = upgradeCannonCommand(Integer.parseInt(argument));
+				report = processUpgradeCommand(Integer.parseInt(argument));
 				break;
 			case "quit":
-				report = quitCommand();
+				report = processQuitCommand();
 				break;
 			}
 		} else if (player.getCurrentLocation() == "store") {
@@ -187,7 +187,7 @@ public class CommandHandler {
 	 * @return the string report including this store's items for sale list and 
 	 * items to buy list.
 	 */
-	public static String processVisitStore() {
+	public static String processVisitStoreCommand() {
 		player.setCurrentLocation("store");
 		String report = "Welcome to the store!\n\n";
 		report += player.getCurrentIsland().getStore().forSale() + "\n";
@@ -210,19 +210,19 @@ public class CommandHandler {
 	 * @param cannonNum the integer number of the cannons to be upgraded
 	 * @return the string report of this cannon upgrade
 	 */
-	public static String upgradeCannonCommand(int cannonNum) {
+	public static String processUpgradeCommand(int cannonNum) {
 		String report = player.upgradeCannons(cannonNum);
 		return report;
 	}
 
 	/**
-	 * This method calls the remaining days setter of the Trader object and set 
-	 * it to 0.
+	 * This method calls the link hasQuit setter of the Trader object and 
+	 * sets hasQuit to true.
 	 * @return a string report saying "Goodbye!"
 	 */
-	public static String quitCommand() {
+	public static String processQuitCommand() {
 		String report = "Goodbye!";
-		player.setRemainingDays(0);
+		player.setHasQuit(true);
 		return report;
 	}
 

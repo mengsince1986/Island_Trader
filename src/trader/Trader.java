@@ -74,6 +74,13 @@ public class Trader {
 	private boolean killedByPirates = false;
 	
 	/**
+	 * stores a boolean value signifying whether the player has chosen to quit
+	 * the game (initialised to false). 
+	 * If true, the game will be over.
+	 */
+	private boolean hasQuit = false;
+	
+	/**
 	 * provides customisation of the initial values of all starting attributes.
 	 * Convenient for testing.
 	 * @param days the selected number of days to play
@@ -209,6 +216,13 @@ public class Trader {
 		return this.killedByPirates;
 	}
 	
+	/**
+	 * @return the boolean {@link hasQuit} attribute value
+	 */
+	public boolean getHasQuit() {
+		return this.hasQuit;
+	}
+	
 	// setters
 	/**
 	 * sets a new value for the player's {@link remainingDays}.
@@ -297,6 +311,15 @@ public class Trader {
 	 */
 	public void setKilledByPirates(boolean value) {
 		this.killedByPirates = value;
+	}
+	
+	/**
+	 * sets the player's {@link hasQuit} attribute to the given value.
+	 * (Used to signify whether the player has chosen to quit the game.)
+	 * @param a boolean value
+	 */
+	public void setHasQuit(boolean value) {
+		this.hasQuit = value;
 	}
 	
 	/**
@@ -506,16 +529,16 @@ public class Trader {
 	 */
 	public boolean noMoneyToSail() {
 		boolean gameOver = true;
+		int sellableCargoValue = getSellableCargoValue();
 		for (Route route: this.currentIsland.getRoutes()) {
 			int sailingCost = route.getSailingTime(this.ownedShip) * this.ownedShip.getCostPerDay();
-			if (sailingCost < this.ownedMoney) {
+			if (sailingCost <= (this.ownedMoney + sellableCargoValue)) {
 				gameOver = false;
 			}
 		}
 		Ship playerShip = this.ownedShip;
 		Port currentPort = this.getCurrentIsland().getPort();
 		int repairCost = playerShip.getDamage() * currentPort.getRepairCost();
-		int sellableCargoValue = getSellableCargoValue();
 		if (repairCost > (this.ownedMoney + sellableCargoValue)) {
 			gameOver = true;
 		}
