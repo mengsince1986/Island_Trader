@@ -4,8 +4,7 @@ import items.*;
 
 /**
  * A simple class to represent a single transaction (buy or sell) at
- * an island's {@link Store}.
- * <p>
+ * an Island's {@link Store}.
  * 
  * @author Finn van Dorsser
  * @author Meng Zhang
@@ -43,8 +42,8 @@ public class TradingLog {
 	/**
 	 * calculates the total {@link tradingValue} and 
 	 * sets the values of all attributes.
-	 * @param tradingIsland the island where the trade took place
-	 * @param tradingItem the item that was traded
+	 * @param tradingIsland the Island where the trade took place
+	 * @param tradingItem the Item that was traded
 	 * @param soldOrBought "Sold" or "Bought"
 	 */
 	public TradingLog(Island tradingIsland, Item tradingItem, String soldOrBought) {

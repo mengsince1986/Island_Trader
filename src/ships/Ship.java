@@ -105,7 +105,7 @@ public class Ship {
 	/**
 	 * Attribute shipSailingModifier is an integer which stores a value
 	 * corresponding to this Ship object's speed description. This attribute is used
-	 * to modify the sailing days of this Ship object between {@link Island}s.
+	 * to determine the days taken for this Ship to sail a given {@link Route}.
 	 */
 	private int shipSailingModifier;
 

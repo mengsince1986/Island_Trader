@@ -6,37 +6,46 @@ import events.WeatherEvent;
 import items.Item;
 import ships.Ship;
 
+/**
+ * A creational class that constructs the game world, including all the {@link Item}s
+ * to be sold in the {@link Store}s on each of the five {@link Island}s, the {@link Route}s
+ * between these Islands, the {@link RandomEvent}s that can occur on these {@link Route}s, as well
+ * as the four unique {@link Ship}s that a player can choose to captain.
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ *
+ */
 public class WorldConstructor {
-	private World newWorld;
-	//private ArrayList<Ship> ships;
+	
+	/**
+	 * the {@link World} object that will contain the objects that make up the game world.
+	 */
+	private World newWorld = new World();
 
+	/**
+	 * creates a new WorldConstructor to build the game world objects in turn
+	 * and finally add them to the {@link newWorld}.
+	 */
 	public WorldConstructor() {
 		// Create items
 		Item gunpowderLow1 = new Item("Gunpowder", 5000, 10);
-		//Item gunpowderLow3 = new Item("Gunpowder", 5000, 10);
 		Item gunpowderMed4 = new Item("Gunpowder", 5000, 20);
-		//Item gunpowderHigh3 = new Item("Gunpowder", 1000, 40);
 		Item gunpowderHigh5 = new Item("Gunpowder", 1000, 25);
 		
 		Item timberLow1 = new Item("Timber", 10000, 50);
-		//Item timberLow3 = new Item("Timber", 10000, 5);
 		Item timberMed4 = new Item("Timber", 10000, 80);
-		//Item timberHigh3 = new Item("Timber", 5000, 9);
 		Item timberHigh5 = new Item("Timber", 5000, 120);
 	
 		Item whaleOilLow1 = new Item("Whale oil", 10000, 3);
-		//Item whaleOilLow3 = new Item("Whale oil", 10000, 3);
 		Item whaleOilMed4 = new Item("Whale oil", 10000, 5);
-		//Item whaleOilHigh3 = new Item("Whale oil", 5000, 8);
 		Item whaleOilHigh5 = new Item("Whale oil", 5000, 8);
-		
-		//Item wineLow1 = new Item("Wine", 5000, 8);
+
 		Item wineLow3 = new Item("Wine", 5000, 7);
 		Item wineMed2 = new Item("Wine", 5000, 10);
 		Item wineHigh3 = new Item("Wine", 5000, 15);
 		Item wineHigh4 = new Item("Wine", 5000, 15);
-		
-		//Item teaLow1 = new Item("Tea", 5000, 2);
+
 		Item teaLow3 = new Item("Tea", 5000, 1);
 		Item teaMed2 = new Item("Tea", 5000, 3);
 		Item teaHigh3 = new Item("Tea", 5000, 6);
@@ -47,7 +56,6 @@ public class WorldConstructor {
 		Item silkHigh3 = new Item("Silk", 10000, 17);
 		Item silkHigh4 = new Item("Silk", 10000, 18);
 		
-		//Item furLow1 = new Item("Fur", 5000, 5);
 		Item furLow3 = new Item("Fur", 5000, 4);
 		Item furMed4 = new Item("Fur", 5000, 6);
 		Item furHigh1 = new Item("Fur", 5000, 10);
@@ -274,27 +282,26 @@ public class WorldConstructor {
 		Ship battleShip = new Ship("Endeavour", 20, 2, 1000, 18, 90, "slow");
 		Ship baoShip = new Ship("Empress", 16, 2, 1800, 8, 75, "normal");
 		
-		// Create a new world
-		World newWorld1 = new World();
 		
 		// add islands to new world
-		newWorld1.addIsland(island1);
-		newWorld1.addIsland(island2);
-		newWorld1.addIsland(island3);
-		newWorld1.addIsland(island4);
-		newWorld1.addIsland(island5);
+		newWorld.addIsland(island1);
+		newWorld.addIsland(island2);
+		newWorld.addIsland(island3);
+		newWorld.addIsland(island4);
+		newWorld.addIsland(island5);
 		
 		// add ships to new world
-		newWorld1.addShip(fastShip);
-		newWorld1.addShip(balancedShip);
-		newWorld1.addShip(battleShip);
-		newWorld1.addShip(baoShip);
+		newWorld.addShip(fastShip);
+		newWorld.addShip(balancedShip);
+		newWorld.addShip(battleShip);
+		newWorld.addShip(baoShip);
 		
-		this.newWorld = newWorld1;
 	}
 	
+	/**
+	 * @return the World object that stores the objects that make up the game world
+	 */
 	public World getMap() {
 		return this.newWorld;
 	}
-	
 }

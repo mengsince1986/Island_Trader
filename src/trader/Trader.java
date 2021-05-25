@@ -3,11 +3,12 @@ import java.util.*;
 import ships.*;
 import map.*;
 import items.*;
+import events.*;
 
 /**
  * A class to represent the current player of the game. Key behaviours include
- * buying and selling items and upgrading the cannons on the player's {@link Ship}.
- * <p>
+ * buying and selling {@link Items}, upgrading the cannons on the player's {@link Ship},
+ * repairing the Ship.
  * 
  * @author Finn van Dorsser
  * @author Meng Zhang
@@ -46,7 +47,7 @@ public class Trader {
 	
 	/**
 	 * the player's {@link Ship}, used to store cargo for trading and for 
-	 * sailing between islands.
+	 * sailing between Islands.
 	 */
 	private Ship ownedShip;
 	
@@ -56,10 +57,10 @@ public class Trader {
 	private Island currentIsland;
 	
 	/**
-	 * a String representation of where the player is on any given island.
+	 * a String representation of where the player is on any given Island.
 	 * Can take the values "port" or "store".
 	 */
-	private String curentLocation;
+	private String currentLocation;
 	
 	/**
 	 * stores a {@link TradingLog} for each transaction that the player has made.
@@ -86,7 +87,7 @@ public class Trader {
 	 * @param days the selected number of days to play
 	 * @param name the selected name of the player
 	 * @param money the player's starting money
-	 * @param home the player's starting island
+	 * @param home the player's starting Island
 	 * @param currentLocation "port" or "store"
 	 */
 	public Trader(int days, String name, int money,
@@ -98,7 +99,7 @@ public class Trader {
 		this.ownedMoney = money;
 		this.homeIsland = home;
 		this.currentIsland = home;
-		this.curentLocation = currentLocation;
+		this.currentLocation = currentLocation;
 		this.tradingLogs = new ArrayList<TradingLog>();	
 	}
 	
@@ -106,8 +107,8 @@ public class Trader {
 	 * allows customisation of only those attributes that the player can choose 
 	 * themselves.
 	 * @param days the selected number of days to play
-	 * @param name the selected name of the player
-	 * @param home the player's starting island
+	 * @param name the selected name String of the player
+	 * @param home the player's starting Island
 	 */
 	public Trader(int days, String name, Island home) {
 		this.selectedDays = days;
@@ -119,7 +120,7 @@ public class Trader {
 		this.ownedMoney = 15000;
 		this.homeIsland = home;
 		this.currentIsland = home;
-		this.curentLocation = "port";
+		this.currentLocation = "port";
 		this.tradingLogs = new ArrayList<TradingLog>();	
 }
 	
@@ -184,7 +185,7 @@ public class Trader {
 	 * @return the player's {@link currentLocation}.
 	 */
 	public String getCurrentLocation() {
-		return this.curentLocation;
+		return this.currentLocation;
 	}
 	
 	/**
@@ -226,7 +227,7 @@ public class Trader {
 	// setters
 	/**
 	 * sets a new value for the player's {@link remainingDays}.
-	 * @param days the new number of days
+	 * @param days the new number of remaining days
 	 */
 	public void setRemainingDays(int days) {
 		this.remainingDays = days;
@@ -250,7 +251,7 @@ public class Trader {
 	
 	/**
 	 * sets a new value for the player's {@link ownedMoney}.
-	 * @param amount the new amount
+	 * @param amount the new amount of money
 	 */
 	public void setOwnedMoney(int amount) {
 		this.ownedMoney = amount;
@@ -274,7 +275,7 @@ public class Trader {
 	
 	/**
 	 * sets the player's {@link homeIsland}.
-	 * @param island the new starting island
+	 * @param island the new starting Island
 	 */
 	public void setHomeIsland(Island island) {
 		this.homeIsland = island;
@@ -282,7 +283,7 @@ public class Trader {
 	
 	/**
 	 * sets the player's {@link ownedShip}.
-	 * @param ship the new ship
+	 * @param ship the new Ship
 	 */
 	public void setOwnedShip(Ship ship) {
 		this.ownedShip = ship;
@@ -290,7 +291,7 @@ public class Trader {
 	
 	/**
 	 * sets the player's {@link currentIsland}.
-	 * @param island the new current island
+	 * @param island the new current Island
 	 */
 	public void setCurrentIsland(Island island) {
 		this.currentIsland = island;
@@ -301,13 +302,13 @@ public class Trader {
 	 * @param location "port" or "store"
 	 */
 	public void setCurrentLocation(String location) {
-		this.curentLocation = location;
+		this.currentLocation = location;
 	}
 	
 	/**
 	 * sets the player's {@link killedByPirates} attribute to the given value.
 	 * (Used to signify whether the player was forced to walk the plank by pirates.)
-	 * @param a boolean value
+	 * @param value a boolean value
 	 */
 	public void setKilledByPirates(boolean value) {
 		this.killedByPirates = value;
@@ -316,7 +317,7 @@ public class Trader {
 	/**
 	 * sets the player's {@link hasQuit} attribute to the given value.
 	 * (Used to signify whether the player has chosen to quit the game.)
-	 * @param a boolean value
+	 * @param value a boolean value
 	 */
 	public void setHasQuit(boolean value) {
 		this.hasQuit = value;
@@ -324,8 +325,8 @@ public class Trader {
 	
 	/**
 	 * adds a {@link TradingLog} to the player's {@link tradingLogs}
-	 * @param tradingIsland the island where the transaction occurred
-	 * @param item the item traded
+	 * @param tradingIsland the Island where the transaction occurred
+	 * @param item the Item traded
 	 * @param sellOrBuy "Bought" or "Sold"
 	 */
 	public void addTradingLog(Island tradingIsland, 
@@ -340,9 +341,9 @@ public class Trader {
 	 * quantity of the Item to be sold, and that the player owns that quantity, before 
 	 * processing the transaction. Returns a report String detailing the outcome of the 
 	 * attempted transaction to be displayed to the player.
-	 * @param currentIsland the player's current island
-	 * @param itemName the name of the item to be sold
-	 * @param quantity the quantity of the item to be sold
+	 * @param currentIsland the player's current Island
+	 * @param itemName the name of the Item to be sold
+	 * @param quantity the quantity of the Item to be sold
 	 * @return a String detailing the outcome of the attempted sale
 	 */
 	public String sell(Island currentIsland, String itemName, int quantity) { 
@@ -389,13 +390,13 @@ public class Trader {
 	 * allows the player to try to buy an {@link Item} from the {@link Store} on the 
 	 * current {@link Island}. Checks that the Store has the given 
 	 * quantity of the Item in stock, that the player has enough money to purchase
-	 * that many, and that the player's ship has enough {@link remainingCapacity} to 
+	 * that many, and that the player's {@link Ship} has enough remaining capacity to 
 	 * hold the Item before processing the transaction. 
 	 * Returns a report String detailing the outcome of the attempted transaction to be 
 	 * displayed to the player.
-	 * @param currentIsland the player's current island
-	 * @param itemName the name of the item to be bought
-	 * @param quantity the quantity of the item to be bought
+	 * @param currentIsland the player's current Island
+	 * @param itemName the name of the Item to be bought
+	 * @param quantity the quantity of the Item to be bought
 	 * @return a String detailing the outcome of the attempted purchase
 	 */
 	public String buy(Island currentIsland, String itemName, int quantity) {
@@ -474,6 +475,7 @@ public class Trader {
 	 * upgrade, before processing the transaction.
 	 * Returns a report String detailing the outcome of the attempted transaction to be displayed 
 	 * to the player.
+	 * @param cannonNum the number of cannons to install
 	 * @return a String detailing the outcome of the attempted upgrade
 	 */
 	public String upgradeCannons(int cannonNum) {
@@ -523,7 +525,7 @@ public class Trader {
 	
 	/**
 	 * checks whether the player has enough {@link ownedMoney}, including the total value
-	 * of the player's saleable items, to be able to sail to another {@link Island}. 
+	 * of the player's saleable Item objects, to be able to sail to another {@link Island}. 
 	 * If not, the game will be over.
 	 * @return a boolean signifying whether or not the game should be over.
 	 */
@@ -546,7 +548,8 @@ public class Trader {
 	}
 	
 	/**
-	 * @return the total sale value of the player's owned items.
+	 * @return the total sale value of the player's owned Item objects at the player's
+	 * current Store.
 	 */
 	public int getSellableCargoValue() {
 		Ship playerShip = this.getOwndedShip();
@@ -570,11 +573,7 @@ public class Trader {
 						"Home Island: " + this.homeIsland.getName() + "\n" +
 						"Ship Owned: " + this.ownedShip.getName() + "\n\n" +
 						"Current Island: " + this.currentIsland.getName() + "\n" +
-						"Current Location: " + this.curentLocation;
+						"Current Location: " + this.currentLocation;
 		return status;
-	}
-	
-	public static void main(String[] args) {
-		
 	}
 }
