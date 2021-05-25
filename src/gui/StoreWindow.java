@@ -273,7 +273,7 @@ public class StoreWindow {
 		
 		// update purchase list when initializing
 		ArrayList<String> purchaseItems = new ArrayList<String>(); 
-		for (Item item : manager.getTrader().getCurrentIsland().getStore().getToBuy()) {
+		for (Item item : manager.getTrader().getCurrentIsland().getStore().getSellablePlayerItems(manager.getShip())) {
 			purchaseItems.add(item.getName());
 		}
 
@@ -299,7 +299,8 @@ public class StoreWindow {
 		tradeQuantitySlider.setSnapToTicks(true);
 		tradeQuantitySlider.setMajorTickSpacing(1);
 		tradeQuantitySlider.setMinimum(1);
-		tradeQuantitySlider.setMaximum(200);
+		// set max of slider to be the max capacity of the ship
+		tradeQuantitySlider.setMaximum(manager.getShip().getDefaultCapacity());
 		tradeQuantitySlider.setBounds(201, 550, 400, 20);
 		storeFrame.getContentPane().add(tradeQuantitySlider);
 		
@@ -371,6 +372,22 @@ public class StoreWindow {
 							                                quantity);
 					reportText.setText(report);
 					
+					// update sell radio buttons
+					ArrayList<String> purchaseItems = new ArrayList<String>(); 
+					for (Item item : manager.getTrader().getCurrentIsland().getStore().getSellablePlayerItems(manager.getShip())) {
+						purchaseItems.add(item.getName());
+					}
+
+					int j = 0;
+					Enumeration<AbstractButton> purchaseItemButtons = purchaseItembuttonGroup.getElements();
+					while (j < purchaseItems.size() && purchaseItemButtons.hasMoreElements()) {
+						JRadioButton purchaseItemButton = (JRadioButton) purchaseItemButtons.nextElement();
+						
+						purchaseItemButton.setText(purchaseItems.get(j));
+						
+						j += 1;
+					}
+					
 					// update status labels
 					int days = manager.getTrader().getRemainingDays();
 					int money = manager.getTrader().getOwnedMoney();
@@ -379,7 +396,7 @@ public class StoreWindow {
 					DaysDisplayLabel.setText(String.valueOf(days));
 					moneyDisplayLabel.setText(String.valueOf(money));
 					locationDisplayLabel.setText(islandLocation);
-					// ====================
+
 					}
 				
 			}
@@ -400,12 +417,14 @@ public class StoreWindow {
 				
 				// get selected purchase item
 				String purchaseItemName = "";
+				JRadioButton chosenItem = null;
 				
 				Enumeration<AbstractButton> items = purchaseItembuttonGroup.getElements();
 				while (items.hasMoreElements()) {
 					JRadioButton item = (JRadioButton) items.nextElement();
 					if(item.isSelected()) {
 						purchaseItemName = item.getText();
+						chosenItem = item;
 					}
 				}
 				
@@ -426,6 +445,18 @@ public class StoreWindow {
 															 purchaseItemName, 
 															 quantity);
 					reportText.setText(report);
+					
+					// update chosenItem
+					// set to "N/A" if Trader sold all of this item from cargos
+					ArrayList<String> purchaseItems = new ArrayList<String>(); 
+					for (Item item : manager.getTrader().getCurrentIsland().getStore().getSellablePlayerItems(manager.getShip())) {
+						purchaseItems.add(item.getName());
+					}
+					
+					if (!purchaseItems.contains(chosenItem.getText())) {
+						chosenItem.setText("N/A");
+					}
+					
 					
 					// update status labels
 					int days = manager.getTrader().getRemainingDays();
@@ -485,7 +516,7 @@ public class StoreWindow {
 				String report = manager.getTrader().getTradingLogsString();
 				reportText.setText(report);
 				
-				// set scrollbar to top
+				// set scroll bar to top
 				javax.swing.SwingUtilities.invokeLater(new Runnable() {
 					   public void run() { 
 					       scrollPane.getVerticalScrollBar().setValue(0);
