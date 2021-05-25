@@ -131,7 +131,8 @@ class SailingTests {
 	void testFailedSailToForLackOfMoney() {
 		
 		testPlayer1.setOwnedMoney(0);
-		String targetReport = "Oh no! You don't have enough money to pay your crew.";
+		String targetReport = "Oh no! You don't have enough money to pay your crew.\n" +
+				"You will have to sell some of your items!";
 		String report = testShip1.sailTo(destination2).get(0);
 		
 		assertEquals(report, targetReport);
