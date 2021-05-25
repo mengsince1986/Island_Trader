@@ -1,27 +1,21 @@
-# seng201_IslandTrader
+# SENG201 Project IslandTrader
 
-## Team
-* Finn van Dorsser
-* Meng Zhang
+## Group 010
 
-## Key Dates
-* Launch : March 29, 2021
-* Last Day for booking a demo: May 27, 2021
-* **Project submission due date: May 27, 2021**
-* Lab demos: May 31-June 04, 2021
+* Finn van Dorsser (82830202)
+* Meng Zhang (71682325)
 
-## Tasks
+## How to load the source code into Eclipse?
 
-TOTAL Time: 33 days
+1. Unzip archive islandTraderGroup010.zip
+2. Open Eclipse (version 4.19.0 is recommended)
+3. Click "Open Projects from File System"
+4. Click "Directory" and choose the unzipped folder islandTraderGroup010
+5. Only select Eclipse project "IslandTraderGUI"
+6. Click "Finish" to import the project
 
-### 1. Sketching UML -- 5%
+## How to run JAR file?
 
-### 2. Implementing a Command Line Application -- 20%
-
-### 3. Implementing a Graphical Application -- 50%
-
-### 4. Wrting Javadoc -- 5%
-
-### 5. Wrting Unit Tests -- 15%
-
-### 6. Report -- 5%
+1. Ensure Java 15 is installed on the machine
+2. Open the folder islandTraderGroup010 in a terminal window
+3. Run "java -jar islandTrader010.jar"
