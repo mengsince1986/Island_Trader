@@ -10,6 +10,7 @@ import map.Island;
 import map.World;
 import map.WorldConstructor;
 import ships.Ship;
+import terminalPrinter.StatusLine;
 
 /**
  * <h1>SENG201 Project: Island Trader</h1> <br>
@@ -80,29 +81,9 @@ public class GUIGameEnvironment {
 
 	public String gameOver() {
 
-		String upperDivider = "----------------Game Over!--------------------";
-		String lowerDivider = "----------------------------------------------";
-		int playerProfit = player.getOwnedMoney() - player.getStartingMoney();
-		int daysPlayed = player.getSelectedDays() - player.getRemainingDays();
-		// MZ: Fixed bug. Update selected days in 2nd constructor of Trader class
-		// or trader.selectedDays is 0 all the time
-		int profitPerDay = Math.floorDiv(playerProfit, daysPlayed);
-
-		String congratulation = "Trader name: " + this.player.getName() + "\nSelected game duration: "
-				+ this.player.getSelectedDays() + " days" + "\nActual duration: " + daysPlayed + " days"
-				+ "\nYou made a profit of " + playerProfit + " coins\n";
-		if (profitPerDay <= 0) {
-			congratulation += "Your score: 0/3 stars. Better luck next time!";
-		} else if (profitPerDay <= 500) {
-			congratulation += "Score: 1/3 stars. Good effort! At least you managed to make something!";
-		} else if (profitPerDay <= 1000) {
-			congratulation += "Score: 2/3 stars! Either you got lucky or are getting pretty good!";
-		} else {
-			congratulation += "Score: 3/3 stars! Outstanding! You must be a god gamer!\n"
-					+ "Have you considered a career in arbitrage?";
-		}
-		String gameOverReport = upperDivider + "\n" + "\n" + congratulation + "\n" + "\n" + lowerDivider;
-
+		StatusLine summary = new StatusLine(player);
+		String gameOverReport = summary.getGameOverReport("");
+		
 		return gameOverReport;
 	}
 
