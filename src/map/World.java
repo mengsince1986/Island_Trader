@@ -1,6 +1,5 @@
 package map;
 
-import exceptions.IslandNotFoundException;
 import ships.Ship;
 
 import java.util.*;
