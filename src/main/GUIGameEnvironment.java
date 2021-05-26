@@ -258,7 +258,7 @@ public class GUIGameEnvironment {
 
 		Island destIsland = world.getIsland(destination);
 		ArrayList<String> reportList = ship.sailTo(destIsland);
-		report = "~~~ ~~~ ~~~ Sailing ~~~ ~~~ ~~~\n\n";
+		report = "\n\n~~~ ~~~ ~~~ Sailing ~~~ ~~~ ~~~\n\n";
 
 		for (String event : reportList) {
 			report += event;
