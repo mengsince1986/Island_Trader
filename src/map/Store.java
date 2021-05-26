@@ -88,7 +88,7 @@ public class Store {
 		String itemString = "Items for sale:\n";
 		if (toSell.size() > 0) {
 			for (int i = 0; i < toSell.size(); i++) {
-				itemString += String.format("\nItem %s: %s", i, toSell.get(i));
+				itemString += String.format("\nItem %s: %s", i+1, toSell.get(i));
 			}
 			return itemString;
 		} else {
@@ -101,7 +101,7 @@ public class Store {
 		String itemString = "Looking to buy:\n";
 		if (toBuy.size() > 0) {
 			for (int i = 0; i < toBuy.size(); i++) {
-				itemString += String.format("\nItem %s: %s", i, toBuy.get(i));
+				itemString += String.format("\nItem %s: %s", i+1, toBuy.get(i));
 			}
 			return itemString;
 		} else {
