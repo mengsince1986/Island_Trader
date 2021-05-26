@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Ship.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">ships</a> &gt; <span class="el_source">Ship.java</span></div><h1>Ship.java</h1><pre class="source lang-java linenums">package ships;
+
+import java.util.*;
+
+import trader.*;
+import map.*;
+import items.*;
+import events.*;
+
+/**
+ * The Ship class is for creating Ship objects with different properties. In
+ * this game, there are four kinds of Ship objects which are different from each
+ * other by name, speed, maximum cannon number, minimum crew number, default
+ * capacity and default durability. All ship objects are initialized in
+ * {@link WorldConstructor} object.
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
+
+public class Ship {
+
+	/**
+	 * Attribute name is a string which stores this Ship object's name.
+	 */
+	private String name;
+
+	/**
+	 * Attribute captain is a {@link Trader} object who owns this ship.
+	 */
+	private Trader captain;
+
+	/**
+	 * Attribute crewNum is an integer which stores a Ship object's current crew
+	 * number.
+	 */
+	private int crewNum;
+
+	/**
+	 * Attribute minimumCrewNum is an integer which stores a Ship object's minimum
+	 * crew number.
+	 */
+	private int minimumCrewNum;
+
+	/**
+	 * Attribute costPerSailor is an integer which stores how much to pay one sailor
+	 * per day.
+	 */
+	private int costPerSailor;
+
+	/**
+	 * Attribute costPerDay is an integer which stores the total sailor cost per
+	 * day.
+	 */
+	private int costPerDay;
+
+	/**
+	 * Attribute cargos is an ArrayList which holds the {@link Item} objects which
+	 * {@link Trader} buy from {@link Store}.
+	 */
+	private ArrayList&lt;Item&gt; cargos;
+
+	/**
+	 * Attribute defaultCapacity is an integer which stores the default capacity of
+	 * this Ship object.
+	 */
+	private int defaultCapacity;
+
+	/**
+	 * Attribute remainingCapacity is an integer which stores the current capacity
+	 * (defaultCapacity minus total weight of bought items) of this Ship object.
+	 */
+	private int remainingCapacity;
+
+	/**
+	 * Attribute cannons is an integer which stores the number of the cannons of
+	 * this Ship object.
+	 */
+	private int cannons;
+
+	/**
+	 * Attribute maxCannons is an integer which stores the maximum number of the
+	 * cannons of this Ship object.
+	 */
+	private int maxCannons;
+
+	/**
+	 * Attribute defaultDurability is an integer which stores the value of the
+	 * default durability of this Ship object.
+	 */
+	private int defaultDurability;
+
+	/**
+	 * Attribute durability is an integer which stores the value of the current
+	 * durability (defaultDurability minus damage) of this Ship object.
+	 */
+	private int durability;
+
+	/**
+	 * Attribute speed is a string which stores a description of the speed of this
+	 * Ship object.
+	 */
+	private String speed;
+
+	/**
+	 * Attribute shipSailingModifier is an integer which stores a value
+	 * corresponding to this Ship object's speed description. This attribute is used
+	 * to determine the days taken for this Ship to sail a given {@link Route}.
+	 */
+	private int shipSailingModifier;
+
+	/**
+	 * Attribute upgradeLogs is an ArrayList which stores all the
+	 * {@link UpgradeLog}s (including repair services and cannon upgrade service) of
+	 * this Ship object.
+	 */
+	private ArrayList&lt;UpgradeLog&gt; upgradeLogs;
+
+	/**
+	 * This constructor sets the values for all the attributes except for the
+	 * captain attribute, calculates the maxCannons by adding 10 to cannons, set
+	 * shipSailingModifier by the string value of speed, and initializes new empty
+	 * ArrayLists for attribute cargos and upgradLogs.
+	 * 
+	 * @param name             a sting describing this Ship object's name
+	 * @param minCrewNum       an integer of this Ship object's minimum crew number
+	 * @param sailorCost       the cost of each sailor per day on this Ship object
+	 * @param defaultCapacity  the number of this Ship object's default capacity
+	 * @param cannons          the number of this Ship object's cannons
+	 * @param defaultDurability the number of this Ship object's default durability
+	 * @param speed            a string describing this Ship object's speed which
+	 *                         can be set as &quot;fast&quot;, &quot;normal&quot;, or &quot;slow&quot;.
+	 */
+<span class="fc" id="L134">	public Ship(String name, int minCrewNum, int sailorCost, int defaultCapacity, int cannons, int defaultDurability,</span>
+			String speed) {
+
+<span class="fc" id="L137">		this.name = name;</span>
+<span class="fc" id="L138">		this.minimumCrewNum = minCrewNum;</span>
+<span class="fc" id="L139">		this.crewNum = minCrewNum;</span>
+<span class="fc" id="L140">		this.costPerSailor = sailorCost;</span>
+<span class="fc" id="L141">		this.costPerDay = crewNum * sailorCost;</span>
+<span class="fc" id="L142">		this.cargos = new ArrayList&lt;Item&gt;();</span>
+<span class="fc" id="L143">		this.defaultCapacity = defaultCapacity;</span>
+<span class="fc" id="L144">		this.remainingCapacity = defaultCapacity;</span>
+<span class="fc" id="L145">		this.cannons = cannons;</span>
+<span class="fc" id="L146">		this.maxCannons = cannons + 10;</span>
+<span class="fc" id="L147">		this.defaultDurability = defaultDurability;</span>
+<span class="fc" id="L148">		this.durability = defaultDurability;</span>
+<span class="fc" id="L149">		this.speed = speed;</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (speed == &quot;fast&quot;) {</span>
+<span class="fc" id="L151">			this.shipSailingModifier = 1; // save 1 day for fast speed</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		} else if (speed == &quot;slow&quot;) {</span>
+<span class="fc" id="L153">			this.shipSailingModifier = -1; // add 1 day for slow speed</span>
+		}
+<span class="fc" id="L155">		this.upgradeLogs = new ArrayList&lt;UpgradeLog&gt;();</span>
+<span class="fc" id="L156">	}</span>
+
+	/**
+	 * This method is the getter of name attribute.
+	 * 
+	 * @return the string stored in name attribute
+	 */
+	public String getName() {
+<span class="fc" id="L164">		return this.name;</span>
+	}
+
+	/**
+	 * This method is the getter of captain attribute.
+	 * 
+	 * @return the {@link Trader} object stored in captain attribute
+	 */
+	public Trader getCaptain() {
+<span class="fc" id="L173">		return this.captain;</span>
+	}
+
+	/**
+	 * This method is the getter of creNum attribute.
+	 * 
+	 * @return the integer value stored in crewNum attribute
+	 */
+	public int getCrewNumber() {
+<span class="nc" id="L182">		return this.crewNum;</span>
+	}
+
+	/**
+	 * This method is the getter of minimumCrewNum attribute.
+	 * 
+	 * @return the integer value stored in minimumCrewNum attribute
+	 */
+	public int getMinimumCrewNum() {
+<span class="nc" id="L191">		return this.minimumCrewNum;</span>
+	}
+
+	/**
+	 * This method is the getter of costPerDay attribute.
+	 * 
+	 * @return the integer value stored in costPerDay attribute
+	 */
+	public int getCostPerDay() {
+<span class="fc" id="L200">		return this.costPerDay;</span>
+	}
+
+	/**
+	 * This method is the getter of cargos attribute.
+	 * 
+	 * @return the ArrayList {@link Item}s stored in cargos attribute.
+	 */
+	public ArrayList&lt;Item&gt; getCargos() {
+<span class="fc" id="L209">		return this.cargos;</span>
+	}
+
+	/**
+	 * This method formats a string report of the cargos on this Ship object by
+	 * iterating all the {@link Item}s stored in cargos attribute.
+	 * 
+	 * @return a string describing the contents of the cargos on this Ship object.
+	 */
+	public String getCargosString() {
+<span class="nc" id="L219">		String cargosString = &quot;Remaining Capacity: &quot; + this.getCapacity() + &quot;\n\n&quot;;</span>
+<span class="nc" id="L220">		cargosString += &quot;Cargo contents:\n\n&quot;;</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">		if (this.cargos.size() &gt; 0) {</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">			for (Item cargoItem : this.cargos) {</span>
+<span class="nc" id="L223">				cargosString += cargoItem.getCargoItemString() + &quot;\n&quot;;</span>
+			}
+<span class="nc" id="L225">		} else {</span>
+<span class="nc" id="L226">			cargosString += &quot;Your ship isn't carrying any cargo.\n&quot;;</span>
+		}
+<span class="nc" id="L228">		return cargosString;</span>
+	}
+
+	/**
+	 * This method is the getter for remainingCapacity attribute
+	 * 
+	 * @return the integer value stored in remainingCapacity attribute
+	 */
+	public int getCapacity() {
+<span class="fc" id="L237">		return this.remainingCapacity;</span>
+	}
+
+	/**
+	 * This method is the getter for defaultCapacity attribute
+	 * 
+	 * @return the integer value stored in defaultCapacity attribute
+	 */
+	public int getDefaultCapacity() {
+<span class="nc" id="L246">		return this.defaultCapacity;</span>
+	}
+
+	/**
+	 * This method is the getter for cannons attribute
+	 * 
+	 * @return the integer value stored in cannons attribute
+	 */
+	public int getCannons() {
+<span class="fc" id="L255">		return this.cannons;</span>
+	}
+
+	/**
+	 * This method is the getter for maxCannons attribute
+	 * 
+	 * @return the integer value stored in maxCannons attribute
+	 */
+	public int getMaxCannons() {
+<span class="fc" id="L264">		return this.maxCannons;</span>
+	}
+
+	/**
+	 * This method is the getter for durability attribute.
+	 * 
+	 * @return the integer value stored in durability attribute
+	 */
+	public int getDurability() {
+<span class="fc" id="L273">		return this.durability;</span>
+	}
+
+	/**
+	 * This method is the getter for defaultDurability attribute.
+	 * 
+	 * @return the integer value stored in defaultDurability attribute
+	 */
+	public int getDefaultDurability() {
+<span class="fc" id="L282">		return this.defaultDurability;</span>
+	}
+
+	/**
+	 * This method calculates the damage value this Ship object has suffered.
+	 * 
+	 * @return the integer value of the damage
+	 */
+	public int getDamage() {
+<span class="fc" id="L291">		return this.defaultDurability - this.durability;</span>
+	}
+
+	/**
+	 * This method is the getter for speed attribute
+	 * 
+	 * @return a string describing this Ship object's speed
+	 */
+	public String getSpeed() {
+<span class="fc" id="L300">		return this.speed;</span>
+	}
+
+	/**
+	 * This method is the getter for shipSailingModifier attribute.
+	 * 
+	 * @return the integer value stored in shipSaiolingModifier attribute
+	 */
+	public int getShipSailingModifier() {
+<span class="fc" id="L309">		return shipSailingModifier;</span>
+	}
+
+	/**
+	 * This method is the getter for upgradeLogs attribute.
+	 * 
+	 * @return the ArrayList stored in upgradeLogs attribute
+	 */
+	public ArrayList&lt;UpgradeLog&gt; getUpgradeLogs() {
+<span class="fc" id="L318">		return this.upgradeLogs;</span>
+	}
+
+	/**
+	 * This method formats a string report of the upgrade logs of this Ship object
+	 * by iterating all the {@link UpgradeLog}s stored in upgradeLogs attribute.
+	 * 
+	 * @return a string describing the contents of the upgrade logs of this Ship
+	 *         object.
+	 */
+	public String getUpgradeLogString() {
+<span class="fc" id="L329">		String logString = &quot;Upgrade log:\n\n&quot;;</span>
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">		if (this.upgradeLogs.size() &gt; 0) {</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">			for (UpgradeLog upgrade : this.upgradeLogs) {</span>
+<span class="fc" id="L332">				logString += upgrade.toString() + &quot;\n&quot;;</span>
+			}
+<span class="fc" id="L334">		} else {</span>
+<span class="nc" id="L335">			logString += &quot;Your ship hasn't been upgraded yet!\n&quot;;</span>
+		}
+<span class="fc" id="L337">		return logString;</span>
+	}
+
+	/**
+	 * This method iterates the ArrayList stored in cargos attribute to check if
+	 * there is an {@link Item} object with the name itemName.
+	 * 
+	 * @param itemName a string name of an item
+	 * @return If the item with the name itemName exists, this method returns the
+	 *         {@link Item} object. If not, this method returns null.
+	 */
+	public Item getCargoItem(String itemName) {
+<span class="pc bpc" id="L349" title="1 of 2 branches missed.">		for (Item cargoItem : cargos) {</span>
+<span class="pc bpc" id="L350" title="1 of 2 branches missed.">			if (cargoItem.getName() == itemName) {</span>
+<span class="fc" id="L351">				return cargoItem;</span>
+			}
+		}
+<span class="nc" id="L354">		return null;</span>
+	}
+
+	/**
+	 * This method is the setter of name attribute.
+	 * 
+	 * @param name a string describing the name of this Ship object
+	 */
+	public void setName(String name) {
+<span class="nc" id="L363">		this.name = name;</span>
+<span class="nc" id="L364">	}</span>
+
+	/**
+	 * This method is the setter of captain attribute.
+	 * 
+	 * @param captain a {@link Trader} object
+	 */
+	public void setCaptain(Trader captain) {
+<span class="fc" id="L372">		this.captain = captain;</span>
+<span class="fc" id="L373">	}</span>
+
+	/**
+	 * This method is the setter of creNum attribute.
+	 * 
+	 * @param num the value of the crew number for this Ship object
+	 */
+	public void setCrewNumber(int num) {
+<span class="nc" id="L381">		this.crewNum = num;</span>
+<span class="nc" id="L382">	}</span>
+
+	/**
+	 * This method adds an integer num to the crewNum attribute and updates the
+	 * costPerDay attribute according to the value of the new crewNum.
+	 * 
+	 * @param num the value to add to the current crew number of this Ship object.
+	 */
+	public void addCrewNumber(int num) {
+<span class="nc" id="L391">		this.crewNum += num;</span>
+<span class="nc" id="L392">		this.costPerDay = this.costPerSailor * this.crewNum;</span>
+<span class="nc" id="L393">	}</span>
+
+	/**
+	 * This method is the setter of minimumCrewNum attribute.
+	 * 
+	 * @param num an integer to set the minimum crew number of this Ship object
+	 */
+	public void setMinimumCrewNumber(int num) {
+<span class="nc" id="L401">		this.minimumCrewNum = num;</span>
+<span class="nc" id="L402">	}</span>
+
+	/**
+	 * This method is the setter of costPerDay attribute.
+	 * 
+	 * @param amount an integer value for the total cost per day of this Ship
+	 *               object.
+	 */
+	public void setCostPerDay(int amount) {
+<span class="nc" id="L411">		this.costPerDay = amount;</span>
+<span class="nc" id="L412">	}</span>
+
+	/**
+	 * This method adds a new {@link Item} to the cargos attribute and reduce the
+	 * current capacity of the this Ship object. If the same kind of {@link Item} is
+	 * already in cargos, only its quantity will be updated. Otherwise, the new
+	 * {@link Item} will be added to the cargos.
+	 * 
+	 * @param item     an {@link Item} object
+	 * @param quantity the quantity number of the new {@link Item} to add to the
+	 *                 cargoes
+	 */
+	public void addToCargos(Item item, int quantity) {
+<span class="fc" id="L425">		boolean found = false;</span>
+<span class="pc bpc" id="L426" title="1 of 2 branches missed.">		for (Item cargoItem : cargos) {</span>
+<span class="nc bnc" id="L427" title="All 2 branches missed.">			if (cargoItem.getName() == item.getName()) {</span>
+<span class="nc" id="L428">				cargoItem.addQuantity(item.getQuantity());</span>
+<span class="nc" id="L429">				found = true;</span>
+			}
+		}
+<span class="pc bpc" id="L432" title="1 of 2 branches missed.">		if (!found) {</span>
+<span class="fc" id="L433">			this.cargos.add(item);</span>
+		}
+<span class="fc" id="L435">		subtractCapacity(item.getQuantity());</span>
+<span class="fc" id="L436">	}</span>
+
+	/**
+	 * This method removes a specific quantity of {@link Item} out of cargos and
+	 * updates the capacity attribute. If the quantity of the item to remove is
+	 * higher than the soldItem quantity, only the quantity of the item to remove
+	 * will be updated. Otherwise the item object itself will be removed from the
+	 * cargos attribute.
+	 * 
+	 * @param soldItem an {@link Item} object
+	 * @param quantity the value of the quantity of the soldItem
+	 */
+	public void subtractFromCargos(Item soldItem, int quantity) {
+<span class="fc" id="L449">		boolean toDelete = false;</span>
+<span class="fc" id="L450">		int indexToDelete = 0;</span>
+<span class="fc bfc" id="L451" title="All 2 branches covered.">		for (Item item : this.cargos) {</span>
+<span class="pc bpc" id="L452" title="1 of 2 branches missed.">			if (item.getName() == soldItem.getName()) {</span>
+<span class="fc bfc" id="L453" title="All 2 branches covered.">				if (item.getQuantity() &gt; quantity) {</span>
+<span class="fc" id="L454">					item.subtractQuantity(quantity);</span>
+<span class="fc" id="L455">				} else {</span>
+<span class="fc" id="L456">					toDelete = true;</span>
+<span class="fc" id="L457">					indexToDelete = this.cargos.lastIndexOf(item);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L461" title="All 2 branches covered.">		if (toDelete) {</span>
+<span class="fc" id="L462">			this.cargos.remove(indexToDelete);</span>
+		}
+
+<span class="fc" id="L465">		addCapacity(soldItem.getQuantity());</span>
+<span class="fc" id="L466">	}</span>
+
+	/**
+	 * This method adds an integer amount to the remainingCapacity attribute. If the
+	 * amount plus current remainingCapacity is larger than the default capacity of
+	 * this Ship object, the remainingCapacity will be set to the same with the
+	 * value of defaultCapacity.
+	 * 
+	 * @param amount an integer value to add to the remainingCapacity of this Ship
+	 *               object
+	 */
+	public void addCapacity(int amount) {
+<span class="fc" id="L478">		this.remainingCapacity = Integer.min(this.defaultCapacity, this.remainingCapacity + amount);</span>
+<span class="fc" id="L479">	}</span>
+
+	/**
+	 * This method subtracts an integer amount from the remainingCapacity attribute.
+	 * If the current remainingCapacity minus the amount equal to or less than 0,
+	 * the remainingCapacity will be set 0.
+	 * 
+	 * @param amount an integer value to subtract from the remainingCapacity of this
+	 *               Ship object
+	 */
+	public void subtractCapacity(int amount) {
+<span class="fc" id="L490">		this.remainingCapacity = Integer.max(0, this.remainingCapacity - amount);</span>
+<span class="fc" id="L491">	}</span>
+
+	/**
+	 * This method checks if the value of capacity attribute is less than 0 after a
+	 * specific amount is reduced from it.
+	 * 
+	 * @param toReduce an integer amount to be reduced from capacity of this Ship
+	 *                 object.
+	 * @return true if the value of capacity is greater or equal to 0 after a
+	 *         specific amount is reduced from it. Otherwise, false.
+	 */
+	public boolean checkCapacityOK(int toReduce) {
+<span class="fc bfc" id="L503" title="All 2 branches covered.">		if (getCapacity() - toReduce &lt; 0) {</span>
+<span class="fc" id="L504">			return false;</span>
+		}
+<span class="fc" id="L506">		return true;</span>
+	}
+
+	/**
+	 * This method is the setter of durability attribute.
+	 * 
+	 * @param num an integer to set durability of this Ship object
+	 */
+	public void setDurability(int num) {
+<span class="fc" id="L515">		this.durability = num;</span>
+<span class="fc" id="L516">	}</span>
+
+	/**
+	 * This method is the setter of defaultDurability attribute.
+	 * 
+	 * @param num an integer to set defaultDurability of this Ship object
+	 */
+	public void setDefaultDurability(int num) {
+<span class="nc" id="L524">		this.defaultDurability = num;</span>
+<span class="nc" id="L525">	}</span>
+
+	/**
+	 * This method is the setter of cannons attribute.
+	 * 
+	 * @param num an integer to set the number of cannons of this Ship object
+	 */
+	public void setCannons(int num) {
+<span class="fc" id="L533">		this.cannons = num;</span>
+<span class="fc" id="L534">	}</span>
+
+	/**
+	 * This method adds a specific number of cannons to the cannons attribute. If
+	 * the current cannon number plus the number to be added to it is greater than
+	 * the value of maxCannons, an error message is printed out.
+	 * 
+	 * @param num the number of cannons to be added
+	 */
+	public void addCannons(int num) {
+<span class="pc bpc" id="L544" title="1 of 2 branches missed.">		if (this.cannons + num &lt;= this.maxCannons) {</span>
+<span class="fc" id="L545">			this.cannons += num;</span>
+<span class="fc" id="L546">		} else {</span>
+<span class="nc" id="L547">			System.out.println(&quot;We can't install so many cannons on the ship&quot;);</span>
+		}
+<span class="fc" id="L549">	}</span>
+
+	/**
+	 * This methods subtracts a damage value from the durability attribute. If the
+	 * durability is less than 0 after the subtraction, it will be set to be 0.
+	 * 
+	 * @param damage an integer value to be subtracted from the durability of this
+	 *               Ship object
+	 */
+	public void sufferDamage(int damage) {
+<span class="pc bpc" id="L559" title="1 of 2 branches missed.">		if (this.durability - damage &gt; 0) {</span>
+<span class="fc" id="L560">			this.durability -= damage;</span>
+<span class="fc" id="L561">		} else {</span>
+<span class="nc" id="L562">			this.durability = 0;</span>
+		}
+<span class="fc" id="L564">	}</span>
+
+	/**
+	 * This methods is the setter of speed attribute.
+	 * 
+	 * @param speed a string (&quot;fast&quot;, &quot;normal&quot;, or &quot;slow&quot;) that describes the speed
+	 *              of this Ship object
+	 */
+	public void setSpeed(String speed) {
+<span class="nc" id="L573">		this.speed = speed;</span>
+<span class="nc" id="L574">	}</span>
+
+	/**
+	 * This method is the setter of shipSailingModifier attribute.
+	 * 
+	 * @param shipSailingModifier an integer to set the value of
+	 *                            shipSaillingModifier for this Ship object
+	 */
+	public void setShipSailingModifier(int shipSailingModifier) {
+<span class="nc" id="L583">		this.shipSailingModifier = shipSailingModifier;</span>
+<span class="nc" id="L584">	}</span>
+
+	/**
+	 * This method resets the cargos attribute to be an empty ArrayList.
+	 */
+	public void emptyCargos() {
+<span class="fc" id="L590">		this.cargos = new ArrayList&lt;Item&gt;();</span>
+<span class="fc" id="L591">	}</span>
+
+	/**
+	 * This method adds an {@link UpgradeLog} to the upgradeLogs attribute. An
+	 * {@link UpgradeLog} includes a piece of upgrade/repair log recording the
+	 * location, service name and corresponding cost.
+	 * 
+	 * @param location an {@link Island} object
+	 * @param service  the string name of the upgrade service (&quot;Damage Repair&quot; or
+	 *                 &quot;Cannon Upgrade&quot;)
+	 * @param cost     the integer value of the upgrade/repair cost
+	 */
+	public void addToUpgradeLogs(Island location, String service, int cost) {
+<span class="fc" id="L604">		UpgradeLog log = new UpgradeLog(location, service, cost);</span>
+<span class="fc" id="L605">		this.upgradeLogs.add(log);</span>
+<span class="fc" id="L606">	}</span>
+
+	/**
+	 * This method checks if the sailing conditions to sail to another
+	 * {@link Island} are met.
+	 * &lt;p&gt;
+	 * To sail to another Island:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;the remaining days of the ship's captain should be greater or equal to
+	 * the days to the destination island;&lt;/li&gt;
+	 * &lt;li&gt;the ship's captain should own enough money (at least the same with the
+	 * cost to the destination island) to pay the crew to finish the sailing;&lt;/li&gt;
+	 * &lt;li&gt;the ship should not have any damage.&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * @param destination an {@link Island} object
+	 * @return true if the sailing conditions are met. Otherwise, false.
+	 */
+	public boolean readyToSail(Island destination) {
+
+		boolean isReady;
+
+		// check if Remaining days enough
+<span class="fc" id="L629">		int remainingDays = this.getCaptain().getRemainingDays();</span>
+		// update remaining days
+<span class="fc" id="L631">		int daysToDestination = getCaptain().getCurrentIsland().daysToIsland(destination, this);</span>
+
+<span class="fc bfc" id="L633" title="All 2 branches covered.">		if ((remainingDays - daysToDestination) &lt; 0) {</span>
+<span class="fc" id="L634">			isReady = false;</span>
+			// add exceptions
+<span class="fc" id="L636">			return isReady;</span>
+		}
+
+		// check if damage
+<span class="fc bfc" id="L640" title="All 2 branches covered.">		if (this.durability != this.defaultDurability) {</span>
+<span class="fc" id="L641">			isReady = false;</span>
+			// add exceptions
+<span class="fc" id="L643">			return isReady;</span>
+		}
+
+		// check if money enough to pay crew
+<span class="fc" id="L647">		int costToDestination = this.costPerDay * daysToDestination;</span>
+<span class="fc bfc" id="L648" title="All 2 branches covered.">		if (costToDestination &gt; this.getCaptain().getOwnedMoney()) {</span>
+<span class="fc" id="L649">			isReady = false;</span>
+			// add exceptions and add exception package
+<span class="fc" id="L651">			return isReady;</span>
+		}
+
+<span class="fc" id="L654">		return true;</span>
+	}
+
+	/**
+	 * This method changes the location {@link Island} of this Ship object and its
+	 * captain {@link Trader} object to be the destination {@link Island} if the
+	 * sailing methods are met. Otherwise, the ship and its captain stay where they
+	 * are.
+	 * 
+	 * @param destination an Island object
+	 * @return an array list of string reports on sailing. If the sailing conditions
+	 *         are met, the reports include all the consequences of the random
+	 *         events which happens on the way. If not, the reports include the
+	 *         messages of unsatisfied sailing conditions.
+	 */
+	public ArrayList&lt;String&gt; sailTo(Island destination) {
+
+<span class="fc" id="L671">		ArrayList&lt;String&gt; eventReports = new ArrayList&lt;String&gt;();</span>
+
+<span class="fc bfc" id="L673" title="All 2 branches covered.">		if (readyToSail(destination)) {</span>
+<span class="fc" id="L674">			Trader captain = getCaptain();</span>
+<span class="fc" id="L675">			Island currentIsland = captain.getCurrentIsland();</span>
+
+			// update remaining days
+<span class="fc" id="L678">			int daysToDestination = currentIsland.daysToIsland(destination, this);</span>
+<span class="fc" id="L679">			captain.subtractRemainingDays(daysToDestination);</span>
+
+			// pay crew and update captain ownedMoney
+<span class="fc" id="L682">			int costToDestination = getCostPerDay() * daysToDestination;</span>
+<span class="fc" id="L683">			captain.subtractMoney(costToDestination);</span>
+
+			// call random events on the route:
+
+<span class="fc" id="L687">			Route route = currentIsland.getRoute(destination);</span>
+<span class="fc" id="L688">			boolean reportsAllEmpty = true;</span>
+<span class="fc bfc" id="L689" title="All 2 branches covered.">			for (RandomEvent randomEvent : route.getEvents()) {</span>
+
+<span class="fc bfc" id="L691" title="All 2 branches covered.">				if (randomEvent.getTriggered()) {</span>
+<span class="fc" id="L692">					String eventReport = randomEvent.processImpact(captain);</span>
+<span class="pc bpc" id="L693" title="1 of 2 branches missed.">					if (!eventReport.isBlank()) {</span>
+<span class="fc" id="L694">						eventReports.add(eventReport + &quot;\n&quot;);</span>
+<span class="fc" id="L695">						reportsAllEmpty = false;</span>
+					}
+				}
+			}
+
+<span class="fc bfc" id="L700" title="All 4 branches covered.">			if (route.getEvents().size() == 0 | reportsAllEmpty) {</span>
+<span class="fc" id="L701">				eventReports.add(&quot;You had a safe and uneventful journey!\n&quot;);</span>
+
+			}
+
+			// update captain currentIsland and currentLocation
+<span class="fc" id="L706">			getCaptain().setCurrentIsland(destination);</span>
+<span class="fc" id="L707">			getCaptain().setCurrentLocation(&quot;port&quot;);</span>
+<span class="fc bfc" id="L708" title="All 2 branches covered.">		} else if (this.durability != this.defaultDurability) {</span>
+<span class="fc" id="L709">			String eventReport = &quot;You need to fix your ship first!&quot;;</span>
+<span class="fc" id="L710">			eventReports.add(eventReport);</span>
+<span class="fc bfc" id="L711" title="All 2 branches covered.">		} else if (this.getCaptain().getRemainingDays() &lt; getCaptain().getCurrentIsland().daysToIsland(destination,</span>
+<span class="fc" id="L712">				this)) {</span>
+<span class="fc" id="L713">			String eventReport = &quot;Oh no! You don't have enough time to sail to that island!&quot;;</span>
+<span class="fc" id="L714">			eventReports.add(eventReport);</span>
+<span class="fc" id="L715">		} else {</span>
+<span class="fc" id="L716">			String eventReport = &quot;Oh no! You don't have enough money to pay your crew.\n&quot; +</span>
+					&quot;You will have to sell some of your items!&quot;;
+<span class="fc" id="L718">			eventReports.add(eventReport);</span>
+		}
+
+<span class="fc" id="L721">		return eventReports;</span>
+	}
+
+	/**
+	 * This methods modifies the string representation of this ship object.
+	 */
+	@Override
+	public String toString() {
+<span class="nc" id="L729">		String properties = &quot;Name: &quot; + getName() + &quot;\n\n&quot; + &quot;Speed: &quot; + getSpeed() + &quot;\n&quot; + &quot;Default durability: &quot;</span>
+<span class="nc" id="L730">				+ getDefaultDurability() + &quot;\n&quot; + &quot;Damage suffered: &quot; + getDamage() + &quot;\n\n&quot; + &quot;Current crew number: &quot;</span>
+<span class="nc" id="L731">				+ getCrewNumber() + &quot;\n&quot; + &quot;Cannons: &quot; + getCannons() + &quot;\n\n&quot; + &quot;Cost per day: &quot; + getCostPerDay();</span>
+<span class="nc" id="L732">		return properties;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>

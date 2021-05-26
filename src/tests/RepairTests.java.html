@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>RepairTests.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">RepairTests.java</span></div><h1>RepairTests.java</h1><pre class="source lang-java linenums">package tests;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import map.Island;
+import map.WorldConstructor;
+import ships.Ship;
+import trader.Trader;
+
+<span class="fc" id="L13">class RepairTests {</span>
+
+	private WorldConstructor newWorld;
+	private Island home;
+	private Ship testShip1;
+	private Ship testShip2;
+	private Trader testPlayer1;
+	private Trader testPlayer2;
+	private int playingDays;
+	private int defaultOwnedMoney;
+
+	@BeforeEach
+	void init() {
+		
+<span class="fc" id="L27">		newWorld = new WorldConstructor();</span>
+<span class="fc" id="L28">		home = newWorld.getMap().getIsland(&quot;Mecca Merchantia&quot;);</span>
+<span class="fc" id="L29">		testShip1 = newWorld.getMap().getShip(&quot;Redcoasts&quot;);</span>
+<span class="fc" id="L30">		testShip2 = newWorld.getMap().getShip(&quot;Black Pearl&quot;);</span>
+		
+<span class="fc" id="L32">		playingDays = 50;</span>
+<span class="fc" id="L33">		defaultOwnedMoney = 20000;</span>
+<span class="fc" id="L34">		testPlayer1 = new Trader(playingDays, &quot;Alice&quot;, defaultOwnedMoney, home, &quot;port&quot;);</span>
+<span class="fc" id="L35">		testPlayer2 = new Trader(playingDays, &quot;Jon&quot;, defaultOwnedMoney, home, &quot;port&quot;);</span>
+		
+<span class="fc" id="L37">		testShip1.setCaptain(testPlayer1);</span>
+<span class="fc" id="L38">		testPlayer1.setOwnedShip(testShip1);</span>
+		
+<span class="fc" id="L40">		testShip2.setCaptain(testPlayer2);</span>
+<span class="fc" id="L41">		testPlayer2.setOwnedShip(testShip2);</span>
+		
+<span class="fc" id="L43">	}</span>
+	
+	@Test
+	void testRepairShip() {
+		
+<span class="fc" id="L48">		int damage = 10;</span>
+<span class="fc" id="L49">		testShip1.setDurability(testShip1.getDefaultDurability() - damage);</span>
+<span class="fc" id="L50">		String report = testPlayer1.repairShip();</span>
+		
+		// check if durability recovers
+<span class="fc" id="L53">		assertEquals(testShip1.getDurability(), testShip1.getDefaultDurability());</span>
+		
+		// check if cost subtracted
+<span class="fc" id="L56">		int repairCostPerDamage = testPlayer1.getCurrentIsland().getPort().getRepairCost();</span>
+<span class="fc" id="L57">		int repairCost = damage * repairCostPerDamage; </span>
+<span class="fc" id="L58">		assertEquals(testPlayer1.getOwnedMoney(), </span>
+<span class="fc" id="L59">				     defaultOwnedMoney - repairCost);</span>
+		
+		// check if right report returned
+<span class="fc" id="L62">		assertEquals(report, &quot;The damage has been fixed!\nYour ship is ready to sail again!&quot;);</span>
+		
+		// check if logged into upgradeLogs
+<span class="fc" id="L65">		String log = &quot;Upgrade log:\n\n&quot; + &quot;Damage Repair&quot; + &quot; at &quot; </span>
+<span class="fc" id="L66">		           + testPlayer1.getCurrentIsland().getName() </span>
+<span class="fc" id="L67">				   + &quot; for &quot; + repairCost + &quot; coins&quot; + &quot;\n&quot;;</span>
+<span class="fc" id="L68">		assertEquals(log, testShip1.getUpgradeLogString());</span>
+<span class="fc" id="L69">	}</span>
+	
+	@Test
+	void testUnnecessaryRepairShip() {
+		
+<span class="fc" id="L74">		int damage = 0;</span>
+<span class="fc" id="L75">		testShip1.setDurability(testShip1.getDefaultDurability() - damage);</span>
+<span class="fc" id="L76">		String report = testPlayer1.repairShip();</span>
+		
+		// check if durability recovers
+<span class="fc" id="L79">		assertEquals(testShip1.getDurability(), testShip1.getDefaultDurability());</span>
+		
+		// check if cost subtracted
+<span class="fc" id="L82">		int repairCostPerDamage = testPlayer1.getCurrentIsland().getPort().getRepairCost();</span>
+<span class="fc" id="L83">		int repairCost = damage * repairCostPerDamage; </span>
+<span class="fc" id="L84">		assertEquals(testPlayer1.getOwnedMoney(), </span>
+<span class="fc" id="L85">				     defaultOwnedMoney - repairCost);</span>
+		
+		// check if right report returned
+<span class="fc" id="L88">		assertEquals(report, &quot;Your ship is fine. There's nothing to repair.&quot;);</span>
+<span class="fc" id="L89">	}</span>
+	
+	@Test
+	void testFailedRepairShipforLackOfMoney() {
+		
+<span class="fc" id="L94">		int damage = 5;</span>
+<span class="fc" id="L95">		int lessMoney = 1;</span>
+<span class="fc" id="L96">		testPlayer2.setOwnedMoney(lessMoney);</span>
+<span class="fc" id="L97">		testShip2.setDurability(testShip2.getDefaultDurability() - damage);</span>
+<span class="fc" id="L98">		String report = testPlayer2.repairShip();</span>
+		
+		// check if durability recovers
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		assertTrue(testShip2.getDurability() != testShip2.getDefaultDurability());</span>
+		
+		// check if cost subtracted
+<span class="fc" id="L104">		assertEquals(testPlayer2.getOwnedMoney(), </span>
+<span class="fc" id="L105">				     lessMoney);</span>
+		
+		// check if right report returned
+<span class="fc" id="L108">		assertEquals(report, &quot;Oh no! You don't have enough money for the repair!\n&quot; + </span>
+				&quot;You'll need to sell some items!&quot;);
+<span class="fc" id="L110">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>

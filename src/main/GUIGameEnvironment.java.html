@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GUIGameEnvironment.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">main</a> &gt; <span class="el_source">GUIGameEnvironment.java</span></div><h1>GUIGameEnvironment.java</h1><pre class="source lang-java linenums">package main;
+
+import java.util.*;
+
+import javax.sound.sampled.Port;
+
+import events.RandomEvent;
+import gui.PortWindow;
+import gui.SetupWindow;
+import gui.StoreWindow;
+import items.Item;
+import trader.Trader;
+import map.Island;
+import map.Route;
+import map.Store;
+import map.World;
+import map.WorldConstructor;
+import ships.Ship;
+import terminalPrinter.StatusLine;
+
+/**
+ * The GUIGameEnvironment class is the entry point for the GUI version of the game. 
+ * It is used to initialize an object working as a manager for {@link SetupWindow},
+ * {@link PortWindow}, and {@link StoreWindow}. It launches, switches and
+ * finishes the GUI window frames. A GUIGameEnvironment object stores the state
+ * of the game and is a media for calling the methods from the back end to 
+ * implement different commands from GUI interface.  
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
+
+public class GUIGameEnvironment {
+
+	/**
+	 * Attribute world is a {@link World} object which stores the state of the {@link Ship},
+	 * {@link Island}s, {@link Store}s, {@link Port}s, {@link RandomEvent}s, and
+	 * {@link Route}s. 
+	 */
+<span class="nc" id="L40">	World world = null;</span>
+	/**
+	 * Attribute player is a {@link Trader} object which stores the state of the
+	 * trader. 
+	 */
+<span class="nc" id="L45">	Trader player = null;</span>
+	/**
+	 * Attribute ship is a {@link Ship} object which stores the state of the
+	 * trader's ship.
+	 */
+<span class="nc" id="L50">	Ship ship = null;</span>
+
+	/**
+	 * This constructor sets the value of world attribute. It constructs a new
+	 * world by initializing a {@link WorldConstructor} object.
+	 */
+<span class="nc" id="L56">	public GUIGameEnvironment() {</span>
+
+		// Constructing a new world
+<span class="nc" id="L59">		WorldConstructor newWorld = new WorldConstructor();</span>
+<span class="nc" id="L60">		world = newWorld.getMap();</span>
+<span class="nc" id="L61">	}</span>
+
+	// Playing methods
+	/**
+	 * This method is the getter for the world attribute.
+	 * @return the {@link World} object stored in world attribute
+	 */
+	public World getWorld() {
+<span class="nc" id="L69">		return this.world;</span>
+	}
+
+	/**
+	 * This method is the getter for the player attribute.
+	 * @return the {@link Trader} object stored in player attribute
+	 */
+	public Trader getTrader() {
+<span class="nc" id="L77">		return this.player;</span>
+	}
+
+	/**
+	 * This method is the getter for the ship attribute.
+	 * @return the {@link Ship} object stored in ship attribute
+	 */
+	public Ship getShip() {
+<span class="nc" id="L85">		return this.ship;</span>
+	}
+	
+	/**
+	 * This method creates a new {@link Trader} object, sets the trader's {@link Ship},
+	 * and formats a string report of the new trader's profile.  
+	 * @param name a name for the {@link Trader}
+	 * @param days the number of the remaining days of the game
+	 * @param homeName the name of the home island for the {@link Trader}
+	 * @param shipName the name of the selected {@link Ship}
+	 * @return a report of the new {@link Trader}'s profile
+	 */
+	public String setTrader(String name, int days, String homeName, String shipName) {
+
+<span class="nc" id="L99">		Island home = this.world.getIsland(homeName);</span>
+<span class="nc" id="L100">		player = new Trader(days, name, home);</span>
+
+<span class="nc" id="L102">		ship = this.world.getShip(shipName);</span>
+<span class="nc" id="L103">		ship.setCaptain(player);</span>
+<span class="nc" id="L104">		player.setOwnedShip(ship);</span>
+
+<span class="nc" id="L106">		String report = &quot;A new trader named &quot; + player.getName() + &quot; has been created!&quot; </span>
+<span class="nc" id="L107">		                + &quot;\nYour ship is &quot; + ship.getName()</span>
+<span class="nc" id="L108">		                + &quot; and you will start from your home island &quot; </span>
+<span class="nc" id="L109">		                + player.getCurrentIsland().getName() </span>
+<span class="nc" id="L110">		                + &quot;\nThe playing time is &quot; + days + &quot; days.&quot;;</span>
+<span class="nc" id="L111">		return report;</span>
+
+	}
+	
+	/**
+	 * This method gets the name of the player.
+	 * @return the name of the {@link Trader}
+	 */
+	public String getTraderName() {
+		
+<span class="nc" id="L121">		String name = player.getName();</span>
+<span class="nc" id="L122">		return name;</span>
+		
+	}
+
+	/**
+	 * This method gets the remaining days of player.
+	 * @return the remaining days of the {@link Trader}
+	 */
+	public int getRemainingDays() {
+		
+<span class="nc" id="L132">		int days = player.getRemainingDays();</span>
+<span class="nc" id="L133">		return days;</span>
+		
+	}
+	
+	/**
+	 * This method gets the number of player's owned money.
+	 * @return the number of the player's owned money
+	 */
+	public int getOwnedMoney() {
+		
+<span class="nc" id="L143">		int money = player.getOwnedMoney();</span>
+<span class="nc" id="L144">		return money;</span>
+		
+	}
+	
+	/**
+	 * This method gets the name of the island the player is located.
+	 * @return the name of the island the player is located
+	 */
+	public String getCurrentIslandName() {
+		
+<span class="nc" id="L154">		String name = player.getCurrentIsland().getName();</span>
+<span class="nc" id="L155">		return name;</span>
+		
+	}
+	
+	/**
+	 * This method gets an ArrayList of the {@link Route} objects from the {@link Island}
+	 * the player is located.
+	 * @return an ArrayList of {@link Route} objects
+	 */
+	public ArrayList&lt;Route&gt; getCurrentRoutes() {
+		
+<span class="nc" id="L166">		ArrayList&lt;Route&gt; routes = player.getCurrentIsland().getRoutes();</span>
+<span class="nc" id="L167">		return routes;</span>
+		
+	}
+	
+	/**
+	 * This method gets the string description of the routes from the {@link Island}
+	 * the player is located
+	 * @return a String description of the available routes
+	 */
+	public String getRoutesDescription() {
+		
+<span class="nc" id="L178">		String routesDescription = player.getCurrentIsland().getRoutesString(ship);</span>
+<span class="nc" id="L179">		return routesDescription;</span>
+		
+	}
+	
+	/**
+	 * This method gets the string description of the player {@link Trader}. 
+	 * @return a String description of the player
+	 */
+	public String getTraderDescription() {
+		
+<span class="nc" id="L189">		String traderDescription = player.toString();</span>
+<span class="nc" id="L190">		return traderDescription;</span>
+		
+	}
+	
+	/**
+	 * This method gets the string description of the player's trading logs.
+	 * @return a String description of the player's trading logs.
+	 */
+	public String getTradingLogsDescription() {
+		
+<span class="nc" id="L200">		String tradingLogsDescription = player.getTradingLogsString();</span>
+<span class="nc" id="L201">		return tradingLogsDescription;</span>
+		
+	}
+	
+	/**
+	 * This method gets the string description of the player's {@link Ship}.
+	 * @return a String description of the player's {@link Ship}
+	 */
+	public String getShipDescription() {
+		
+<span class="nc" id="L211">		String shipDescription = ship.toString();</span>
+<span class="nc" id="L212">		return shipDescription;</span>
+		
+	}
+	
+	/**
+	 * This method gets the string description of the {@link Ship}'s cargos
+	 * @return a String description of the {@link Ship}'s cargos
+	 */
+	public String getCargosDescription() {
+		
+<span class="nc" id="L222">		String cargosDescription = ship.getCargosString();</span>
+<span class="nc" id="L223">		return cargosDescription;</span>
+		
+	}
+	
+	/**
+	 * This method gets the string description of the {@link Ship}'s upgrade logs.
+	 * @return a String description of the {@link Ship}'s upgrade logs
+	 */
+	public String getUpgradeLogsDescription() {
+		
+<span class="nc" id="L233">		String upgradeLogsDescripion = ship.getUpgradeLogString();</span>
+<span class="nc" id="L234">		return upgradeLogsDescripion;</span>
+		
+	}
+	
+	/**
+	 * This method gets the number of cost of one cannon from the {@link Port} the
+	 * player is located.
+	 * @return the cost number of one cannon
+	 */
+	public int getCostPerCannon() {
+		
+<span class="nc" id="L245">		int cost = player.getCurrentIsland().getPort().getcannonCost();</span>
+<span class="nc" id="L246">		return cost;</span>
+		
+	}
+	
+	/**
+	 * This method calls the sailTo() method from {@link Ship}
+	 * @param destination a String name of an island
+	 * @return a String report of the sailing
+	 */
+	public String sail(String destination) {
+
+<span class="nc" id="L257">		String report = &quot;&quot;;</span>
+
+<span class="nc" id="L259">		Island destIsland = world.getIsland(destination);</span>
+<span class="nc" id="L260">		ArrayList&lt;String&gt; reportList = ship.sailTo(destIsland);</span>
+<span class="nc" id="L261">		report = &quot;\n\n~~~ ~~~ ~~~ Sailing ~~~ ~~~ ~~~\n\n&quot;;</span>
+
+<span class="nc bnc" id="L263" title="All 2 branches missed.">		for (String event : reportList) {</span>
+<span class="nc" id="L264">			report += event;</span>
+		}
+
+<span class="nc" id="L267">		return report;</span>
+
+	}
+	
+	/**
+	 * This method calls the repairShip() method from the player.
+	 * @return a String report of the repair result
+	 */
+	public String repair() {
+		
+<span class="nc" id="L277">		String report = player.repairShip();</span>
+<span class="nc" id="L278">		return report;</span>
+		
+	}
+	
+	/**
+	 * This method calls the upgradeCannons() method from the player.
+	 * @param cannonNum the number of the cannons to be added
+	 * @return a String report of the cannon upgrade service
+	 */
+	public String upgradeCannons(int cannonNum) {
+		
+<span class="nc" id="L289">		String report = player.upgradeCannons(cannonNum);</span>
+<span class="nc" id="L290">		return report;</span>
+		
+	}
+	
+	/**
+	 * This method gets an ArrayList of {@link Item}s for sale from the {@link Store}
+	 * the player is located.
+	 * @return an ArrayList of {@link Item}s
+	 */
+	public ArrayList&lt;Item&gt; getItemsToSell() {
+		
+<span class="nc" id="L301">		ArrayList&lt;Item&gt; itemsToSell = player.getCurrentIsland().getStore().getToSell();</span>
+<span class="nc" id="L302">		return itemsToSell;</span>
+		
+	}
+	
+	/**
+	 * This method gets an ArrayList of {@link Item}s for the player to sell from
+	 * the {@link Store} the player is located.
+	 * @return an ArrayList of {@link Item}s
+	 */
+	public ArrayList&lt;Item&gt; getSellableTraderItems() {
+		
+<span class="nc" id="L313">		ArrayList&lt;Item&gt; sellableTraderItems = player.getCurrentIsland().getStore().getSellablePlayerItems(ship);</span>
+<span class="nc" id="L314">		return sellableTraderItems;</span>
+		
+	}
+	
+	/**
+	 * This method calls the buy() method from the player.
+	 * @param itemName the String name of the {@link Item} to buy
+	 * @param quantity the number of the quantity of the {@link Item} to buy
+	 * @return a String report of the purchase
+	 */
+	public String buy(String itemName, int quantity) {
+		
+<span class="nc" id="L326">		String report = player.buy(player.getCurrentIsland(), </span>
+<span class="nc" id="L327">				                   itemName, quantity);</span>
+<span class="nc" id="L328">		return report;</span>
+		
+	}
+	
+	/**
+	 * This method calls the sell() method from the player.
+	 * @param itemName the String name of the {@link Item} to sell
+	 * @param quantity the number of the quantity of the {@link Item} to sell
+	 * @return a String report of the selling
+	 */
+	public String sell(String itemName, int quantity) {
+		
+<span class="nc" id="L340">		String report = player.sell(player.getCurrentIsland(), </span>
+<span class="nc" id="L341">				                    itemName, quantity);</span>
+<span class="nc" id="L342">		return report;</span>
+		
+	}
+	
+	/**
+	 * This method gets the sale list from the {@link Store} the player is located. 
+	 * @return a String sale list
+	 */
+	public String getListForSale() {
+		
+<span class="nc" id="L352">		String listForSale = player.getCurrentIsland().getStore().forSale();</span>
+<span class="nc" id="L353">		return listForSale;</span>
+		
+	}
+	
+	/**
+	 * This method gets the the list of items the {@link Store} is looking to buy.
+	 * @return a String list of items the {@link Store} to buy
+	 */
+	public String getListToPurchase() {
+		
+<span class="nc" id="L363">		String listToPurchase = player.getCurrentIsland().getStore().forPurchase();</span>
+<span class="nc" id="L364">		return listToPurchase;</span>
+		
+	}
+
+	/**
+	 * This method gets the summary of the player's performance from {@link StatusLine}.
+	 * @return a String report of the player's performance
+	 */
+	public String gameOver() {
+
+<span class="nc" id="L374">		StatusLine summary = new StatusLine(player);</span>
+<span class="nc" id="L375">		String gameOverReport = summary.getGameOverReport(&quot;&quot;);</span>
+		
+<span class="nc" id="L377">		return gameOverReport;</span>
+	}
+
+	
+	// Window managing methods
+	
+	// SetupWindow
+	/**
+	 * This method initializes a new {@link SetupWindow} object.
+	 */
+	public void launchSetupWindow() {
+		@SuppressWarnings(&quot;unused&quot;)
+<span class="nc" id="L389">		SetupWindow setupWindow = new SetupWindow(this);</span>
+<span class="nc" id="L390">	}</span>
+
+	/**
+	 * This method closes the {@link SetupWindow} and launches the {@link PortWindow}.
+	 * @param setupWindow a {@link SetupWindow} porject
+	 */
+	public void closeSetupWindow(SetupWindow setupWindow) {
+<span class="nc" id="L397">		setupWindow.closeSetupWindow();</span>
+<span class="nc" id="L398">		launchPortWindow();</span>
+<span class="nc" id="L399">	}</span>
+
+	// PortWindow
+	/**
+	 * This method initializes a new {@link PortWindow} object.
+	 */
+	public void launchPortWindow() {
+		@SuppressWarnings(&quot;unused&quot;)
+<span class="nc" id="L407">		PortWindow portWindow = new PortWindow(this);</span>
+<span class="nc" id="L408">	}</span>
+
+	/**
+	 * This method closes the {@link PortWindow} and launches the {@link StoreWindow}.
+	 * @param portWindow a {@link PortWindow} object
+	 */
+	public void closePortWindow(PortWindow portWindow) {
+<span class="nc" id="L415">		portWindow.closePortWindow();</span>
+		// launch store window next
+<span class="nc" id="L417">		launchStoreWindow();</span>
+<span class="nc" id="L418">	}</span>
+
+	/**
+	 * This method closes the {@link PortWindow} and launches the {@link SetupWindow}.
+	 * @param portWindow a {@link PortWindow} object
+	 */
+	public void restartSetupWindow(PortWindow portWindow) {
+		
+<span class="nc" id="L426">		ship.setDurability(ship.getDefaultDurability());</span>
+<span class="nc" id="L427">		portWindow.closePortWindow();</span>
+<span class="nc" id="L428">		launchSetupWindow();</span>
+		
+<span class="nc" id="L430">	}</span>
+
+	// StoreWindow
+	/**
+	 * This method initializes a new {@link StoreWindow} object.
+	 */
+	public void launchStoreWindow() {
+		@SuppressWarnings(&quot;unused&quot;)
+<span class="nc" id="L438">		StoreWindow storeWindow = new StoreWindow(this);</span>
+<span class="nc" id="L439">	}</span>
+
+	/**
+	 * This method closes the {@link StoreWindow} and launches the {@link PortWindow}.
+	 * @param storeWindow a {@link StoreWindow} object
+	 */
+	public void closeStoreWindow(StoreWindow storeWindow) {
+<span class="nc" id="L446">		storeWindow.closeStoreWindow();</span>
+		// launch port window next
+<span class="nc" id="L448">		launchPortWindow();</span>
+<span class="nc" id="L449">	}</span>
+
+	/**
+	 * This main method initializes a new GUIGameEnvironment object and launches
+	 * the {@link SetupWindow}.
+	 * @param args default arguments for main method 
+	 */
+	public static void main(String[] args) {
+
+<span class="nc" id="L458">		GUIGameEnvironment manager = new GUIGameEnvironment();</span>
+
+<span class="nc" id="L460">		manager.launchSetupWindow();</span>
+
+<span class="nc" id="L462">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>

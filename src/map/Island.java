@@ -2,7 +2,6 @@ package map;
 
 import java.util.ArrayList;
 
-import events.*;
 import ships.Ship;
 
 /**

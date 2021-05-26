@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Island.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">map</a> &gt; <span class="el_source">Island.java</span></div><h1>Island.java</h1><pre class="source lang-java linenums">package map;
+
+import java.util.ArrayList;
+
+import ships.Ship;
+
+/**
+ * Represents the game's islands, which players sail between to conduct
+ * their trading——five in total.
+ * &lt;p&gt;
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ *
+ */
+public class Island {
+	
+	/**
+	 * the (extraordinarily creative) name of the Island.
+	 */
+	private String name;
+	
+	/**
+	 * a list to contain the available {@link Route}s departing the Island.
+	 */
+<span class="fc" id="L26">	private ArrayList&lt;Route&gt; routes = new ArrayList&lt;&gt;();</span>
+	
+	/**
+	 * the Island's {@link Store} object, where trading takes place.
+	 */
+	private Store store;
+	
+	/**
+	 * the Island's {@link Port} object, where Ship repairs and upgrade take place.
+	 */
+	private Port port;
+	
+	
+	/**
+	 * instantiates a new Island with just a name String. Convenient for testing.
+	 * @param name the name String for the Island
+	 */
+<span class="fc" id="L43">	public Island(String name) {</span>
+<span class="fc" id="L44">		this.name = name;</span>
+<span class="fc" id="L45">	}</span>
+	
+	/**
+	 * instantiates a new Island and sets the {@link name}, {@link store}, and
+	 * {@link port} attributes to the given name String, Store, and Port objects
+	 * respectively.
+	 * @param name the name String for the Island
+	 * @param store the Island's Store
+	 * @param port the Island's Port
+	 */
+<span class="fc" id="L55">	public Island(String name, Store store, Port port) {</span>
+<span class="fc" id="L56">		this.name = name;</span>
+<span class="fc" id="L57">		this.store = store;</span>
+<span class="fc" id="L58">		this.port = port;</span>
+<span class="fc" id="L59">	}</span>
+	
+	/**
+	 * adds a {@link Route} leaving the Island
+	 * @param route the Route to be added
+	 */
+	public void addRoute(Route route) {
+<span class="fc" id="L66">		routes.add(route);</span>
+<span class="fc" id="L67">	}</span>
+	
+	/**
+	 * @return the {@link name} String of the Island
+	 */
+	public String getName() {
+<span class="fc" id="L73">		return this.name;</span>
+	}
+	
+	/**
+	 * @return the ArrayList of available {@link Route} objects which have the Island
+	 * as their source
+	 */
+	public ArrayList&lt;Route&gt; getRoutes() {
+<span class="fc" id="L81">		return routes;</span>
+	}
+	
+	/**
+	 * searches the {@link routes} list for the Route whose destination is the
+	 * given Island.
+	 * @param destination the destination Island
+	 * @return the {@link Route} whose destination attribute is set to the given
+	 * Island, else null if no match
+	 */
+	public Route getRoute(Island destination) {
+<span class="fc" id="L92">		ArrayList&lt;Route&gt; routes = getRoutes();</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		for (Route route : routes) {</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">			if (route.getDest() == destination) {</span>
+<span class="fc" id="L95">				return route;</span>
+			}
+		}
+<span class="nc" id="L98">		return null;</span>
+	}
+	
+	/**
+	 * takes a Ship and returns a String representation of all available Route options
+	 * from the current Island, including the calculated sailing time and cost for each.
+	 * @param playerShip the Ship to do the sailing
+	 * @return a String representation of all the available Route options from the current
+	 * Island and the cost of sailing them
+	 */
+	public String getRoutesString(Ship playerShip) {
+<span class="nc" id="L109">		int costPerDay = playerShip.getCostPerDay();</span>
+<span class="nc" id="L110">		String routesString = &quot;Routes available:\n&quot;;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (routes.size() &gt; 0) {</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">			for (int i = 0; i &lt; routes.size(); i++) {</span>
+<span class="nc" id="L113">				int sailingTime = routes.get(i).getSailingTime(playerShip);</span>
+<span class="nc" id="L114">				int totalCost = costPerDay * sailingTime;</span>
+<span class="nc" id="L115">				routesString += String.format(&quot;\nRoute %s: %sSailing time: %s days\nCost: %s\n&quot;, </span>
+<span class="nc" id="L116">						i+1, routes.get(i), sailingTime, totalCost);</span>
+			} 
+<span class="nc" id="L118">			return routesString;</span>
+		} else {
+<span class="nc" id="L120">			routesString += &quot;No routes available; you're stuck here!&quot;;</span>
+<span class="nc" id="L121">			return routesString;</span>
+		}
+	}
+	
+	/**
+	 * @return the current Island's {@link Store} object
+	 */
+	public Store getStore() {
+<span class="fc" id="L129">		return store;</span>
+	}
+	
+	/**
+	 * @return the current Island's {@link Port} object
+	 */
+	public Port getPort() {
+<span class="fc" id="L136">		return port;</span>
+	}
+	
+	/** 
+	 * takes an Island destination and a Ship to calculate and return the number of days
+	 * to sail on a Route to the given destination.
+	 * @param destination the Island of interest
+	 * @param playerShip the Ship to do the sailing
+	 * @return the number of days to sail to the destination, else -1 if no match with 
+	 * the available Route options
+	 */
+	public int daysToIsland(Island destination, Ship playerShip) {
+<span class="fc" id="L148">		int shipSailingModifier = playerShip.getShipSailingModifier();</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		for (Route route : routes) {</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">			if (route.getDest() == destination) {</span>
+<span class="fc" id="L151">				return Integer.max(1, (route.getDistance() - shipSailingModifier));</span>
+			}
+<span class="nc" id="L153">		} return -1;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>

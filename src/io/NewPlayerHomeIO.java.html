@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>NewPlayerHomeIO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">io</a> &gt; <span class="el_source">NewPlayerHomeIO.java</span></div><h1>NewPlayerHomeIO.java</h1><pre class="source lang-java linenums">package io;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import map.Island;
+import map.World;
+import trader.Trader;
+
+/**
+ * The NewPlayerHomeIO is a {@link NewPlayerIO} sub-class to create a command
+ * line interface for setting the home island of the new {@link Trader}.
+ * &lt;p&gt;
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
+
+public class NewPlayerHomeIO extends NewPlayerIO {
+
+	/**
+	 * Attribute islandsList is an ArrayList which stores the string names of the
+	 * available {@link Island} objects.
+	 */
+<span class="nc" id="L25">	private ArrayList&lt;String&gt; islandsList = new ArrayList&lt;String&gt;();</span>
+
+	/**
+	 * This constructor sets the world attribute with a World object, creates and
+	 * formats a string for the prompt attribute and adds all the available
+	 * command options for this interface to attribute commandsList.
+	 * 
+	 * @param newWorld a World object
+	 */
+	public NewPlayerHomeIO(World newWorld) {
+
+<span class="nc" id="L36">		super(newWorld);</span>
+<span class="nc" id="L37">		super.setPrompt(&quot;Please choose your home island:\n&quot;);</span>
+
+<span class="nc" id="L39">		HashMap&lt;String, Island&gt; islands = getWorld().getIslands();</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">		for (String islandName : islands.keySet()) {</span>
+<span class="nc" id="L41">			super.addCommand(islandName);</span>
+<span class="nc" id="L42">			islandsList.add(islandName);</span>
+		}
+<span class="nc" id="L44">		super.addCommand(&quot;Cancel&quot;); // 2</span>
+
+<span class="nc" id="L46">	}</span>
+
+	/**
+	 * This method processes a string name chosen by users or a cancel command
+	 * input. It adds the string name users choose or the cancel command to
+	 * attribute commandArguments. This method also initializes a
+	 * {@link NewPlayerShipIO} object after users choose a valid island name.
+	 * 
+	 * @param playerChoice a string of &quot;0&quot; or a string integer
+	 */
+	@Override
+	public void processPlayerInput(String playerChoice) {
+
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (Integer.parseInt(playerChoice) == islandsList.size()) {</span>
+
+<span class="nc" id="L61">			super.addCommandArgument(&quot;cancel&quot;);</span>
+
+<span class="nc" id="L63">		} else {</span>
+
+<span class="nc" id="L65">			String chosenIslandName = this.islandsList.get(Integer.parseInt(playerChoice));</span>
+<span class="nc" id="L66">			super.addCommandArgument(chosenIslandName);</span>
+<span class="nc" id="L67">			NewPlayerShipIO newShip = new NewPlayerShipIO(getWorld());</span>
+<span class="nc" id="L68">			newShip.readCommandArguments();</span>
+
+		}
+
+<span class="nc" id="L72">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>

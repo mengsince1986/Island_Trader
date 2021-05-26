@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>IO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">io</a> &gt; <span class="el_source">IO.java</span></div><h1>IO.java</h1><pre class="source lang-java linenums">package io;
+
+import java.util.*;
+
+import commands.CommandHandler;
+import main.GameEnvironment;
+import trader.*;
+
+/**
+ * The IO (input and output) is an abstract class for creating command line
+ * interface. It is the base for {@link PortIO}, {@link SailToIO},
+ * {@link RepairIO}, {@link UpgradeIO}, {@link StoreIO}, {@link BuyIO}, and
+ * {@link TransactionQuantityIO}.
+ * &lt;p&gt;
+ * The sub-classes created based on IO print prompts for different commands,
+ * take integers inputs from users, validate the inputs, and pass the inputs as
+ * an ArrayList to {@link CommandHandler} through {@link GameEnvironment}.
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
+
+public abstract class IO {
+
+	/**
+	 * Attribute player stores the current Trader object which is used for printing
+	 * related Trader properties for command line interface. This attribute is set
+	 * static as there's only one Trader object in the game, so all command line
+	 * interface objects share the same player attribute.
+	 */
+	private static Trader player;
+
+	/**
+	 * Attribute commandsList stores an ArrayList of available commands in this
+	 * command line interface object.
+	 */
+	private ArrayList&lt;String&gt; commandsList;
+
+	/**
+	 * Attribute commandArguments stores an ArrayList of commands users choose from
+	 * the command line interface. This attribute is set static so that it can store
+	 * command inputs from different command line interface objects.
+	 */
+<span class="nc" id="L44">	private static ArrayList&lt;String&gt; commandArguments = new ArrayList&lt;String&gt;();</span>
+
+	/**
+	 * Attribute gettingTransactionQuantity stores a boolean value. It is true when
+	 * a command line interface object accepts all positive integer inputs from
+	 * users, e.g. the quantity of items a trader buys or sells.
+	 */
+<span class="nc" id="L51">	private static boolean gettingTransactionQuantity = false;</span>
+
+	/**
+	 * This constructor sets the player attribute with the current Trader object and
+	 * initializes a new ArrayList for the commandsList attribute.
+	 * 
+	 * @param trader the current Trader object
+	 */
+<span class="nc" id="L59">	public IO(Trader trader) {</span>
+
+<span class="nc" id="L61">		player = trader;</span>
+<span class="nc" id="L62">		commandsList = new ArrayList&lt;String&gt;();</span>
+
+<span class="nc" id="L64">	}</span>
+
+	/**
+	 * This method prints the prompt and available command options returned by
+	 * getCommandsListString(), gets an input of integer from users, and validates
+	 * the input. If the input is valid, this method will add the command matching
+	 * the input to attribute commandArguments. If the input is invalid, this method
+	 * will print an error message.
+	 * &lt;p&gt;
+	 * If attribute gettingTransactionQuantity is true, any positive integer input
+	 * will be acceptable. Otherwise, only integer inputs matching available
+	 * commands in attribute commandsList are accepted.
+	 * 
+	 * @param prompt the string prompt for this interface IO object
+	 * @return the ArrayList of commandArguments
+	 */
+	public ArrayList&lt;String&gt; readCommandArguments(String prompt) {
+
+		int playerChoice;
+<span class="nc" id="L83">		boolean isValid = false;</span>
+
+		// A do while loop which keeps running until player enters a valid input
+		do {
+
+<span class="nc" id="L88">			System.out.println(getCommandsListString());</span>
+<span class="nc" id="L89">			System.out.println(prompt);</span>
+
+<span class="nc" id="L91">			String errorMessage = &quot;=====================!!!========================\n&quot;</span>
+					+ &quot;You need to choose a valid number. Choose again.\n&quot;
+					+ &quot;================================================\n&quot;;
+
+<span class="nc" id="L95">			Scanner commandReader = new Scanner(System.in);</span>
+
+			try {
+<span class="nc" id="L98">				playerChoice = commandReader.nextInt();</span>
+
+<span class="nc bnc" id="L100" title="All 2 branches missed.">				if (playerChoice &gt;= 0) {</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">					if (gettingTransactionQuantity) {</span>
+<span class="nc" id="L102">						processPlayerInput(playerChoice);</span>
+<span class="nc" id="L103">						isValid = true;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">					} else if (playerChoice &lt;= commandsList.size() - 1) {</span>
+<span class="nc" id="L105">						processPlayerInput(playerChoice);</span>
+<span class="nc" id="L106">						isValid = true;</span>
+<span class="nc" id="L107">					} else {</span>
+<span class="nc" id="L108">						System.out.println(errorMessage);</span>
+					}
+<span class="nc" id="L110">				} else {</span>
+<span class="nc" id="L111">					System.out.println(errorMessage);</span>
+				}
+<span class="nc" id="L113">			} catch (InputMismatchException e) {</span>
+
+<span class="nc" id="L115">				System.out.println(errorMessage);</span>
+			}
+
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		} while (!isValid);</span>
+
+<span class="nc" id="L120">		return commandArguments;</span>
+	}
+
+	/**
+	 * This is an abstract method which processes a command input from users.
+	 * 
+	 * @param choice an integer which matches a command in this interface
+	 */
+	public abstract void processPlayerInput(int choice);
+
+	/**
+	 * This method is the getter for attribute player.
+	 * 
+	 * @return the Trader object stored in attribute player
+	 */
+	public static Trader getTrader() {
+<span class="nc" id="L136">		return player;</span>
+	}
+
+	/**
+	 * This method is the getter for attribute commandsList.
+	 * 
+	 * @return the ArrayList stored in attribute commandsList
+	 */
+	public ArrayList&lt;String&gt; getCommandsList() {
+<span class="nc" id="L145">		return commandsList;</span>
+	}
+
+	/**
+	 * This method is the setter for attribute gettingTransactionQuantity.
+	 * 
+	 * @param value true if the interface object accepts all natural numbers as
+	 *              input, otherwise false
+	 */
+	public void setGettingTransactionQuantity(boolean value) {
+<span class="nc" id="L155">		gettingTransactionQuantity = value;</span>
+<span class="nc" id="L156">	}</span>
+
+	/**
+	 * This method adds a single command string to the ArrayList stored in attribute
+	 * commandsList.
+	 * 
+	 * @param command a string command
+	 */
+	public void addCommand(String command) {
+<span class="nc" id="L165">		commandsList.add(command);</span>
+<span class="nc" id="L166">	}</span>
+
+	/**
+	 * This method iterates attribute commandsList and concatenates all the commands
+	 * into a string.
+	 * 
+	 * @return a formated string which includes all the command options
+	 */
+	public String getCommandsListString() {
+<span class="nc" id="L175">		String commandList = &quot;============== Commands List =================&quot; + &quot;\n\n&quot;;</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		for (int i = 0; i &lt; commandsList.size(); i++) {</span>
+<span class="nc" id="L177">			commandList += i + &quot;. &quot; + commandsList.get(i) + &quot;\n&quot;;</span>
+		}
+<span class="nc" id="L179">		return commandList;</span>
+	}
+
+	/**
+	 * This method is the getter for attribute commandArguments.
+	 * 
+	 * @return the ArrayList stored in attribute commandArguments
+	 */
+	public static ArrayList&lt;String&gt; getCommandArguments() {
+<span class="nc" id="L188">		return commandArguments;</span>
+	}
+
+	/**
+	 * This method resets the commandArguments attribute to be an empty ArrayList
+	 */
+	public static void resetCommandArguments() {
+<span class="nc" id="L195">		commandArguments.clear();</span>
+<span class="nc" id="L196">	}</span>
+
+	/**
+	 * This method adds a single command/argument string to attribute
+	 * commandArguments.
+	 * 
+	 * @param arg a command/argument string
+	 */
+	public static void addCommandArgument(String arg) {
+<span class="nc" id="L205">		commandArguments.add(arg);</span>
+<span class="nc" id="L206">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>

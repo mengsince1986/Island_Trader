@@ -7,7 +7,7 @@ import events.*;
 
 /**
  * A class to represent the current player of the game. Key behaviours include
- * buying and selling {@link Items}, upgrading the cannons on the player's {@link Ship},
+ * buying and selling {@link Item}s, upgrading the cannons on the player's {@link Ship},
  * repairing the Ship.
  * 
  * @author Finn van Dorsser

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>PortIO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">io</a> &gt; <span class="el_source">PortIO.java</span></div><h1>PortIO.java</h1><pre class="source lang-java linenums">package io;
+
+import ships.Ship;
+import trader.*;
+
+/**
+ * The PortIO is an {@link IO} sub-class to create command line interface for port.
+ * &lt;p&gt;
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
+
+public class PortIO extends IO {
+
+	/**
+	 * This constructor sets the player attribute with the current Trader object and
+	 * adds all the port command options to attribute commandsList.
+	 * 
+	 * @param player the current Trader object
+	 */
+	public PortIO(Trader player) {
+
+<span class="nc" id="L24">		super(player);</span>
+<span class="nc" id="L25">		this.addCommand(&quot;Sail to another Island&quot;); // 0</span>
+<span class="nc" id="L26">		this.addCommand(&quot;Go to store&quot;); // 1</span>
+<span class="nc" id="L27">		this.addCommand(&quot;Repair ship&quot;); // 2</span>
+<span class="nc" id="L28">		this.addCommand(&quot;Upgrade cannons&quot;); // 3</span>
+<span class="nc" id="L29">		this.addCommand(&quot;View trading log&quot;); // 4</span>
+<span class="nc" id="L30">		this.addCommand(&quot;View ship details&quot;); // 5</span>
+<span class="nc" id="L31">		super.addCommand(&quot;Quit the game&quot;); // 6</span>
+
+<span class="nc" id="L33">	}</span>
+
+	/**
+	 * This method processes an input of a port command from users. It categorizes the
+	 * commands in attribute commandList with a switch statement and adds the
+	 * command matching users' input to attribute commandArguments. This method also
+	 * initializes a new command line interface object if necessary.
+	 * 
+	 * @param playerChoice an integer which matches a command in this interface
+	 */
+	@Override
+	public void processPlayerInput(int playerChoice) {
+
+<span class="nc" id="L46">		resetCommandArguments();</span>
+<span class="nc" id="L47">		String argument = null;</span>
+
+<span class="nc bnc" id="L49" title="All 8 branches missed.">		switch (playerChoice) {</span>
+		case 0: // sail
+
+<span class="nc" id="L52">			super.addCommandArgument(&quot;sail&quot;);</span>
+<span class="nc" id="L53">			Ship playerShip = getTrader().getOwndedShip();</span>
+<span class="nc" id="L54">			System.out.println(getTrader().getCurrentIsland().getRoutesString(playerShip));</span>
+<span class="nc" id="L55">			SailToIO sailTo = new SailToIO(getTrader());</span>
+<span class="nc" id="L56">			sailTo.readCommandArguments(&quot;Where do you wish to sail?&quot;);</span>
+<span class="nc" id="L57">			break;</span>
+
+		case 1: // visit store
+<span class="nc" id="L60">			super.addCommandArgument(&quot;store&quot;);</span>
+<span class="nc" id="L61">			break;</span>
+
+		case 2: // repair ship
+<span class="nc" id="L64">			super.addCommandArgument(&quot;repair&quot;);</span>
+<span class="nc" id="L65">			RepairIO repair = new RepairIO(getTrader());</span>
+<span class="nc" id="L66">			int repairCostPerDamage = super.getTrader().getCurrentIsland().getPort().getRepairCost();</span>
+<span class="nc" id="L67">			int currentDamage = super.getTrader().getOwndedShip().getDamage();</span>
+<span class="nc" id="L68">			int repairCost = currentDamage * repairCostPerDamage;</span>
+<span class="nc" id="L69">			repair.readCommandArguments(&quot;Hi, Captain! Wanna repair your ship?\n&quot; + &quot;Only &quot; + repairCostPerDamage</span>
+<span class="nc" id="L70">					+ &quot; coins for each damage.\n&quot; + &quot;It'll cost you &quot; + repairCost</span>
+<span class="nc" id="L71">					+ &quot; coins to fix all the cracks and holes.&quot;);</span>
+<span class="nc" id="L72">			break;</span>
+
+		case 3: // upgrade cannons
+<span class="nc" id="L75">			super.addCommandArgument(&quot;upgrade&quot;);</span>
+<span class="nc" id="L76">			setGettingTransactionQuantity(true);</span>
+<span class="nc" id="L77">			UpgradeIO upgrade = new UpgradeIO(getTrader());</span>
+<span class="nc" id="L78">			int upgradeCannonFee = super.getTrader().getCurrentIsland().getPort().getcannonCost();</span>
+<span class="nc" id="L79">			upgrade.readCommandArguments(</span>
+<span class="nc" id="L80">					&quot;Yo, Captain! How many cannons do you want?\n&quot; + upgradeCannonFee + &quot; coins for one.\n&quot;);</span>
+<span class="nc" id="L81">			setGettingTransactionQuantity(false);</span>
+<span class="nc" id="L82">			break;</span>
+			
+		case 4: // view trading logs
+<span class="nc" id="L85">			addCommandArgument(&quot;logs&quot;);</span>
+<span class="nc" id="L86">			addCommandArgument(null);</span>
+<span class="nc" id="L87">			break;</span>
+			
+		case 5: // view ship details
+<span class="nc" id="L90">			addCommandArgument(&quot;ship&quot;);</span>
+<span class="nc" id="L91">			addCommandArgument(null);</span>
+<span class="nc" id="L92">			break;</span>
+			
+		case 6: // quit game
+<span class="nc" id="L95">			super.addCommandArgument(&quot;quit&quot;);</span>
+			break;
+		}
+
+		// MZ: in case there's only one element in commandArguments
+		// as commandHandler always check the 2nd index of commandArguments
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (super.getCommandArguments().size() == 1) {</span>
+<span class="nc" id="L102">			super.addCommandArgument(argument);</span>
+		}
+
+<span class="nc" id="L105">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>

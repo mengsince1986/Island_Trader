@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Port.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">map</a> &gt; <span class="el_source">Port.java</span></div><h1>Port.java</h1><pre class="source lang-java linenums">package map;
+
+/**
+ * A class to represent the game's ports, where ship repairs and upgrades
+ * take place——one per {@link Island}.
+ * &lt;p&gt;
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ *
+ */
+public class Port {
+	
+	/**
+	 * the amount of money required to repair one unit of Ship damage
+	 * at the Port.
+	 */
+	private int repairCostPerDamage;
+	
+	/**
+	 * the amount of money required to install one extra cannon on a Ship at 
+	 * the Port.
+	 */
+	private int costPerCannon;
+	
+	/**
+	 * initialises a new Port to have the given {@link repairCostPerDamage} and 
+	 * {@link costPerCannon} values.
+	 * @param repairCost the amount required to repair one unit of Ship damage
+	 * @param cannonCost the amount required to install one extra cannon on a Ship
+	 */
+<span class="fc" id="L32">	public Port(int repairCost, int cannonCost) {</span>
+<span class="fc" id="L33">		this.repairCostPerDamage = repairCost;</span>
+<span class="fc" id="L34">		this.costPerCannon = cannonCost;</span>
+<span class="fc" id="L35">	}</span>
+	
+	/**
+	 * @return the amount required to repair one unit of Ship damage
+	 */
+	public int getRepairCost() {
+<span class="fc" id="L41">		return repairCostPerDamage;</span>
+	}
+	
+	/**
+	 * @return the amount required to install one extra cannon on a Ship
+	 */
+	public int getcannonCost() {
+<span class="fc" id="L48">		return costPerCannon;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>

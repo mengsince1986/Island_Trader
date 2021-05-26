@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SailToIO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">io</a> &gt; <span class="el_source">SailToIO.java</span></div><h1>SailToIO.java</h1><pre class="source lang-java linenums">package io;
+
+import java.util.*;
+import map.*;
+import trader.*;
+
+/**
+ * The SailToIO is an {@link IO} sub-class to create command line interface for the
+ * sailing command.
+ * &lt;p&gt;
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
+
+public class SailToIO extends IO {
+	
+	/**
+	 * Attribute routes stores an ArrayList of {@link Route} objects which are
+	 * available for sailing to.
+	 */
+	private ArrayList&lt;Route&gt; routes;
+
+	/**
+	 * This constructor sets the player attribute with the current Trader object and
+	 * adds all the sailing command options to attribute commandsList. 
+	 * @param player the current Trader object
+	 */
+	public SailToIO(Trader player) {
+<span class="nc" id="L30">		super(player);</span>
+<span class="nc" id="L31">		this.routes = getTrader().getCurrentIsland().getRoutes();</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">		for (Route route : routes) {</span>
+<span class="nc" id="L33">			this.addCommand(route.getDest().getName());;</span>
+		}
+<span class="nc" id="L35">		addCommand(&quot;cancel&quot;);</span>
+<span class="nc" id="L36">	}</span>
+	
+	/**
+	 * This method processes an input of sailing command from users and adds the
+	 * command matching users' input to attribute commandArguments.
+	 * 
+	 * @param playerChoice an integer which matches a command in this interface
+	 */
+	@Override
+	public void processPlayerInput(int playerChoice) {
+		
+<span class="nc" id="L47">		String argument = null;</span>
+<span class="nc" id="L48">	    argument = getCommandsList().get(playerChoice);</span>
+<span class="nc" id="L49">		super.addCommandArgument(argument);</span>
+		
+<span class="nc" id="L51">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>

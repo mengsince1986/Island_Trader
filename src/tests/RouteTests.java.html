@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>RouteTests.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">RouteTests.java</span></div><h1>RouteTests.java</h1><pre class="source lang-java linenums">package tests;
+
+import map.Route; import map.Island;
+import events.*;
+import ships.*;
+import trader.Trader;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
+
+
+
+<span class="fc" id="L19">class RouteTests {</span>
+	
+<span class="fc" id="L21">	static Island island1 = new Island(&quot;Island1&quot;);</span>
+<span class="fc" id="L22">	static Island island2 = new Island(&quot;Island2&quot;);</span>
+<span class="fc" id="L23">	static Route route1 = new Route(10, &quot;Looks dicey&quot;);</span>
+<span class="fc" id="L24">	static Route route2 = new Route(10, &quot;Looks safe&quot;);</span>
+<span class="fc" id="L25">	static Ship normalShip = new Ship(&quot;Redcoasts&quot;, 15, 2, 1500, 8, 75, &quot;normal&quot;);</span>
+<span class="fc" id="L26">	static Ship fastShip = new Ship(&quot;Black Pearl&quot;, 10, 2, 1500, 6, 70, &quot;fast&quot;);</span>
+<span class="fc" id="L27">	static Ship slowShip = new Ship(&quot;Endeavour&quot;, 20, 2, 1000, 18, 90, &quot;slow&quot;);</span>
+<span class="fc" id="L28">	static Trader testTrader = new Trader(15, &quot;Test Trader&quot;, island1);</span>
+	
+	@BeforeAll
+	static void setUpBeforeClass() throws Exception {
+		
+<span class="fc" id="L33">		route1.setSource(island1);</span>
+<span class="fc" id="L34">		route1.setDest(island2);</span>
+<span class="fc" id="L35">		route2.setSource(island2);</span>
+<span class="fc" id="L36">		route2.setDest(island1);</span>
+			
+<span class="fc" id="L38">		PirateEvent route1Pirates = new PirateEvent(10, 10, 100);</span>
+<span class="fc" id="L39">		route1.addEvent(route1Pirates);</span>
+<span class="fc" id="L40">		WeatherEvent route1Weather = new WeatherEvent(10);</span>
+<span class="fc" id="L41">		route1.addEvent(route1Weather);</span>
+<span class="fc" id="L42">		RescueEvent route1Rescue = new RescueEvent(10, 100);</span>
+<span class="fc" id="L43">		route1.addEvent(route1Rescue);</span>
+		
+<span class="fc" id="L45">		island1.addRoute(route1);</span>
+<span class="fc" id="L46">		island2.addRoute(route2);</span>
+		
+<span class="fc" id="L48">		testTrader.setOwnedShip(normalShip);</span>
+<span class="fc" id="L49">		normalShip.setCaptain(testTrader);</span>
+		
+<span class="fc" id="L51">	}</span>
+		
+		
+					
+
+	@AfterAll
+	static void tearDownAfterClass() throws Exception {
+<span class="fc" id="L58">	}</span>
+
+	@BeforeEach
+	void setUp() throws Exception {
+<span class="fc" id="L62">	}</span>
+
+	@AfterEach
+	void tearDown() throws Exception {
+<span class="fc" id="L66">	}</span>
+	
+	@RepeatedTest(100)
+	void eventTriggerTest() {
+<span class="fc" id="L70">		PirateEvent route1Pirates = (PirateEvent)route1.getEvents().get(0);</span>
+<span class="fc" id="L71">		WeatherEvent route1Weather = (WeatherEvent)route1.getEvents().get(1);</span>
+<span class="fc" id="L72">		route1Weather.setChanceLevel(0);</span>
+		
+<span class="fc" id="L74">		assertNotEquals(route1Pirates.getTriggered(), route1Weather.getTriggered());</span>
+		
+<span class="fc" id="L76">	}</span>
+	
+	@RepeatedTest(100)
+	void fightOutcomeTest() {
+<span class="fc" id="L80">		normalShip.setCannons(0);</span>
+		
+<span class="fc" id="L82">		PirateEvent route1Pirates = (PirateEvent)route1.getEvents().get(0);</span>
+		
+<span class="fc" id="L84">		assertEquals(PirateScenarios.FOUGHT_AND_LOST, route1Pirates.getFightOutcome(normalShip, true));</span>
+<span class="fc" id="L85">	}</span>
+	
+	@RepeatedTest(100)
+	void normalShipPirateTest() {
+<span class="fc" id="L89">		PirateEvent route1Pirates = (PirateEvent)route1.getEvents().get(0);</span>
+		
+<span class="fc" id="L91">		normalShip.setCannons(0);</span>
+		
+<span class="fc" id="L93">		PirateScenarios normalShipOutcome = route1Pirates.getChaseOutcome(normalShip);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		assertEquals(true, (normalShipOutcome == PirateScenarios.FLED_AND_ESCAPED |</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">				normalShipOutcome == PirateScenarios.FLED_AND_LOST));</span>
+		
+<span class="fc" id="L97">	}</span>
+	
+	@RepeatedTest(100)
+	void fastShipPirateTest() {
+<span class="fc" id="L101">		PirateEvent route1Pirates = (PirateEvent)route1.getEvents().get(0);</span>
+		
+<span class="fc" id="L103">		fastShip.setCannons(0);</span>
+		
+<span class="fc" id="L105">		PirateScenarios fastShipOutcome = route1Pirates.getChaseOutcome(fastShip);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		assertEquals(true, (fastShipOutcome == PirateScenarios.FLED_AND_ESCAPED |</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">				fastShipOutcome == PirateScenarios.FLED_AND_LOST));</span>
+<span class="fc" id="L108">	}</span>
+	
+	@RepeatedTest(100)
+	void slowShipPirateTest() {
+<span class="fc" id="L112">		PirateEvent route1Pirates = (PirateEvent)route1.getEvents().get(0);</span>
+
+<span class="fc" id="L114">		slowShip.setCannons(0);</span>
+
+<span class="fc" id="L116">		PirateScenarios slowShipOutcome = route1Pirates.getChaseOutcome(slowShip);</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		assertEquals(true, (slowShipOutcome == PirateScenarios.FLED_AND_ESCAPED |</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">				slowShipOutcome == PirateScenarios.FLED_AND_LOST));</span>
+<span class="fc" id="L119">	}</span>
+	
+	@RepeatedTest(100)
+	void weatherTest() {
+<span class="fc" id="L123">		WeatherEvent route1Weather = (WeatherEvent)route1.getEvents().get(1);</span>
+		
+<span class="fc" id="L125">		route1Weather.processImpact(testTrader);</span>
+		
+<span class="fc" id="L127">		Ship testShip = testTrader.getOwndedShip();</span>
+<span class="fc" id="L128">		assertNotEquals(testShip.getDefaultDurability(), testShip.getDurability());</span>
+		
+<span class="fc" id="L130">		route1Weather.setChanceLevel(0);</span>
+<span class="fc" id="L131">		testShip.setDurability(testShip.getDefaultDurability());</span>
+		
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (route1Weather.getTriggered()) {</span>
+<span class="nc" id="L134">			route1Weather.processImpact(testTrader);</span>
+		}
+<span class="fc" id="L136">		assertEquals(testShip.getDefaultDurability(), testShip.getDurability());</span>
+		
+		
+<span class="fc" id="L139">	}</span>
+	
+	@RepeatedTest(100)
+	void rescueTest() {
+<span class="fc" id="L143">		RescueEvent route1Rescue = (RescueEvent)route1.getEvents().get(2);</span>
+		
+<span class="fc" id="L145">		route1Rescue.processImpact(testTrader);</span>
+		
+<span class="fc" id="L147">		assertNotEquals(testTrader.getStartingMoney(), testTrader.getOwnedMoney());</span>
+		
+<span class="fc" id="L149">		route1Rescue.setChanceLevel(0);</span>
+<span class="fc" id="L150">		testTrader.setOwnedMoney(testTrader.getStartingMoney());</span>
+		
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (route1Rescue.getTriggered()) {</span>
+<span class="nc" id="L153">			route1Rescue.processImpact(testTrader);</span>
+		}
+		
+<span class="fc" id="L156">		assertEquals(testTrader.getStartingMoney(), testTrader.getOwnedMoney());</span>
+<span class="fc" id="L157">	}</span>
+	
+	@Test
+	void noTimeTest() {
+<span class="fc" id="L161">		normalShip.sailTo(island2);</span>
+		
+<span class="fc" id="L163">		assertEquals(true, testTrader.noTimeToSail());</span>
+<span class="fc" id="L164">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>

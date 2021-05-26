@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>StoreWindow.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">gui</a> &gt; <span class="el_source">StoreWindow.java</span></div><h1>StoreWindow.java</h1><pre class="source lang-java linenums">package gui;
+
+import javax.swing.JFrame;
+
+import main.GUIGameEnvironment;
+
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import javax.swing.JTextArea;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.JSeparator;
+import javax.swing.JRadioButton;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Enumeration;
+
+import javax.swing.JSlider;
+import javax.swing.event.ChangeListener;
+
+import items.Item;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.JScrollPane;
+
+/**
+ * The StoreWindow is one of the the GUI interface objects for running the game.
+ * It provides all the available command options at store, gets users choices
+ * and calls the related methods through the attribute manager -
+ * {@link GUIGameEnvironment} object - to change the state of the game.
+ * &lt;p&gt;
+ * The StoreWindow also updates the status bar and prints the report after the
+ * implementation of each command.
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
+
+public class StoreWindow {
+
+	/**
+	 * Attribute storeFrame stores the Frame object of this window.
+	 */
+	private JFrame storeFrame;
+
+	/**
+	 * Attribute saleItemButtonGroup stores a ButtonGroup object including all the
+	 * RadioButtons with the name of the available items on sale.
+	 */
+<span class="nc" id="L56">	private final ButtonGroup saleItembuttonGroup = new ButtonGroup();</span>
+
+	/**
+	 * Attribute purchaseItemButtonGroup stores a ButtonGroup object including all
+	 * the RadioButtons with the name of the available items to purchase.
+	 */
+<span class="nc" id="L62">	private final ButtonGroup purchaseItembuttonGroup = new ButtonGroup();</span>
+
+	/**
+	 * Attribute manager is the {@link GUIGameEnvironment} object which maintains
+	 * the state of the program and makes instances of window classes.
+	 */
+	private GUIGameEnvironment manager;
+
+	// This static main method is only used for initializing this window frame
+	// individually for testing
+	/*
+	 * public static void main(String[] args) { EventQueue.invokeLater(new
+	 * Runnable() { public void run() { try { StoreWindow window = new
+	 * StoreWindow(); window.frame.setVisible(true); } catch (Exception e) {
+	 * e.printStackTrace(); } } }); }
+	 */
+
+	/**
+	 * This constructor sets the value of manager attribute, initializes this Frame
+	 * object and sets this frame to be visible.
+	 * 
+	 * @param incomingManager the current {@link GUIGameEnvironment} object
+	 */
+<span class="nc" id="L85">	public StoreWindow(GUIGameEnvironment incomingManager) {</span>
+<span class="nc" id="L86">		this.manager = incomingManager;</span>
+<span class="nc" id="L87">		initialize();</span>
+<span class="nc" id="L88">		storeFrame.setVisible(true);</span>
+<span class="nc" id="L89">	}</span>
+
+	/**
+	 * This method disposes this window frame.
+	 */
+	public void closeStoreWindow() {
+<span class="nc" id="L95">		storeFrame.dispose();</span>
+<span class="nc" id="L96">	}</span>
+
+	/**
+	 * This method closes this window frame and launches the PortWindow frame by
+	 * calling the closeStoreWindow method from manager which is the current
+	 * {@link GUIGameEnvironment} object.
+	 */
+	public void finishedStoreWindow() {
+<span class="nc" id="L104">		this.manager.closeStoreWindow(this);</span>
+<span class="nc" id="L105">	}</span>
+
+	/**
+	 * This method initializes the contents of the frame.
+	 */
+	private void initialize() {
+<span class="nc" id="L111">		storeFrame = new JFrame();</span>
+<span class="nc" id="L112">		storeFrame.setTitle(&quot;Island Trader - STORE&quot;);</span>
+<span class="nc" id="L113">		storeFrame.getContentPane().setFont(new Font(&quot;Dialog&quot;, Font.PLAIN, 14));</span>
+<span class="nc" id="L114">		storeFrame.setBounds(100, 100, 686, 795);</span>
+<span class="nc" id="L115">		storeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L116">		storeFrame.getContentPane().setLayout(null);</span>
+
+<span class="nc" id="L118">		JLabel storeLabel = new JLabel(&quot;Store&quot;);</span>
+<span class="nc" id="L119">		storeLabel.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 18));</span>
+<span class="nc" id="L120">		storeLabel.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L121">		storeLabel.setBounds(295, 12, 70, 15);</span>
+<span class="nc" id="L122">		storeFrame.getContentPane().add(storeLabel);</span>
+
+		// Report text area
+<span class="nc" id="L125">		JTextArea reportText = new JTextArea();</span>
+<span class="nc" id="L126">		reportText.setEditable(false);</span>
+<span class="nc" id="L127">		reportText.setText(&quot;Trading report&quot;);</span>
+<span class="nc" id="L128">		reportText.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L129">		reportText.setLineWrap(true);</span>
+<span class="nc" id="L130">		reportText.setWrapStyleWord(true);</span>
+<span class="nc" id="L131">		reportText.setBounds(40, 127, 600, 559);</span>
+<span class="nc" id="L132">		storeFrame.getContentPane().add(reportText);</span>
+
+		// update store report when initializing
+<span class="nc" id="L135">		String report = &quot;Welcome to the store, Captain!\n\n&quot;;</span>
+<span class="nc" id="L136">		report += manager.getListForSale() + &quot;\n\n&quot;;</span>
+<span class="nc" id="L137">		report += &quot;******************************\n\n&quot;;</span>
+<span class="nc" id="L138">		report += manager.getListToPurchase();</span>
+<span class="nc" id="L139">		reportText.setText(report);</span>
+		// ======================================
+
+<span class="nc" id="L142">		JScrollPane scrollPane = new JScrollPane(reportText);</span>
+<span class="nc" id="L143">		scrollPane.setBounds(40, 116, 600, 300);</span>
+<span class="nc" id="L144">		storeFrame.getContentPane().add(scrollPane);</span>
+<span class="nc" id="L145">		javax.swing.SwingUtilities.invokeLater(new Runnable() {</span>
+			public void run() {
+<span class="nc" id="L147">				scrollPane.getVerticalScrollBar().setValue(0);</span>
+<span class="nc" id="L148">			}</span>
+		});
+
+<span class="nc" id="L151">		JLabel NameLabel = new JLabel(&quot;Name: &quot;);</span>
+<span class="nc" id="L152">		NameLabel.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L153">		NameLabel.setBounds(59, 58, 70, 15);</span>
+<span class="nc" id="L154">		storeFrame.getContentPane().add(NameLabel);</span>
+
+<span class="nc" id="L156">		JLabel nameDisplayLabel = new JLabel(&quot;&lt;dynamic&gt;&quot;);</span>
+<span class="nc" id="L157">		nameDisplayLabel.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L158">		nameDisplayLabel.setBounds(128, 58, 200, 15);</span>
+<span class="nc" id="L159">		storeFrame.getContentPane().add(nameDisplayLabel);</span>
+
+<span class="nc" id="L161">		JLabel DaysLabel = new JLabel(&quot;Remaining Days:&quot;);</span>
+<span class="nc" id="L162">		DaysLabel.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L163">		DaysLabel.setBounds(348, 58, 150, 15);</span>
+<span class="nc" id="L164">		storeFrame.getContentPane().add(DaysLabel);</span>
+
+<span class="nc" id="L166">		JLabel DaysDisplayLabel = new JLabel(&quot;0&quot;);</span>
+<span class="nc" id="L167">		DaysDisplayLabel.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L168">		DaysDisplayLabel.setBounds(498, 58, 140, 15);</span>
+<span class="nc" id="L169">		storeFrame.getContentPane().add(DaysDisplayLabel);</span>
+
+<span class="nc" id="L171">		JLabel moneyLabel = new JLabel(&quot;Money: &quot;);</span>
+<span class="nc" id="L172">		moneyLabel.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L173">		moneyLabel.setBounds(59, 89, 70, 15);</span>
+<span class="nc" id="L174">		storeFrame.getContentPane().add(moneyLabel);</span>
+
+<span class="nc" id="L176">		JLabel moneyDisplayLabel = new JLabel(&quot;0&quot;);</span>
+<span class="nc" id="L177">		moneyDisplayLabel.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L178">		moneyDisplayLabel.setBounds(128, 89, 140, 15);</span>
+<span class="nc" id="L179">		storeFrame.getContentPane().add(moneyDisplayLabel);</span>
+
+<span class="nc" id="L181">		JLabel locationLabel = new JLabel(&quot;Location: &quot;);</span>
+<span class="nc" id="L182">		locationLabel.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L183">		locationLabel.setBounds(348, 89, 85, 15);</span>
+<span class="nc" id="L184">		storeFrame.getContentPane().add(locationLabel);</span>
+
+<span class="nc" id="L186">		JLabel locationDisplayLabel = new JLabel(&quot;&lt;dynamic&gt;&quot;);</span>
+<span class="nc" id="L187">		locationDisplayLabel.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L188">		locationDisplayLabel.setBounds(438, 89, 200, 15);</span>
+<span class="nc" id="L189">		storeFrame.getContentPane().add(locationDisplayLabel);</span>
+
+		// update status labels
+<span class="nc" id="L192">		String name = manager.getTraderName();</span>
+<span class="nc" id="L193">		int days = manager.getRemainingDays();</span>
+<span class="nc" id="L194">		int money = manager.getOwnedMoney();</span>
+<span class="nc" id="L195">		String islandLocation = manager.getCurrentIslandName();</span>
+
+<span class="nc" id="L197">		nameDisplayLabel.setText(name);</span>
+<span class="nc" id="L198">		DaysDisplayLabel.setText(String.valueOf(days));</span>
+<span class="nc" id="L199">		moneyDisplayLabel.setText(String.valueOf(money));</span>
+<span class="nc" id="L200">		locationDisplayLabel.setText(islandLocation);</span>
+		// ====================
+
+		// Sale item radio buttons
+<span class="nc" id="L204">		JRadioButton saleItem1Button = new JRadioButton(&quot;N/A&quot;);</span>
+<span class="nc" id="L205">		saleItem1Button.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L206">		saleItembuttonGroup.add(saleItem1Button);</span>
+<span class="nc" id="L207">		saleItem1Button.setSelected(true);</span>
+<span class="nc" id="L208">		saleItem1Button.setBounds(198, 442, 120, 23);</span>
+<span class="nc" id="L209">		storeFrame.getContentPane().add(saleItem1Button);</span>
+
+<span class="nc" id="L211">		JRadioButton saleItem2Button = new JRadioButton(&quot;N/A&quot;);</span>
+<span class="nc" id="L212">		saleItem2Button.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L213">		saleItembuttonGroup.add(saleItem2Button);</span>
+<span class="nc" id="L214">		saleItem2Button.setBounds(339, 442, 120, 23);</span>
+<span class="nc" id="L215">		storeFrame.getContentPane().add(saleItem2Button);</span>
+
+<span class="nc" id="L217">		JRadioButton saleItem3Button = new JRadioButton(&quot;N/A&quot;);</span>
+<span class="nc" id="L218">		saleItem3Button.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L219">		saleItembuttonGroup.add(saleItem3Button);</span>
+<span class="nc" id="L220">		saleItem3Button.setBounds(481, 442, 120, 23);</span>
+<span class="nc" id="L221">		storeFrame.getContentPane().add(saleItem3Button);</span>
+
+		// update sale list when initializing
+<span class="nc" id="L224">		ArrayList&lt;String&gt; saleItems = new ArrayList&lt;String&gt;();</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">		for (Item item : manager.getItemsToSell()) {</span>
+<span class="nc" id="L226">			saleItems.add(item.getName());</span>
+		}
+
+<span class="nc" id="L229">		int i = 0;</span>
+<span class="nc" id="L230">		Enumeration&lt;AbstractButton&gt; saleItemButtons = saleItembuttonGroup.getElements();</span>
+<span class="nc bnc" id="L231" title="All 4 branches missed.">		while (i &lt; saleItems.size() &amp;&amp; saleItemButtons.hasMoreElements()) {</span>
+<span class="nc" id="L232">			JRadioButton saleItemButton = (JRadioButton) saleItemButtons.nextElement();</span>
+
+<span class="nc" id="L234">			saleItemButton.setText(saleItems.get(i));</span>
+
+<span class="nc" id="L236">			i += 1;</span>
+		}
+		// ===================================
+
+<span class="nc" id="L240">		JSeparator separator = new JSeparator();</span>
+<span class="nc" id="L241">		separator.setBounds(40, 477, 600, 2);</span>
+<span class="nc" id="L242">		storeFrame.getContentPane().add(separator);</span>
+
+		// To purchase item radio buttons
+<span class="nc" id="L245">		JRadioButton purchaseItem1Button = new JRadioButton(&quot;N/A&quot;);</span>
+<span class="nc" id="L246">		purchaseItem1Button.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L247">		purchaseItembuttonGroup.add(purchaseItem1Button);</span>
+<span class="nc" id="L248">		purchaseItem1Button.setSelected(true);</span>
+<span class="nc" id="L249">		purchaseItem1Button.setBounds(198, 495, 120, 23);</span>
+<span class="nc" id="L250">		storeFrame.getContentPane().add(purchaseItem1Button);</span>
+
+<span class="nc" id="L252">		JRadioButton purchaseItem2Button = new JRadioButton(&quot;N/A&quot;);</span>
+<span class="nc" id="L253">		purchaseItem2Button.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L254">		purchaseItembuttonGroup.add(purchaseItem2Button);</span>
+<span class="nc" id="L255">		purchaseItem2Button.setBounds(339, 495, 120, 23);</span>
+<span class="nc" id="L256">		storeFrame.getContentPane().add(purchaseItem2Button);</span>
+
+<span class="nc" id="L258">		JRadioButton purchaseItem3Button = new JRadioButton(&quot;N/A&quot;);</span>
+<span class="nc" id="L259">		purchaseItem3Button.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L260">		purchaseItembuttonGroup.add(purchaseItem3Button);</span>
+<span class="nc" id="L261">		purchaseItem3Button.setBounds(481, 495, 120, 23);</span>
+<span class="nc" id="L262">		storeFrame.getContentPane().add(purchaseItem3Button);</span>
+
+		// update purchase list when initializing
+<span class="nc" id="L265">		ArrayList&lt;String&gt; purchaseItems = new ArrayList&lt;String&gt;();</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">		for (Item item : manager.getSellableTraderItems()) {</span>
+<span class="nc" id="L267">			purchaseItems.add(item.getName());</span>
+		}
+
+<span class="nc" id="L270">		int j = 0;</span>
+<span class="nc" id="L271">		Enumeration&lt;AbstractButton&gt; purchaseItemButtons = purchaseItembuttonGroup.getElements();</span>
+<span class="nc bnc" id="L272" title="All 4 branches missed.">		while (j &lt; purchaseItems.size() &amp;&amp; purchaseItemButtons.hasMoreElements()) {</span>
+<span class="nc" id="L273">			JRadioButton purchaseItemButton = (JRadioButton) purchaseItemButtons.nextElement();</span>
+
+<span class="nc" id="L275">			purchaseItemButton.setText(purchaseItems.get(j));</span>
+
+<span class="nc" id="L277">			j += 1;</span>
+		}
+
+<span class="nc" id="L280">		JSeparator separator_1 = new JSeparator();</span>
+<span class="nc" id="L281">		separator_1.setBounds(40, 530, 600, 2);</span>
+<span class="nc" id="L282">		storeFrame.getContentPane().add(separator_1);</span>
+		// ===================================
+
+		// Trading quantity slider
+<span class="nc" id="L286">		JSlider tradeQuantitySlider = new JSlider();</span>
+
+<span class="nc" id="L288">		tradeQuantitySlider.setValue(15);</span>
+<span class="nc" id="L289">		tradeQuantitySlider.setSnapToTicks(true);</span>
+<span class="nc" id="L290">		tradeQuantitySlider.setMajorTickSpacing(1);</span>
+<span class="nc" id="L291">		tradeQuantitySlider.setMinimum(1);</span>
+		// set max of slider to be the max capacity of the ship
+<span class="nc" id="L293">		tradeQuantitySlider.setMaximum(manager.getShip().getDefaultCapacity());</span>
+<span class="nc" id="L294">		tradeQuantitySlider.setBounds(201, 550, 400, 20);</span>
+<span class="nc" id="L295">		storeFrame.getContentPane().add(tradeQuantitySlider);</span>
+
+<span class="nc" id="L297">		JLabel tradeQuantityLable = new JLabel(&quot;Trading Quantity :&quot;);</span>
+<span class="nc" id="L298">		tradeQuantityLable.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L299">		tradeQuantityLable.setLabelFor(tradeQuantitySlider);</span>
+<span class="nc" id="L300">		tradeQuantityLable.setBounds(40, 547, 150, 20);</span>
+<span class="nc" id="L301">		storeFrame.getContentPane().add(tradeQuantityLable);</span>
+
+<span class="nc" id="L303">		JLabel QuantityLabel = new JLabel(&quot;N/A&quot;);</span>
+<span class="nc" id="L304">		QuantityLabel.setLabelFor(tradeQuantitySlider);</span>
+<span class="nc" id="L305">		QuantityLabel.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="nc" id="L306">		QuantityLabel.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L307">		QuantityLabel.setBounds(371, 573, 70, 20);</span>
+<span class="nc" id="L308">		storeFrame.getContentPane().add(QuantityLabel);</span>
+<span class="nc" id="L309">		QuantityLabel.setText(String.valueOf(tradeQuantitySlider.getValue()));</span>
+
+<span class="nc" id="L311">		tradeQuantitySlider.addChangeListener(new ChangeListener() {</span>
+			public void stateChanged(ChangeEvent e) {
+<span class="nc" id="L313">				QuantityLabel.setText(String.valueOf(tradeQuantitySlider.getValue()));</span>
+<span class="nc" id="L314">			}</span>
+		});
+
+		// Go to port button
+<span class="nc" id="L318">		JButton portButton = new JButton(&quot;Go to Port&quot;);</span>
+<span class="nc" id="L319">		portButton.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L320">		portButton.addMouseListener(new MouseAdapter() {</span>
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+<span class="nc" id="L324">				finishedStoreWindow();</span>
+
+<span class="nc" id="L326">			}</span>
+		});
+
+		// But button
+<span class="nc" id="L330">		JButton buyButton = new JButton(&quot;Buy&quot;);</span>
+<span class="nc" id="L331">		buyButton.addMouseListener(new MouseAdapter() {</span>
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				// get selected sale item
+<span class="nc" id="L336">				String saleItemName = &quot;&quot;;</span>
+
+<span class="nc" id="L338">				Enumeration&lt;AbstractButton&gt; items = saleItembuttonGroup.getElements();</span>
+<span class="nc bnc" id="L339" title="All 2 branches missed.">				while (items.hasMoreElements()) {</span>
+<span class="nc" id="L340">					JRadioButton item = (JRadioButton) items.nextElement();</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">					if (item.isSelected()) {</span>
+<span class="nc" id="L342">						saleItemName = item.getText();</span>
+					}
+				}
+
+				// get quantity
+<span class="nc" id="L347">				int quantity = tradeQuantitySlider.getValue();</span>
+
+				// call manager to implement buy method
+<span class="nc bnc" id="L350" title="All 2 branches missed.">				if (saleItemName == &quot;N/A&quot;) {</span>
+
+<span class="nc" id="L352">					reportText.setText(&quot;The item you choose does not exist,\n&quot; + &quot;please choose your item again.&quot;);</span>
+
+<span class="nc" id="L354">				} else {</span>
+
+					// call Trader.buy() through manager
+<span class="nc" id="L357">					String report = manager.buy(saleItemName, quantity);</span>
+<span class="nc" id="L358">					reportText.setText(report);</span>
+
+					// update sell radio buttons
+<span class="nc" id="L361">					ArrayList&lt;String&gt; purchaseItems = new ArrayList&lt;String&gt;();</span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">					for (Item item : manager.getSellableTraderItems()) {</span>
+<span class="nc" id="L363">						purchaseItems.add(item.getName());</span>
+					}
+
+<span class="nc" id="L366">					int j = 0;</span>
+<span class="nc" id="L367">					Enumeration&lt;AbstractButton&gt; purchaseItemButtons = purchaseItembuttonGroup.getElements();</span>
+<span class="nc bnc" id="L368" title="All 4 branches missed.">					while (j &lt; purchaseItems.size() &amp;&amp; purchaseItemButtons.hasMoreElements()) {</span>
+<span class="nc" id="L369">						JRadioButton purchaseItemButton = (JRadioButton) purchaseItemButtons.nextElement();</span>
+
+<span class="nc" id="L371">						purchaseItemButton.setText(purchaseItems.get(j));</span>
+
+<span class="nc" id="L373">						j += 1;</span>
+					}
+
+					// update status labels
+<span class="nc" id="L377">					int money = manager.getOwnedMoney();</span>
+<span class="nc" id="L378">					moneyDisplayLabel.setText(String.valueOf(money));</span>
+
+				}
+
+<span class="nc" id="L382">			}</span>
+		});
+<span class="nc" id="L384">		buyButton.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L385">		buyButton.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L387">			}</span>
+		});
+<span class="nc" id="L389">		buyButton.setBackground(new Color(204, 153, 102));</span>
+<span class="nc" id="L390">		buyButton.setBounds(40, 440, 117, 25);</span>
+<span class="nc" id="L391">		storeFrame.getContentPane().add(buyButton);</span>
+
+		// Sell button
+<span class="nc" id="L394">		JButton sellButton = new JButton(&quot;Sell&quot;);</span>
+<span class="nc" id="L395">		sellButton.addMouseListener(new MouseAdapter() {</span>
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				// get selected purchase item
+<span class="nc" id="L400">				String purchaseItemName = &quot;&quot;;</span>
+<span class="nc" id="L401">				JRadioButton chosenItem = null;</span>
+
+<span class="nc" id="L403">				Enumeration&lt;AbstractButton&gt; items = purchaseItembuttonGroup.getElements();</span>
+<span class="nc bnc" id="L404" title="All 2 branches missed.">				while (items.hasMoreElements()) {</span>
+<span class="nc" id="L405">					JRadioButton item = (JRadioButton) items.nextElement();</span>
+<span class="nc bnc" id="L406" title="All 2 branches missed.">					if (item.isSelected()) {</span>
+<span class="nc" id="L407">						purchaseItemName = item.getText();</span>
+<span class="nc" id="L408">						chosenItem = item;</span>
+					}
+				}
+
+				// get quantity
+<span class="nc" id="L413">				int quantity = tradeQuantitySlider.getValue();</span>
+
+				// call manager to implement sell method
+<span class="nc bnc" id="L416" title="All 2 branches missed.">				if (purchaseItemName == &quot;N/A&quot;) {</span>
+
+<span class="nc" id="L418">					reportText.setText(&quot;The item you choose does not exist,\n&quot; + &quot;please choose your item again.&quot;);</span>
+
+<span class="nc" id="L420">				} else {</span>
+
+					// call Trader.sell() method through manager
+<span class="nc" id="L423">					String report = manager.sell(purchaseItemName, quantity);</span>
+<span class="nc" id="L424">					reportText.setText(report);</span>
+
+					// update chosenItem
+					// set to &quot;N/A&quot; if Trader sold all of this item from cargos
+<span class="nc" id="L428">					ArrayList&lt;String&gt; purchaseItems = new ArrayList&lt;String&gt;();</span>
+<span class="nc bnc" id="L429" title="All 2 branches missed.">					for (Item item : manager.getSellableTraderItems()) {</span>
+<span class="nc" id="L430">						purchaseItems.add(item.getName());</span>
+					}
+
+<span class="nc bnc" id="L433" title="All 2 branches missed.">					if (!purchaseItems.contains(chosenItem.getText())) {</span>
+<span class="nc" id="L434">						chosenItem.setText(&quot;N/A&quot;);</span>
+					}
+
+					// update status labels
+<span class="nc" id="L438">					int money = manager.getOwnedMoney();</span>
+<span class="nc" id="L439">					moneyDisplayLabel.setText(String.valueOf(money));</span>
+				}
+
+<span class="nc" id="L442">			}</span>
+		});
+<span class="nc" id="L444">		sellButton.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L445">		sellButton.setBackground(new Color(204, 153, 102));</span>
+<span class="nc" id="L446">		sellButton.setBounds(40, 493, 117, 25);</span>
+<span class="nc" id="L447">		storeFrame.getContentPane().add(sellButton);</span>
+
+<span class="nc" id="L449">		portButton.setBounds(523, 640, 117, 25);</span>
+<span class="nc" id="L450">		storeFrame.getContentPane().add(portButton);</span>
+
+		// View Store Button
+<span class="nc" id="L453">		JButton viewStoreButton = new JButton(&quot;Store Trading List&quot;);</span>
+<span class="nc" id="L454">		viewStoreButton.setBackground(new Color(204, 153, 102));</span>
+<span class="nc" id="L455">		viewStoreButton.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L457">			}</span>
+		});
+<span class="nc" id="L459">		viewStoreButton.addMouseListener(new MouseAdapter() {</span>
+			@Override
+			public void mouseClicked(MouseEvent e) {
+<span class="nc" id="L462">				String report = &quot;Following is our trading list.\n\n&quot;;</span>
+<span class="nc" id="L463">				report += manager.getListForSale() + &quot;\n\n&quot;;</span>
+<span class="nc" id="L464">				report += &quot;******************************\n\n&quot;;</span>
+<span class="nc" id="L465">				report += manager.getListToPurchase();</span>
+<span class="nc" id="L466">				reportText.setText(report);</span>
+
+				// set scroll bar to top
+<span class="nc" id="L469">				javax.swing.SwingUtilities.invokeLater(new Runnable() {</span>
+					public void run() {
+<span class="nc" id="L471">						scrollPane.getVerticalScrollBar().setValue(0);</span>
+<span class="nc" id="L472">					}</span>
+				});
+<span class="nc" id="L474">			}</span>
+		});
+<span class="nc" id="L476">		viewStoreButton.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L477">		viewStoreButton.setBounds(40, 640, 200, 25);</span>
+<span class="nc" id="L478">		storeFrame.getContentPane().add(viewStoreButton);</span>
+
+		// View trading logs button
+<span class="nc" id="L481">		JButton viewTradingLogsButton = new JButton(&quot;View Trading Logs&quot;);</span>
+<span class="nc" id="L482">		viewTradingLogsButton.setBackground(new Color(204, 153, 102));</span>
+<span class="nc" id="L483">		viewTradingLogsButton.addMouseListener(new MouseAdapter() {</span>
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+<span class="nc" id="L487">				String report = manager.getTradingLogsDescription();</span>
+<span class="nc" id="L488">				reportText.setText(report);</span>
+
+				// set scroll bar to top
+<span class="nc" id="L491">				javax.swing.SwingUtilities.invokeLater(new Runnable() {</span>
+					public void run() {
+<span class="nc" id="L493">						scrollPane.getVerticalScrollBar().setValue(0);</span>
+<span class="nc" id="L494">					}</span>
+				});
+<span class="nc" id="L496">			}</span>
+		});
+<span class="nc" id="L498">		viewTradingLogsButton.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L499">		viewTradingLogsButton.setBounds(40, 689, 200, 25);</span>
+<span class="nc" id="L500">		storeFrame.getContentPane().add(viewTradingLogsButton);</span>
+
+		// View Ship cargos button
+<span class="nc" id="L503">		JButton viewShipCargoesButton = new JButton(&quot;View Ship Cargos&quot;);</span>
+<span class="nc" id="L504">		viewShipCargoesButton.addMouseListener(new MouseAdapter() {</span>
+			@Override
+			public void mouseClicked(MouseEvent e) {
+<span class="nc" id="L507">				String report = &quot;&quot;;</span>
+<span class="nc" id="L508">				report += manager.getCargosDescription();</span>
+<span class="nc" id="L509">				reportText.setText(report);</span>
+
+				// set scroll bar to top
+<span class="nc" id="L512">				javax.swing.SwingUtilities.invokeLater(new Runnable() {</span>
+					public void run() {
+<span class="nc" id="L514">						scrollPane.getVerticalScrollBar().setValue(0);</span>
+<span class="nc" id="L515">					}</span>
+				});
+<span class="nc" id="L517">			}</span>
+		});
+<span class="nc" id="L519">		viewShipCargoesButton.setBackground(new Color(204, 153, 102));</span>
+<span class="nc" id="L520">		viewShipCargoesButton.setFont(new Font(&quot;Dialog&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L521">		viewShipCargoesButton.setBounds(264, 640, 200, 25);</span>
+<span class="nc" id="L522">		storeFrame.getContentPane().add(viewShipCargoesButton);</span>
+<span class="nc" id="L523">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>

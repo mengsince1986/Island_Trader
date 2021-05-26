@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TradingTests.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">TradingTests.java</span></div><h1>TradingTests.java</h1><pre class="source lang-java linenums">package tests;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import items.Item;
+import map.Island;
+import map.Port;
+import map.Route;
+import map.Store;
+import ships.Ship;
+import trader.Trader;
+
+<span class="fc" id="L19">class TradingTests {</span>
+	
+	static Item testGunpowderLow;
+	static Item testGunpowderHigh;
+	static Item[] toSell;
+	static Item[] toBuy;
+	static Store testStore;
+	static Port testPort;
+	static Island testIsland1;
+	static Island testIsland2;
+	static Route testRoute1;
+	static Route testRoute2;
+	static Ship tradingTestShip;
+	static Trader testTrader;
+	
+
+	@BeforeAll
+	static void setUpBeforeClass() throws Exception {
+<span class="fc" id="L37">	}</span>
+
+	@AfterAll
+	static void tearDownAfterClass() throws Exception {
+<span class="fc" id="L41">	}</span>
+
+	@BeforeEach
+	void setUp() throws Exception {
+<span class="fc" id="L45">		testGunpowderLow = new Item(&quot;Gunpowder&quot;, 5000, 10);</span>
+<span class="fc" id="L46">		testGunpowderHigh = new Item(&quot;Gunpowder&quot;, 5000, 20);</span>
+<span class="fc" id="L47">		toSell = new Item[]{testGunpowderLow};</span>
+<span class="fc" id="L48">		toBuy = new Item[]{testGunpowderHigh};</span>
+<span class="fc" id="L49">		testStore = new Store(toSell, toBuy);</span>
+<span class="fc" id="L50">		testPort = new Port(10, 10);</span>
+<span class="fc" id="L51">		testIsland1 = new Island(&quot;Island1&quot;, testStore, testPort);</span>
+<span class="fc" id="L52">		testIsland2 = new Island(&quot;Island2&quot;, testStore, testPort);</span>
+<span class="fc" id="L53">		testRoute1 = new Route(10, &quot;Looks safe&quot;);</span>
+<span class="fc" id="L54">		testRoute2 = new Route(10, &quot;Looks safe&quot;);</span>
+<span class="fc" id="L55">		testRoute1.setSource(testIsland1);</span>
+<span class="fc" id="L56">		testRoute1.setDest(testIsland2);</span>
+<span class="fc" id="L57">		testRoute2.setSource(testIsland2);</span>
+<span class="fc" id="L58">		testRoute2.setDest(testIsland1);</span>
+<span class="fc" id="L59">		testIsland1.addRoute(testRoute1);</span>
+<span class="fc" id="L60">		testIsland2.addRoute(testRoute2);</span>
+<span class="fc" id="L61">		testTrader = new Trader(20, &quot;Test Trader&quot;, 100000, testIsland1, &quot;store&quot;);</span>
+<span class="fc" id="L62">		tradingTestShip = new Ship(&quot;Redcoasts&quot;, 15, 2, 5000, 8, 75, &quot;normal&quot;);</span>
+<span class="fc" id="L63">		testTrader.setOwnedShip(tradingTestShip);</span>
+<span class="fc" id="L64">		tradingTestShip.setCaptain(testTrader);</span>
+<span class="fc" id="L65">	}</span>
+
+	@AfterEach
+	void tearDown() throws Exception {
+<span class="fc" id="L69">	}</span>
+
+	@Test
+	void buyTest() {
+<span class="fc" id="L73">		String buyReport = testTrader.buy(testIsland1, &quot;Gunpowder&quot;, 5000);</span>
+<span class="fc" id="L74">		assertEquals( </span>
+<span class="fc" id="L75">				&quot;Success!\n&quot; +</span>
+				&quot;Return to port to view your trading logs\n&quot; +
+				&quot;Most recent: &quot; +
+				&quot;Bought 5000 Gunpowder at Island1 for 50000 coins\n&quot; +
+				&quot;\nRedirecting you to storefront...&quot;,
+<span class="fc" id="L80">				buyReport);</span>
+<span class="fc" id="L81">		assertEquals(</span>
+<span class="fc" id="L82">				&quot;Items for sale:\n&quot;</span>
+				+ &quot;Nothing for sale at this store!\n&quot;,
+<span class="fc" id="L84">				testStore.forSale());</span>
+<span class="fc" id="L85">	}</span>
+
+	@Test
+	void sellAllTest() {
+<span class="fc" id="L89">		testTrader.buy(testIsland1, &quot;Gunpowder&quot;, 5000);</span>
+<span class="fc" id="L90">		assertEquals(0, testStore.getToSell().size());</span>
+<span class="fc" id="L91">		assertEquals(5000, testStore.getItem(&quot;Gunpowder&quot;, &quot;toBuy&quot;).getQuantity());</span>
+<span class="fc" id="L92">		String sellReport = testTrader.sell(testIsland1, &quot;Gunpowder&quot;, 5000);</span>
+<span class="fc" id="L93">		assertEquals(</span>
+<span class="fc" id="L94">				&quot;Success!\n&quot; +</span>
+				&quot;Return to port to view your trading logs\n&quot; +
+				&quot;Most recent: &quot; +
+				&quot;Sold 5000 Gunpowder at Island1 for 100000 coins\n&quot; +
+				&quot;\nRedirecting you to storefront...&quot;,
+<span class="fc" id="L99">				sellReport);</span>
+<span class="fc" id="L100">		assertEquals(</span>
+<span class="fc" id="L101">				&quot;Looking to buy:\n&quot; +</span>
+				&quot;This store is not looking to buy anything!\n&quot;,
+<span class="fc" id="L103">				testStore.forPurchase());</span>
+<span class="fc" id="L104">		assertEquals(</span>
+<span class="fc" id="L105">				&quot;Items you can sell:\n&quot; +</span>
+				&quot;\nIt looks like you don't own anything this store is looking to buy!\n&quot;,
+<span class="fc" id="L107">				testStore.getSellablePlayerItemsString(tradingTestShip));</span>
+<span class="fc" id="L108">	}</span>
+	
+	@Test
+	void sellSomeTest() {
+<span class="fc" id="L112">		testTrader.buy(testIsland1, &quot;Gunpowder&quot;, 5000);</span>
+<span class="fc" id="L113">		String sellReport = testTrader.sell(testIsland1, &quot;Gunpowder&quot;, 1000);</span>
+<span class="fc" id="L114">		assertEquals(</span>
+<span class="fc" id="L115">				&quot;Success!\n&quot; +</span>
+				&quot;Return to port to view your trading logs\n&quot; +
+				&quot;Most recent: &quot; +
+				&quot;Sold 1000 Gunpowder at Island1 for 20000 coins\n&quot; +
+				&quot;\nRedirecting you to storefront...&quot;,
+<span class="fc" id="L120">				sellReport);</span>
+<span class="fc" id="L121">		assertEquals(</span>
+<span class="fc" id="L122">				&quot;Looking to buy:\n&quot; +</span>
+				&quot;\nItem 0: Gunpowder\n&quot; +
+				&quot;Quantity: 4000\n&quot; +
+				&quot;Price per unit: 20\n&quot;,
+<span class="fc" id="L126">				testStore.forPurchase());</span>
+<span class="fc" id="L127">		assertEquals(</span>
+<span class="fc" id="L128">				&quot;Items you can sell:\n&quot; +</span>
+				&quot;\nItem 0: Gunpowder\n&quot; +
+				&quot;Quantity: 4000\n&quot; +
+				&quot;Price per unit: 20\n&quot;,
+<span class="fc" id="L132">				testStore.getSellablePlayerItemsString(tradingTestShip));</span>
+<span class="fc" id="L133">	}</span>
+
+	@Test
+	void notEnoughMoneyTest() {
+<span class="fc" id="L137">		testTrader = new Trader(10, &quot;Test Trader&quot;, 0, testIsland1, &quot;store&quot;);</span>
+<span class="fc" id="L138">		testTrader.setOwnedShip(tradingTestShip);</span>
+		
+<span class="fc" id="L140">		String buyReport = testTrader.buy(testIsland1, &quot;Gunpowder&quot;, 1);</span>
+<span class="fc" id="L141">		assertEquals(</span>
+<span class="fc" id="L142">				&quot;You don't have enough funds to make that purchase!\n&quot; +</span>
+				&quot;Redirecting you to storefront...&quot;,
+<span class="fc" id="L144">				buyReport);</span>
+<span class="fc" id="L145">	}</span>
+	
+	@Test
+	void buyTooManyTest() {
+<span class="fc" id="L149">		String buyReport = testTrader.buy(testIsland1, &quot;Gunpowder&quot;, 5001);</span>
+<span class="fc" id="L150">		assertEquals(</span>
+<span class="fc" id="L151">				&quot;The store can't sell you that many!\n&quot; +</span>
+				&quot;Redirecting you to storefront...&quot;,
+<span class="fc" id="L153">				buyReport);</span>
+<span class="fc" id="L154">	}</span>
+	
+	@Test
+	void notEnoughCapacityTest() {
+<span class="fc" id="L158">		tradingTestShip = new Ship(&quot;Redcoasts&quot;, 15, 2, 0, 8, 75, &quot;normal&quot;);</span>
+<span class="fc" id="L159">		testTrader.setOwnedShip(tradingTestShip);</span>
+		
+<span class="fc" id="L161">		String buyReport = testTrader.buy(testIsland1, &quot;Gunpowder&quot;, 1);</span>
+<span class="fc" id="L162">		assertEquals(</span>
+<span class="fc" id="L163">				&quot;Your ship doesn't have enough remaining cargo capacity!\n&quot; +</span>
+				&quot;Redirecting you to storefront...&quot;,
+<span class="fc" id="L165">				buyReport);</span>
+<span class="fc" id="L166">	}</span>
+	
+	@Test
+	void sellMoreThanStoreTest() {
+<span class="fc" id="L170">		testGunpowderLow = new Item(&quot;Gunpowder&quot;, 5000, 10);</span>
+<span class="fc" id="L171">		testGunpowderHigh = new Item(&quot;Gunpowder&quot;, 0, 20);</span>
+<span class="fc" id="L172">		toSell = new Item[]{testGunpowderLow};</span>
+<span class="fc" id="L173">		toBuy = new Item[]{testGunpowderHigh};</span>
+<span class="fc" id="L174">		testStore = new Store(toSell, toBuy);</span>
+<span class="fc" id="L175">		testIsland1 = new Island(&quot;Island1&quot;, testStore, null);</span>
+<span class="fc" id="L176">		testTrader = new Trader(10, &quot;Test Trader&quot;, 50000, testIsland1, &quot;store&quot;);</span>
+<span class="fc" id="L177">		testTrader.setOwnedShip(tradingTestShip);</span>
+		
+<span class="fc" id="L179">		testTrader.buy(testIsland1, &quot;Gunpowder&quot;, 5000);</span>
+<span class="fc" id="L180">		String sellReport = testTrader.sell(testIsland1, &quot;Gunpowder&quot;, 1);</span>
+<span class="fc" id="L181">		assertEquals(</span>
+<span class="fc" id="L182">				&quot;The store won't buy that many! Try again.\n&quot; +</span>
+				&quot;Redirecting you to storefront...&quot;,
+<span class="fc" id="L184">				sellReport);</span>
+<span class="fc" id="L185">	}</span>
+	
+	@Test
+	void sellMoreThanCargoTest() {
+<span class="fc" id="L189">		testGunpowderLow = new Item(&quot;Gunpowder&quot;, 5000, 10);</span>
+<span class="fc" id="L190">		testGunpowderHigh = new Item(&quot;Gunpowder&quot;, 10000, 20);</span>
+<span class="fc" id="L191">		toSell = new Item[]{testGunpowderLow};</span>
+<span class="fc" id="L192">		toBuy = new Item[]{testGunpowderHigh};</span>
+<span class="fc" id="L193">		testStore = new Store(toSell, toBuy);</span>
+<span class="fc" id="L194">		testIsland1 = new Island(&quot;Island1&quot;, testStore, null);</span>
+<span class="fc" id="L195">		testTrader = new Trader(10, &quot;Test Trader&quot;, 50000, testIsland1, &quot;store&quot;);</span>
+<span class="fc" id="L196">		testTrader.setOwnedShip(tradingTestShip);</span>
+		
+<span class="fc" id="L198">		testTrader.buy(testIsland1, &quot;Gunpowder&quot;, 5000);</span>
+<span class="fc" id="L199">		String sellReport = testTrader.sell(testIsland1, &quot;Gunpowder&quot;, 5001);</span>
+<span class="fc" id="L200">		assertEquals(</span>
+<span class="fc" id="L201">				&quot;You don't own that quantity of the item! Try again.\n&quot; +</span>
+				&quot;Redirecting you to storefront...&quot;,
+<span class="fc" id="L203">				sellReport);</span>
+<span class="fc" id="L204">	}</span>
+	
+	@Test
+	void noMoneyToSailTest() {
+<span class="fc" id="L208">		testTrader.buy(testIsland1, &quot;Gunpowder&quot;, 15);</span>
+<span class="fc" id="L209">		tradingTestShip.sailTo(testIsland2);</span>
+<span class="fc" id="L210">		testTrader.setOwnedMoney(0);</span>
+		
+<span class="fc" id="L212">		assertEquals(false, tradingTestShip.readyToSail(testIsland1));</span>
+<span class="fc" id="L213">		assertEquals(false, testTrader.noMoneyToSail());</span>
+		
+<span class="fc" id="L215">		testTrader.sell(testIsland2, &quot;Gunpowder&quot;, 15);</span>
+		
+<span class="fc" id="L217">		assertEquals(true, tradingTestShip.readyToSail(testIsland1));</span>
+<span class="fc" id="L218">		assertEquals(false, testTrader.noMoneyToSail());</span>
+		
+<span class="fc" id="L220">		tradingTestShip.sailTo(testIsland1);</span>
+<span class="fc" id="L221">		assertEquals(true, testTrader.noMoneyToSail());</span>
+<span class="fc" id="L222">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>

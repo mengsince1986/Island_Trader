@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Item.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">items</a> &gt; <span class="el_source">Item.java</span></div><h1>Item.java</h1><pre class="source lang-java linenums">package items;
+
+import map.Store;
+import ships.Ship;
+import trader.Trader;
+
+/**
+ * A basic class to represent the items that are traded between a {@link Trader}
+ * and the various {@link Store}s in the game.
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
+public class Item {
+	
+	/**
+	 * the name of the Item.
+	 */
+	private String name;
+	
+	/**
+	 * represents the amount of the Item that is in a {@link Ship}'s cargo hold,
+	 * willing to be sold or bought by a Store, or was sold by a Trader.
+	 */
+	private int quantity;
+	
+	/**
+	 * represents the price paid or received for one unit of the Item.
+	 */
+	private int pricePerUnit;
+	
+	/**
+	 * constructs an Item object with the given {@link name} String, {@link quantity},
+	 * and {@link pricePerUnit}.
+	 * @param name the name String of the new Item
+	 * @param quantity the amount of the Item that was/is to be sold/bought
+	 * @param pricePerUnit the price for one unit of the Item
+	 */
+<span class="fc" id="L39">	public Item (String name, int quantity, int pricePerUnit) {</span>
+<span class="fc" id="L40">		this.name = name;</span>
+<span class="fc" id="L41">		this.quantity = quantity;</span>
+<span class="fc" id="L42">		this.pricePerUnit = pricePerUnit;</span>
+<span class="fc" id="L43">	}</span>
+	
+	/**
+	 * @return the Item's {@link name} attribute
+	 */
+	public String getName() {
+<span class="fc" id="L49">		return name;</span>
+	}
+	
+	/**
+	 * @return the Item's {@link quantity} attribute
+	 */
+	public int getQuantity() {
+<span class="fc" id="L56">		return quantity;</span>
+	}
+	
+	/**
+	 * @return the Item's {@link pricePerUnit} attribute
+	 */
+	public int getPricePerUnit() {
+<span class="fc" id="L63">		return pricePerUnit;</span>
+	}
+	
+	/**
+	 * increases the value of the Item's {@link quantity} attribute by the given amount
+	 * @param amount the amount to be added
+	 */
+	public void addQuantity(int amount) {
+<span class="fc" id="L71">		this.quantity += amount;</span>
+<span class="fc" id="L72">	}</span>
+	
+	/**
+	 * decreases the value of the Item's {@link quantity} attribute by the given amount
+	 * @param amount the amount to be subtracted
+	 */
+	public void subtractQuantity(int amount) {
+<span class="fc" id="L79">		this.quantity -= amount;</span>
+<span class="fc" id="L80">	}</span>
+	
+	/**
+	 * @return a readable generic String representation of an Item object
+	 */
+	public String toString() {
+<span class="fc" id="L86">		return String.format(</span>
+<span class="fc" id="L87">				&quot;%s\nQuantity: %s\nPrice per unit: %s\n&quot;, </span>
+<span class="fc" id="L88">				this.name, </span>
+<span class="fc" id="L89">				this.quantity, </span>
+<span class="fc" id="L90">				this.pricePerUnit);</span>
+	}
+	
+	/**
+	 * @return a readable String representation specifically of an Item currently in
+	 * the player's {@link Ship}'s cargo hold
+	 */
+	public String getCargoItemString() {
+<span class="nc" id="L98">		return String.format(</span>
+<span class="nc" id="L99">				&quot;%s\nQuantity: %s\nPrice paid per unit: %s\n&quot;, </span>
+<span class="nc" id="L100">				this.name, </span>
+<span class="nc" id="L101">				this.quantity,</span>
+<span class="nc" id="L102">				this.pricePerUnit);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>

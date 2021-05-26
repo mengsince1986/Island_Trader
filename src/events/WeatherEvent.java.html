@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>WeatherEvent.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">events</a> &gt; <span class="el_source">WeatherEvent.java</span></div><h1>WeatherEvent.java</h1><pre class="source lang-java linenums">package events;
+
+import trader.Trader;
+import ships.Ship;
+
+/**
+ * A class to implement the &quot;unfortunate weather&quot; random event, which causes
+ * a storm to deal a random amount of damage to the player's {@link Ship}.
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ *
+ */
+public class WeatherEvent extends RandomEvent {
+	
+	/**
+	 * a constant maximum amount of damage to be dealt by the event, set to be 1 less
+	 * than the defaultDurability attribute of the {@link Ship}s on offer to the 
+	 * player.
+	 */
+<span class="fc" id="L21">	private final int MAX_DAMAGE = 69;</span>
+	
+	/**
+	 * initialises a new WeatherEvent and with the value given as the {@link chanceLevel}.
+	 * @param chanceLevel the number representing the likelihood of the event triggering
+	 * on any one occasion
+	 */
+<span class="fc" id="L28">	public WeatherEvent(int chanceLevel) {</span>
+<span class="fc" id="L29">		setChanceLevel(chanceLevel);</span>
+<span class="fc" id="L30">	}</span>
+	
+	/**
+	 * generates and returns the pseudorandom amount of damage to be dealt to a Ship 
+	 * object as a result of the event's being triggered.
+	 * @return the damage to be dealt to a Ship object as a result of the event
+	 */
+	public int getDamage() {
+<span class="fc" id="L38">		int damageDealt = getRandomInRange(1, MAX_DAMAGE);</span>
+<span class="fc" id="L39">		return damageDealt;</span>
+	}
+
+	/**
+	 * takes the amount of damage dealt to a Ship and returns a readable String
+	 * detailing the damage dealt.
+	 * @param shipDamage the amount of damage dealt
+	 * @return a report String detailing the damage dealt
+	 */
+	public String getReport(int shipDamage) {
+<span class="fc" id="L49">		return String.format((&quot;Your ship struck a storm and took %d damage! &quot; + </span>
+<span class="fc" id="L50">				&quot;You'll have to repair it at the next port.\n&quot;), shipDamage);</span>
+	}
+	
+	/**
+	 * processes the impact of the triggered WeatherEvent on the given {@link Trader}
+	 * and returns a report detailing this impact to be displayed to the player.
+	 * @return a report String detailing the impact of the event and to be displayed
+	 * to the player 
+	 */
+	public String processImpact(Trader player) {
+<span class="fc" id="L60">		int shipDamage = getDamage();</span>
+<span class="fc" id="L61">		Ship ship = player.getOwndedShip();</span>
+<span class="fc" id="L62">		ship.sufferDamage(shipDamage);</span>
+<span class="fc" id="L63">		String reportString = getReport(shipDamage);</span>
+<span class="fc" id="L64">		return reportString;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>

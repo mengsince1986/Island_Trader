@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>NewPlayerIO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">io</a> &gt; <span class="el_source">NewPlayerIO.java</span></div><h1>NewPlayerIO.java</h1><pre class="source lang-java linenums">package io;
+
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+import commands.TraderCreatorHandler;
+import main.GameEnvironment;
+import map.Island;
+import map.World;
+import ships.Ship;
+import trader.Trader;
+
+/**
+ * The NewPlayerIO is an abstract class for creating command line interface. It
+ * is the base for {@link NewPlayerConstructorIO} {@link NewPlayerNameIO},
+ * {@link NewPlayerTimeIO}, {@link NewPlayerHomeIO}, and
+ * {@link NewPlayerShipIO}.
+ * &lt;p&gt;
+ * The sub-classes created based on NewPlayerIO print prompts for creating a new
+ * {@link Trader}, take string inputs from users, validate the inputs, and pass
+ * the inputs as an ArrayList to {@link TraderCreatorHandler} through
+ * {@link GameEnvironment}.
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
+
+public abstract class NewPlayerIO {
+
+	/**
+	 * Attribute world stores the current World object which stores all the
+	 * {@link Island} and {@link Ship} objects.
+	 */
+	private static World world;
+	
+	/**
+	 * Attribute prompt stores a string prompt for this command line interface
+	 * object.
+	 */
+	private String prompt;
+	
+	/**
+	 * Attribute commandsList stores an ArrayList of available commands in this
+	 * command line interface object.
+	 */
+	private ArrayList&lt;String&gt; commandsList;
+	
+	/**
+	 * Attribute commandArguments stores an ArrayList of commands users choose from
+	 * the command line interface. This attribute is set static so that it can store
+	 * command inputs from different command line interface objects.
+	 */
+<span class="nc" id="L54">	private static ArrayList&lt;String&gt; commandArguments = new ArrayList&lt;String&gt;();</span>
+	
+	/**
+	 * Attribute gettingName is a boolean value which is set true when the command
+	 * line interface object is expecting a new player's name as the input.
+	 * Otherwise, it is set false.
+	 */
+<span class="nc" id="L61">	private static boolean gettingName = false;</span>
+	
+	/**
+	 * Attribute gettingPlayingTimes is a boolean value which is set true when the
+	 * command line interface object is expecting the number of the playing days as
+	 * the input. Otherwise, it is set false.
+	 */
+<span class="nc" id="L68">	private static boolean gettingPlayingTime = false;</span>
+
+	/**
+	 * This constructor sets the world attribute with the current World object and
+	 * initializes a new ArrayList for the commandsList attribute.
+	 * 
+	 * @param newWorld a World object
+	 */
+<span class="nc" id="L76">	public NewPlayerIO(World newWorld) {</span>
+
+<span class="nc" id="L78">		world = newWorld;</span>
+<span class="nc" id="L79">		commandsList = new ArrayList&lt;String&gt;();</span>
+
+<span class="nc" id="L81">	}</span>
+
+	/**
+	 * This method prints the prompt and available command options returned by
+	 * getCommandsListString(), gets a an input of string from users, and validates
+	 * the input. If the input is valid, this method will add the command matching
+	 * the input to attribute commandArguments. If the input is invalid, this method
+	 * will print an error message.
+	 * &lt;p&gt;
+	 * 
+	 * @return the ArrayList of commandArguments
+	 */
+	public ArrayList&lt;String&gt; readCommandArguments() {
+
+		String playerChoice;
+<span class="nc" id="L96">		boolean isValid = false;</span>
+
+		do {
+			// Print available commandList
+<span class="nc" id="L100">			System.out.println(getCommandsListString());</span>
+			// Prompt for player
+<span class="nc" id="L102">			System.out.println(this.prompt);</span>
+
+<span class="nc" id="L104">			String errorMessage = &quot;=====================!!!========================\n&quot;</span>
+					+ &quot;The input is invalid. Check the prompt and do it again.\n&quot;
+					+ &quot;================================================\n&quot;;
+
+<span class="nc" id="L108">			Scanner commandReader = new Scanner(System.in);</span>
+
+			try {
+
+<span class="nc" id="L112">				playerChoice = commandReader.nextLine();</span>
+
+<span class="nc bnc" id="L114" title="All 2 branches missed.">				if (gettingName) {</span>
+
+<span class="nc bnc" id="L116" title="All 4 branches missed.">					if (playerChoice.matches(&quot;0&quot;) &amp;&amp; Integer.parseInt(playerChoice) == 0) {</span>
+<span class="nc" id="L117">						processPlayerInput(playerChoice);</span>
+<span class="nc" id="L118">						isValid = true;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">					} else if (!playerChoice.matches(&quot;[a-zA-Z]+&quot;)) {</span>
+<span class="nc" id="L120">						System.out.println(&quot;\nSorry, the name can only include letters.&quot;);</span>
+<span class="nc bnc" id="L121" title="All 4 branches missed.">					} else if (playerChoice.length() &lt; 3 || playerChoice.length() &gt; 15) {</span>
+<span class="nc" id="L122">						System.out.println(&quot;\nThe name should be between 3 and 15 characters.&quot;);</span>
+<span class="nc" id="L123">					} else {</span>
+<span class="nc" id="L124">						processPlayerInput(playerChoice);</span>
+<span class="nc" id="L125">						isValid = true;</span>
+					}
+
+<span class="nc bnc" id="L128" title="All 2 branches missed.">				} else if (gettingPlayingTime) {</span>
+<span class="nc bnc" id="L129" title="All 4 branches missed.">					if (playerChoice.matches(&quot;0&quot;) &amp;&amp; Integer.parseInt(playerChoice) == 0) {</span>
+
+<span class="nc" id="L131">						processPlayerInput(playerChoice);</span>
+<span class="nc" id="L132">						isValid = true;</span>
+
+<span class="nc bnc" id="L134" title="All 4 branches missed.">					} else if (Integer.parseInt(playerChoice) &lt; 20 || Integer.parseInt(playerChoice) &gt; 50) {</span>
+
+<span class="nc" id="L136">						System.out.println(&quot;\nThe number of the days should be between 20 and 50.&quot;);</span>
+
+<span class="nc" id="L138">					} else {</span>
+
+<span class="nc" id="L140">						processPlayerInput(playerChoice);</span>
+<span class="nc" id="L141">						isValid = true;</span>
+					}
+
+<span class="nc bnc" id="L144" title="All 2 branches missed.">				} else if (Integer.parseInt(playerChoice) &gt;= 0</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">						&amp;&amp; Integer.parseInt(playerChoice) &lt;= commandsList.size() - 1) {</span>
+
+<span class="nc" id="L147">					processPlayerInput(playerChoice);</span>
+<span class="nc" id="L148">					isValid = true;</span>
+
+<span class="nc" id="L150">				} else {</span>
+
+<span class="nc" id="L152">					System.out.println(errorMessage);</span>
+
+				}
+
+<span class="nc" id="L156">			} catch (InputMismatchException e) {</span>
+
+<span class="nc" id="L158">				System.out.println(errorMessage);</span>
+
+<span class="nc" id="L160">			} catch (NumberFormatException e) {</span>
+
+<span class="nc" id="L162">				System.out.println(errorMessage);</span>
+
+			}
+
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		} while (!isValid);</span>
+
+<span class="nc" id="L168">		return commandArguments;</span>
+	}
+
+	/**
+	 * This is an abstract method which processes a command input from users.
+	 * 
+	 * @param choice a string which matches a command in this interface
+	 */
+	public abstract void processPlayerInput(String choice);
+
+	/**
+	 * This method is the getter for attribute world.
+	 * 
+	 * @return the World object stored in the world attribute
+	 */
+	public static World getWorld() {
+<span class="nc" id="L184">		return world;</span>
+	}
+
+	/**
+	 * This method is the getter for attribute commandsList.
+	 * 
+	 * @return the ArrayList stored in the commandsList attribute
+	 */
+	public ArrayList&lt;String&gt; getCommandsList() {
+<span class="nc" id="L193">		return commandsList;</span>
+	}
+
+	/**
+	 * This method adds a single command string to the ArrayList stored in attribute
+	 * commandsList.
+	 * 
+	 * @param command a string command
+	 */
+	public void addCommand(String command) {
+<span class="nc" id="L203">		commandsList.add(command);</span>
+<span class="nc" id="L204">	}</span>
+
+	/**
+	 * This method iterates attribute commandsList and concatenates all the commands
+	 * into a string.
+	 * 
+	 * @return a formated string which includes all the command options
+	 */
+	public String getCommandsListString() {
+<span class="nc" id="L213">		String commandList = &quot;============== Commands List =================&quot; + &quot;\n\n&quot;;</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		for (int i = 0; i &lt; commandsList.size(); i++) {</span>
+<span class="nc" id="L215">			commandList += i + &quot;. &quot; + commandsList.get(i) + &quot;\n&quot;;</span>
+		}
+<span class="nc" id="L217">		return commandList;</span>
+	}
+
+	/**
+	 * This method is the getter for attribute commandArguments.
+	 * 
+	 * @return the ArrayList stored in attribute commandArguments
+	 */
+	public static ArrayList&lt;String&gt; getCommandArguments() {
+<span class="nc" id="L226">		return commandArguments;</span>
+	}
+
+	/**
+	 * This method resets the commandArguments attribute to be an empty ArrayList
+	 */
+	public static void resetCommandArguments() {
+<span class="nc" id="L233">		commandArguments.clear();</span>
+<span class="nc" id="L234">	}</span>
+
+	/**
+	 * This method adds a single command/argument string to attribute
+	 * commandArguments.
+	 * 
+	 * @param arg a command/argument string
+	 */
+	public static void addCommandArgument(String arg) {
+<span class="nc" id="L243">		commandArguments.add(arg);</span>
+<span class="nc" id="L244">	}</span>
+
+	/**
+	 * This method is the setter for attribute prompt.
+	 * 
+	 * @param newPrompt a string prompt for this interface object
+	 */
+	public void setPrompt(String newPrompt) {
+<span class="nc" id="L252">		this.prompt = newPrompt;</span>
+<span class="nc" id="L253">	}</span>
+
+	/**
+	 * This method is the getter for attribute prompt.
+	 * 
+	 * @return the string stored in attribute prompt
+	 */
+	public String getPrompt() {
+<span class="nc" id="L261">		return this.prompt;</span>
+	}
+
+	/**
+	 * This method is the setter for attribute gettingName.
+	 * 
+	 * @param value true if this interface object is expecting a new player's name
+	 *              as the input. Otherwise, it's false.
+	 */
+	public static void setGettingName(boolean value) {
+<span class="nc" id="L271">		gettingName = value;</span>
+<span class="nc" id="L272">	}</span>
+
+	/**
+	 * This method is the setter for attribute gettingPlayingTime.
+	 * 
+	 * @param value true if this interface object is expecting the number of the
+	 *              playing days as the input. Otherwise, it is set false.
+	 */
+	public static void setGettingPlayingTime(boolean value) {
+<span class="nc" id="L281">		gettingPlayingTime = value;</span>
+<span class="nc" id="L282">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>

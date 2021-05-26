@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>UpgradeLog.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">src (May 26, 2021 9:58:16 PM)</a> &gt; <a href="../../index.html" class="el_group">IslandTraderGUI</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">ships</a> &gt; <span class="el_source">UpgradeLog.java</span></div><h1>UpgradeLog.java</h1><pre class="source lang-java linenums">package ships;
+
+import map.*;
+import trader.Trader;
+
+/**
+ * The UpgradeLog class is for initializing an object to record the repair or
+ * cannon upgrade service a {@link Trader} purchased for a {@link Ship}.
+ * 
+ * @author Finn van Dorsser
+ * @author Meng Zhang
+ */
+
+public class UpgradeLog {
+
+	/**
+	 * Attribute upgradeLocation stores the string name of the {@link Island} where
+	 * the upgrade service is purchased
+	 */
+	private String upgradeLocation;
+
+	/**
+	 * Attribute upgradeService stores the string name of the purchased upgrade
+	 * service.
+	 */
+	private String upgradeService;
+
+	/**
+	 * Attribute upgradeCost stores the value of the upgrade service cost.
+	 */
+	private int upgradeCost;
+
+	/**
+	 * This constructor sets the values for all three class attributes.
+	 * 
+	 * @param location an {@link Island} object
+	 * @param service  the string name of the upgrade service (&quot;Damage Repair&quot; or
+	 *                 &quot;Cannon Upgrade&quot;)
+	 * @param cost     the integer value of the upgrade/repair cost
+	 */
+<span class="fc" id="L41">	public UpgradeLog(Island location, String service, int cost) {</span>
+<span class="fc" id="L42">		this.upgradeLocation = location.getName();</span>
+<span class="fc" id="L43">		this.upgradeService = service;</span>
+<span class="fc" id="L44">		this.upgradeCost = cost;</span>
+<span class="fc" id="L45">	}</span>
+
+	/**
+	 * This methods modifies the string representation of this UpgradeLog object.
+	 */
+	@Override
+	public String toString() {
+
+<span class="fc" id="L53">		String log = this.upgradeService + &quot; at &quot; + this.upgradeLocation + &quot; for &quot; + this.upgradeCost + &quot; coins&quot;;</span>
+<span class="fc" id="L54">		return log;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>src (May 26, 2021 9:58:16 PM)</div></body></html>
