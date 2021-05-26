@@ -15,8 +15,8 @@ import map.Route;
 import map.Store;
 import map.World;
 import map.WorldConstructor;
+import reports.StatusLine;
 import ships.Ship;
-import terminalPrinter.StatusLine;
 
 /**
  * The GUIGameEnvironment class is the entry point for the GUI version of the game. 
@@ -258,7 +258,7 @@ public class GUIGameEnvironment {
 
 		Island destIsland = world.getIsland(destination);
 		ArrayList<String> reportList = ship.sailTo(destIsland);
-		report = "\n\n~~~ ~~~ ~~~ Sailing ~~~ ~~~ ~~~\n\n";
+		report = "~~~ ~~~ ~~~ Sailing ~~~ ~~~ ~~~\n\n";
 
 		for (String event : reportList) {
 			report += event;

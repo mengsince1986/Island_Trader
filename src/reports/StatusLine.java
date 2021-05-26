@@ -1,4 +1,4 @@
-package terminalPrinter;
+package reports;
 
 import trader.*;
 
@@ -59,7 +59,7 @@ public class StatusLine {
 	 */
 	public String getGameOverReport(String reason) {
 
-		String upperDivider = "-----------------Game Over--------------------";
+		String upperDivider = "-----------------Game Summary-----------------";
 		String lowerDivider = "----------------------------------------------";
 		int playerProfit = this.player.getOwnedMoney() - this.player.getStartingMoney();
 		int daysPlayed = Integer.max(1, this.player.getSelectedDays() - this.player.getRemainingDays());
@@ -83,7 +83,7 @@ public class StatusLine {
 					"Have you considered a career in arbitrage?";
 		}
 		
-		String gameOverReport = upperDivider + "\n" + "\n" +
+		String gameOverReport = upperDivider + "\n" +
 				report + "\n" + 
 				"\n" +
 				lowerDivider;

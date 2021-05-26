@@ -360,24 +360,24 @@ public class PortWindow {
 		summaryButton.setVisible(false);
 		
 		// Destination radio buttons
-		JRadioButton destRadionButton1 = new JRadioButton("N/A");
-		destRadionButton1.setFont(new Font("Dialog", Font.BOLD, 14));
-		destRadionButton1.setSelected(true);
-		destinationButtonGroup.add(destRadionButton1);
-		destRadionButton1.setBounds(255, 428, 250, 23);
-		portFrame.getContentPane().add(destRadionButton1);
+		JRadioButton destRadioButton1 = new JRadioButton("N/A");
+		destRadioButton1.setFont(new Font("Dialog", Font.BOLD, 14));
+		destRadioButton1.setSelected(true);
+		destinationButtonGroup.add(destRadioButton1);
+		destRadioButton1.setBounds(255, 428, 250, 23);
+		portFrame.getContentPane().add(destRadioButton1);
 
-		JRadioButton destRadionButton2 = new JRadioButton("N/A");
-		destRadionButton2.setFont(new Font("Dialog", Font.BOLD, 14));
-		destinationButtonGroup.add(destRadionButton2);
-		destRadionButton2.setBounds(255, 455, 250, 23);
-		portFrame.getContentPane().add(destRadionButton2);
+		JRadioButton destRadioButton2 = new JRadioButton("N/A");
+		destRadioButton2.setFont(new Font("Dialog", Font.BOLD, 14));
+		destinationButtonGroup.add(destRadioButton2);
+		destRadioButton2.setBounds(255, 455, 250, 23);
+		portFrame.getContentPane().add(destRadioButton2);
 
-		JRadioButton destRadionButton3 = new JRadioButton("N/A");
-		destRadionButton3.setFont(new Font("Dialog", Font.BOLD, 14));
-		destinationButtonGroup.add(destRadionButton3);
-		destRadionButton3.setBounds(255, 480, 250, 23);
-		portFrame.getContentPane().add(destRadionButton3);
+		JRadioButton destRadioButton3 = new JRadioButton("N/A");
+		destRadioButton3.setFont(new Font("Dialog", Font.BOLD, 14));
+		destinationButtonGroup.add(destRadioButton3);
+		destRadioButton3.setBounds(255, 480, 250, 23);
+		portFrame.getContentPane().add(destRadioButton3);
 
 		// update destination radio buttons when initializing PortWindow
 		ArrayList<String> islandNames = new ArrayList<String>();
@@ -425,10 +425,10 @@ public class PortWindow {
 
 				} else {
 
-					String report = manager.sail(destinationName);
+					String sailReport = manager.sail(destinationName);
 
 					// check if game over
-					if (manager.getTrader().noTimeToSail() || manager.getTrader().noMoneyToSail()) {
+					if (manager.getTrader().noTimeToSail() || manager.getTrader().noMoneyToSail() || manager.getTrader().getKilledByPirates()) {
 
 						// update status labels
 						int days = manager.getRemainingDays();
@@ -442,20 +442,24 @@ public class PortWindow {
 						// update report
 						String gameOverReason = "";
 						if (manager.getTrader().noTimeToSail()) {
-							gameOverReason = "Time is up. You don't have time to sail anywhere.";
-						} else {
-							gameOverReason = "You have lost all your money!";
+							gameOverReason = "Time is up. You don't have enough days left to sail anywhere!";
+						} else if (manager.getTrader().getKilledByPirates()) {
+							gameOverReason = "You're dead!";
+						} else if (manager.getTrader().noMoneyToSail()) {
+							gameOverReason = "You don't have enough money to sail anywhere!";
 						}
-						report = "==============GAME OVER============\n\n" 
-								 + gameOverReason
-						         + report;
-						reportText.setText(report);
+						String finalReport = sailReport +
+								"==============GAME OVER============\n\n" +
+								gameOverReason +
+								"\nClick the \"Summary\" button to see how you did!";
+						
+						reportText.setText(finalReport);
 
 						// set all buttons invisible except for "Quit"
 						sailButton.setVisible(false);
-						destRadionButton1.setVisible(false);
-						destRadionButton2.setVisible(false);
-						destRadionButton3.setVisible(false);
+						destRadioButton1.setVisible(false);
+						destRadioButton2.setVisible(false);
+						destRadioButton3.setVisible(false);
 						upgradeCannonsButton.setVisible(false);
 						cannonNumSlider.setVisible(false);
 						costLable.setVisible(false);
@@ -476,7 +480,7 @@ public class PortWindow {
 					} else {
 
 						// update report
-						reportText.setText(report);
+						reportText.setText(sailReport);
 
 						// update status labels
 						int days = manager.getRemainingDays();

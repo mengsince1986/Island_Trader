@@ -1,4 +1,4 @@
-package terminalPrinter;
+package reports;
 
 /**
  * The ReportPrinter class is used to initialize an object to print formated

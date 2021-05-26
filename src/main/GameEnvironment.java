@@ -7,8 +7,8 @@ import io.*;
 import trader.Trader;
 import map.World;
 import map.WorldConstructor;
+import reports.*;
 import ships.Ship;
-import terminalPrinter.*;
 
 /**
  * This class is the entry point for the command-line interface version of the game.
