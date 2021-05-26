@@ -120,13 +120,13 @@ class TradingTests {
 				sellReport);
 		assertEquals(
 				"Looking to buy:\n" +
-				"\nItem 0: Gunpowder\n" +
+				"\nItem 1: Gunpowder\n" +
 				"Quantity: 4000\n" +
 				"Price per unit: 20\n",
 				testStore.forPurchase());
 		assertEquals(
 				"Items you can sell:\n" +
-				"\nItem 0: Gunpowder\n" +
+				"\nItem 1: Gunpowder\n" +
 				"Quantity: 4000\n" +
 				"Price per unit: 20\n",
 				testStore.getSellablePlayerItemsString(tradingTestShip));

@@ -22,7 +22,7 @@ public abstract class RandomEvent {
 	/**
 	 * a number representing the likelihood that the event will be triggered.
 	 * a value of 0 represents a 0% chance of the event being triggered, while
-	 * a value >= 10 represents a 100% chance of the event being triggered.
+	 * a value greater or equal to 10 represents a 100% chance of the event being triggered.
 	 */
 	private int chanceLevel;
 	

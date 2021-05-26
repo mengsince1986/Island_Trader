@@ -96,9 +96,8 @@ public class Item {
 	 */
 	public String getCargoItemString() {
 		return String.format(
-				"%s\nQuantity: %s\nPrice paid per unit: %s\n", 
+				"%s\nQuantity: %s\n", 
 				this.name, 
-				this.quantity,
-				this.pricePerUnit);
+				this.quantity);
 	}
 }
