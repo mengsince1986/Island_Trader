@@ -13,7 +13,7 @@ public class ReportPrinter {
 	 * This method takes a string report, formats it and and prints it to the
 	 * terminal.
 	 * 
-	 * @param a report String to be printed
+	 * @param report a String report to be printed
 	 */
 	public static void printReport(String report) {
 

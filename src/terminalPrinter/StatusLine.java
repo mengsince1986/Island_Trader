@@ -28,7 +28,7 @@ public class StatusLine {
 	}
 	
 	/**
-	 * @returns a formated status line String containing basic player status information
+	 * This method prints a formated status line String containing basic player status information
 	 */
 	public void printStatusLine() {
 		
@@ -49,8 +49,10 @@ public class StatusLine {
 	}
 	
 	/**
-	 * @returns a formated game over report String, including a congratulatory message and a score 
+	 * This method formats a game over report including a congratulation message and a score 
 	 * out of 3 based on how much profit the player made
+	 * @param reason a String describing the reason which causes game over
+	 * @return a formated game over report String
 	 */
 	public String getGameOverReport(String reason) {
 
