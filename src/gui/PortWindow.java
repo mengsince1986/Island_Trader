@@ -545,7 +545,7 @@ public class PortWindow {
 		restartButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				restartSetupWindow();
 
 			}
