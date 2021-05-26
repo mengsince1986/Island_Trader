@@ -28,7 +28,7 @@ public class StatusLine {
 	}
 	
 	/**
-	 * prints a formated status line String containing basic player status information
+	 * prints a formatted status line String containing basic player status information
 	 * to the terminal
 	 */
 	public void printStatusLine() {
@@ -55,12 +55,11 @@ public class StatusLine {
 	 * congratulatory message, and a score out of 3 for the amount of profit they were able to make
 	 * against the number of days played.
 	 * @param reason a String detailing the reason why the game has ended
-	 * @return a formatted game over report String, including a congratulatory message and a score 
-	 * out of 3 based on how much profit the player made
+	 * @return a formatted game over report String, including a congratulatory message and a score
 	 */
 	public String getGameOverReport(String reason) {
 
-		String upperDivider = "----------------Game Over!--------------------";
+		String upperDivider = "-----------------Game Over--------------------";
 		String lowerDivider = "----------------------------------------------";
 		int playerProfit = this.player.getOwnedMoney() - this.player.getStartingMoney();
 		int daysPlayed = Integer.max(1, this.player.getSelectedDays() - this.player.getRemainingDays());

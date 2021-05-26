@@ -147,13 +147,14 @@ public class SetupWindow {
 		setupFrame.getContentPane().add(dayLabel);
 
 		JSlider daysSlider = new JSlider();
-		daysSlider.setMaximum(90);
-		daysSlider.setMinimum(30);
+		daysSlider.setValue(35);
+		daysSlider.setMaximum(50);
+		daysSlider.setMinimum(20);
 		daysSlider.setPaintLabels(true);
 		daysSlider.setPaintTicks(true);
 		daysSlider.setSnapToTicks(true);
-		daysSlider.setMinorTickSpacing(20);
-		daysSlider.setMajorTickSpacing(20);
+		daysSlider.setMinorTickSpacing(5);
+		daysSlider.setMajorTickSpacing(5);
 		dayLabel.setLabelFor(daysSlider);
 		daysSlider.setBounds(166, 117, 205, 40);
 		setupFrame.getContentPane().add(daysSlider);
@@ -234,6 +235,7 @@ public class SetupWindow {
 		baoShipRadioButton.setBounds(315, 324, 149, 23);
 		setupFrame.getContentPane().add(baoShipRadioButton);
 
+		// Quit Button
 		JButton quitBtn = new JButton("Quit");
 		quitBtn.setBackground(new Color(255, 102, 102));
 		quitBtn.addMouseListener(new MouseAdapter() {
@@ -244,6 +246,7 @@ public class SetupWindow {
 			}
 		});
 
+		// Report Text Area
 		JTextArea reportText = new JTextArea();
 		reportText.setWrapStyleWord(true);
 		reportText.setLineWrap(true);
@@ -256,6 +259,7 @@ public class SetupWindow {
 		quitBtn.setBounds(102, 387, 80, 25);
 		setupFrame.getContentPane().add(quitBtn);
 
+		// Confirm Button
 		JButton confirmBtn = new JButton("Confirm");
 		confirmBtn.addMouseListener(new MouseAdapter() {
 			@Override
@@ -309,6 +313,7 @@ public class SetupWindow {
 		confirmBtn.setBounds(242, 387, 117, 25);
 		setupFrame.getContentPane().add(confirmBtn);
 
+		// Start Button
 		JButton startButton = new JButton("Start Game");
 		startButton.addMouseListener(new MouseAdapter() {
 			@Override

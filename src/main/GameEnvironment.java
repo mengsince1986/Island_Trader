@@ -11,9 +11,6 @@ import ships.Ship;
 import terminalPrinter.*;
 
 /**
- * <h1> SENG201 Project: Island Trader </h1>
- * <br>
- * 
  * This class is the entry point for the command-line interface version of the game.
  * It constructs the game world using a {@link WorldConstructor}, constructs the player's
  * {@link Trader} object, and handles the basic gameplay logic.
