@@ -31,30 +31,40 @@ public abstract class NewPlayerIO {
 	/**
 	 * Attribute world stores the current World object which stores all the
 	 * {@link Island} and {@link Ship} objects.
-	 * <p>
+	 */
+	private static World world;
+	
+	/**
 	 * Attribute prompt stores a string prompt for this command line interface
 	 * object.
-	 * <p>
+	 */
+	private String prompt;
+	
+	/**
 	 * Attribute commandsList stores an ArrayList of available commands in this
 	 * command line interface object.
-	 * <p>
+	 */
+	private ArrayList<String> commandsList;
+	
+	/**
 	 * Attribute commandArguments stores an ArrayList of commands users choose from
 	 * the command line interface. This attribute is set static so that it can store
 	 * command inputs from different command line interface objects.
-	 * <p>
+	 */
+	private static ArrayList<String> commandArguments = new ArrayList<String>();
+	
+	/**
 	 * Attribute gettingName is a boolean value which is set true when the command
 	 * line interface object is expecting a new player's name as the input.
 	 * Otherwise, it is set false.
-	 * <p>
+	 */
+	private static boolean gettingName = false;
+	
+	/**
 	 * Attribute gettingPlayingTimes is a boolean value which is set true when the
 	 * command line interface object is expecting the number of the playing days as
 	 * the input. Otherwise, it is set false.
 	 */
-	private static World world;
-	private String prompt;
-	private ArrayList<String> commandsList;
-	private static ArrayList<String> commandArguments = new ArrayList<String>();
-	private static boolean gettingName = false;
 	private static boolean gettingPlayingTime = false;
 
 	/**
