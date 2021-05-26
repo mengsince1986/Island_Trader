@@ -6,13 +6,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-import events.PirateEvent;
-import events.PirateScenarios;
-import events.RescueEvent;
-import events.WeatherEvent;
 import items.Item;
 import map.Island;
 import map.Port;

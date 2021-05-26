@@ -422,11 +422,8 @@ public class GUIGameEnvironment {
 	 * @param portWindow a {@link PortWindow} object
 	 */
 	public void restartSetupWindow(PortWindow portWindow) {
-		
-		ship.setDurability(ship.getDefaultDurability());
 		portWindow.closePortWindow();
 		launchSetupWindow();
-		
 	}
 
 	// StoreWindow

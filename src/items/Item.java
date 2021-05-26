@@ -2,6 +2,7 @@ package items;
 
 import map.Store;
 import ships.Ship;
+import trader.Trader;
 
 /**
  * A basic class to represent the items that are traded between a {@link Trader}

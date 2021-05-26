@@ -1,6 +1,5 @@
 package events;
 
-import ships.Ship;
 import trader.Trader;
 
 /**
