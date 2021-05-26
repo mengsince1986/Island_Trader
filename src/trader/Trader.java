@@ -570,11 +570,10 @@ public class Trader {
 	*/
 	public String toString() {
 		String status = "Name: " + this.name + "\n\n" +
-						"Money Owend: " + this.ownedMoney + "\n\n" +
-						"Home Island: " + this.homeIsland.getName() + "\n" +
-						"Ship Owned: " + this.ownedShip.getName() + "\n\n" +
-						"Current Island: " + this.currentIsland.getName() + "\n" +
-						"Current Location: " + this.currentLocation;
+						"Money: " + this.ownedMoney + "\n\n" +
+						"Ship: " + this.ownedShip.getName() + "\n\n" +
+						"Current island: " + this.currentIsland.getName() + "\n" +
+						"Current location on the island: " + this.currentLocation;
 		return status;
 	}
 }
