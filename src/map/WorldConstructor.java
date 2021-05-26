@@ -93,52 +93,16 @@ public class WorldConstructor {
 		Item coralHigh3 = new Item("Coral", 500, 150);
 		
 		Item[] sellList1 = {gunpowderLow1, timberLow1, whaleOilLow1};
-		Item[] buyList1 = {
-				spiceHigh1, 
-				tobaccoHigh1, 
-				coralHigh1,
-				furHigh1,
-				marbleHigh1,
-				silverHigh1,
-				goldHigh1
-				};
+		Item[] buyList1 = {spiceHigh1, tobaccoHigh1, coralHigh1};
 		
 		Item[] sellList2 = {wineMed2, teaMed2, silkMed2};
-		Item[] buyList2 = {spiceMed2, tobaccoMed2, coralMed2};
+		Item[] buyList2 = {marbleHigh1, tobaccoMed2, coralMed2};
 		
-		Item[] sellList3 = {
-				silkHigh3, 
-				marbleHigh3, 
-				silverHigh3,
-				goldHigh3,
-				spiceHigh3,
-				tobaccoHigh3,
-				coralHigh3,
-				wineHigh3,
-				teaHigh3,
-				furHigh3,
-				};
-		Item[] buyList3 = {
-				silkLow3, 
-				marbleLow3, 
-				silverLow3,
-				goldLow3,
-				spiceLow3,
-				tobaccoLow3,
-				coralLow3,
-				wineLow3,
-				teaLow3,
-				furLow3,
-				};
+		Item[] sellList3 = {goldHigh3, marbleMed4, tobaccoHigh3};
+		Item[] buyList3 = {goldMed4, coralLow3, furLow3};
 		
-		Item[] sellList4 = {furMed4, marbleMed4, silverMed4, goldMed4};
-		Item[] buyList4 = {
-				wineHigh4,
-				teaHigh4,
-				silkHigh4,
-				gunpowderMed4, 
-				timberMed4, 
-				whaleOilMed4};
+		Item[] sellList4 = {furMed4, silverMed4, goldLow3};
+		Item[] buyList4 = {wineHigh4, teaHigh4, silkHigh4};
 				
 		Item [] sellList5 = {spiceLow5, tobaccoLow5, coralLow5};
 		Item [] buyList5 = {gunpowderHigh5, timberHigh5, whaleOilHigh5};
