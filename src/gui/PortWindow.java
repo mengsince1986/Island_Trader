@@ -303,6 +303,33 @@ public class PortWindow {
 		upgradeCannonsButton.setBounds(51, 632, 180, 25);
 		portFrame.getContentPane().add(upgradeCannonsButton);
 
+		// View routes button
+		JButton viewRoutesButton = new JButton("Available Routes");
+		viewRoutesButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		viewRoutesButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				String routeReport = manager.getRoutesDescription();
+				reportText.setText(routeReport);
+
+				// set scroll bar to top
+				javax.swing.SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						scrollPane.getVerticalScrollBar().setValue(0);
+					}
+				});
+
+			}
+		});
+		viewRoutesButton.setFont(new Font("Dialog", Font.BOLD, 14));
+		viewRoutesButton.setBackground(new Color(204, 153, 102));
+		viewRoutesButton.setBounds(50, 547, 180, 25);
+		portFrame.getContentPane().add(viewRoutesButton);
+
 		// Quit button
 		JButton quitButton = new JButton("Quit");
 		quitButton.setFont(new Font("Dialog", Font.BOLD, 14));
@@ -331,6 +358,43 @@ public class PortWindow {
 		summaryButton.setBounds(300, 790, 117, 25);
 		portFrame.getContentPane().add(summaryButton);
 		summaryButton.setVisible(false);
+		
+		// Destination radio buttons
+		JRadioButton destRadionButton1 = new JRadioButton("N/A");
+		destRadionButton1.setFont(new Font("Dialog", Font.BOLD, 14));
+		destRadionButton1.setSelected(true);
+		destinationButtonGroup.add(destRadionButton1);
+		destRadionButton1.setBounds(255, 428, 250, 23);
+		portFrame.getContentPane().add(destRadionButton1);
+
+		JRadioButton destRadionButton2 = new JRadioButton("N/A");
+		destRadionButton2.setFont(new Font("Dialog", Font.BOLD, 14));
+		destinationButtonGroup.add(destRadionButton2);
+		destRadionButton2.setBounds(255, 455, 250, 23);
+		portFrame.getContentPane().add(destRadionButton2);
+
+		JRadioButton destRadionButton3 = new JRadioButton("N/A");
+		destRadionButton3.setFont(new Font("Dialog", Font.BOLD, 14));
+		destinationButtonGroup.add(destRadionButton3);
+		destRadionButton3.setBounds(255, 480, 250, 23);
+		portFrame.getContentPane().add(destRadionButton3);
+
+		// update destination radio buttons when initializing PortWindow
+		ArrayList<String> islandNames = new ArrayList<String>();
+		for (Route route : manager.getCurrentRoutes()) {
+			islandNames.add(route.getDest().getName());
+		}
+
+		int i = 0;
+		Enumeration<AbstractButton> destinations = destinationButtonGroup.getElements();
+		while (i < islandNames.size() && destinations.hasMoreElements()) {
+			JRadioButton destination = (JRadioButton) destinations.nextElement();
+			if (destination.getText() == "N/A") {
+				destination.setText(islandNames.get(i));
+			}
+			i += 1;
+		}
+		// ========================
 
 		// Sail button
 		JButton sailButton = new JButton("Sail to");
@@ -376,11 +440,27 @@ public class PortWindow {
 						locationDisplayLabel.setText(islandLocation);
 
 						// update report
-						report = report + "\n\n==============GAME OVER============";
+						String gameOverReason = "";
+						if (manager.getTrader().noTimeToSail()) {
+							gameOverReason = "Time is up. You don't have time to sail anywhere.";
+						} else {
+							gameOverReason = "You have lost all your money!";
+						}
+						report = "==============GAME OVER============\n\n" 
+								 + gameOverReason
+						         + report;
 						reportText.setText(report);
 
 						// set all buttons invisible except for "Quit"
 						sailButton.setVisible(false);
+						destRadionButton1.setVisible(false);
+						destRadionButton2.setVisible(false);
+						destRadionButton3.setVisible(false);
+						upgradeCannonsButton.setVisible(false);
+						cannonNumSlider.setVisible(false);
+						costLable.setVisible(false);
+						cannonCostLable.setVisible(false);
+						viewRoutesButton.setVisible(false);
 						repairButton.setVisible(false);
 						storeButton.setVisible(false);
 
@@ -447,42 +527,7 @@ public class PortWindow {
 		sailButton.setBounds(50, 450, 180, 25);
 		portFrame.getContentPane().add(sailButton);
 
-		// Destination radio buttons
-		JRadioButton destRadionButton1 = new JRadioButton("N/A");
-		destRadionButton1.setFont(new Font("Dialog", Font.BOLD, 14));
-		destRadionButton1.setSelected(true);
-		destinationButtonGroup.add(destRadionButton1);
-		destRadionButton1.setBounds(255, 428, 250, 23);
-		portFrame.getContentPane().add(destRadionButton1);
-
-		JRadioButton destRadionButton2 = new JRadioButton("N/A");
-		destRadionButton2.setFont(new Font("Dialog", Font.BOLD, 14));
-		destinationButtonGroup.add(destRadionButton2);
-		destRadionButton2.setBounds(255, 455, 250, 23);
-		portFrame.getContentPane().add(destRadionButton2);
-
-		JRadioButton destRadionButton3 = new JRadioButton("N/A");
-		destRadionButton3.setFont(new Font("Dialog", Font.BOLD, 14));
-		destinationButtonGroup.add(destRadionButton3);
-		destRadionButton3.setBounds(255, 480, 250, 23);
-		portFrame.getContentPane().add(destRadionButton3);
-
-		// update destination radio buttons when initializing PortWindow
-		ArrayList<String> islandNames = new ArrayList<String>();
-		for (Route route : manager.getCurrentRoutes()) {
-			islandNames.add(route.getDest().getName());
-		}
-
-		int i = 0;
-		Enumeration<AbstractButton> destinations = destinationButtonGroup.getElements();
-		while (i < islandNames.size() && destinations.hasMoreElements()) {
-			JRadioButton destination = (JRadioButton) destinations.nextElement();
-			if (destination.getText() == "N/A") {
-				destination.setText(islandNames.get(i));
-			}
-			i += 1;
-		}
-		// ========================
+	
 
 		JSeparator separator1 = new JSeparator();
 		separator1.setBounds(45, 515, 650, 2);
@@ -509,33 +554,6 @@ public class PortWindow {
 		restartButton.setBackground(new Color(255, 102, 102));
 		restartButton.setBounds(50, 790, 100, 25);
 		portFrame.getContentPane().add(restartButton);
-
-		// View routes button
-		JButton viewRoutesButton = new JButton("Available Routes");
-		viewRoutesButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		viewRoutesButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				String routeReport = manager.getRoutesDescription();
-				reportText.setText(routeReport);
-
-				// set scroll bar to top
-				javax.swing.SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						scrollPane.getVerticalScrollBar().setValue(0);
-					}
-				});
-
-			}
-		});
-		viewRoutesButton.setFont(new Font("Dialog", Font.BOLD, 14));
-		viewRoutesButton.setBackground(new Color(204, 153, 102));
-		viewRoutesButton.setBounds(50, 547, 180, 25);
-		portFrame.getContentPane().add(viewRoutesButton);
 
 		// View ship button
 		JButton viewShipButton = new JButton("Ship Status");
