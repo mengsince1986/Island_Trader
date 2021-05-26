@@ -293,7 +293,7 @@ public class GUIGameEnvironment {
 	
 	/**
 	 * This method gets an ArrayList of {@link Item}s for sale from the {@link Store}
-	 * the player is located.
+	 * where the player is located.
 	 * @return an ArrayList of {@link Item}s
 	 */
 	public ArrayList<Item> getItemsToSell() {
@@ -305,7 +305,7 @@ public class GUIGameEnvironment {
 	
 	/**
 	 * This method gets an ArrayList of {@link Item}s for the player to sell from
-	 * the {@link Store} the player is located.
+	 * the {@link Store} where the player is located.
 	 * @return an ArrayList of {@link Item}s
 	 */
 	public ArrayList<Item> getSellableTraderItems() {
