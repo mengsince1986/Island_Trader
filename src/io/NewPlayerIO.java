@@ -121,9 +121,9 @@ public abstract class NewPlayerIO {
 						processPlayerInput(playerChoice);
 						isValid = true;
 
-					} else if (Integer.parseInt(playerChoice) < 10 || Integer.parseInt(playerChoice) > 100) {
+					} else if (Integer.parseInt(playerChoice) < 20 || Integer.parseInt(playerChoice) > 50) {
 
-						System.out.println("\nThe number of the days should be between 10 and 100.");
+						System.out.println("\nThe number of the days should be between 20 and 50.");
 
 					} else {
 

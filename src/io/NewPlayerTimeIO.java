@@ -25,7 +25,7 @@ public class NewPlayerTimeIO extends NewPlayerIO {
 		
 		super(newWorld);
 		super.setPrompt("Please enter the days you want to play for:\n"
-				     + "The number should be between 10 to 100.\n");
+				     + "The number should be between 20 and 50.\n");
 		super.addCommand("Cancel");
 	}
 	

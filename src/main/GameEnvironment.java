@@ -13,19 +13,27 @@ import terminalPrinter.*;
 /**
  * <h1> SENG201 Project: Island Trader </h1>
  * <br>
+ * 
+ * This class is the entry point for the command-line interface version of the game.
+ * It constructs the game world using a {@link WorldConstructor}, constructs the player's
+ * {@link Trader} object, and handles the basic gameplay logic.
+ * 
  * @author Finn van Dorsser
  * @author Meng Zhang 
  */
-
 public class GameEnvironment {
 	
    /**
-   * This is the main method which creates a new player and starts the game.
-   * @param args Unused.
-   * @return Nothing.
+   * This method will be called when GameEnvironment is run from the terminal. It
+   * sets up the game, asking for valid player input until the construction of their
+   * {@link Trader} is complete, starts the trading adventure and monitors the location of
+   * the player's Trader to provide them with relevant commands, and ends the game if:
+   *  - the Trader has no time left to sail anywhere
+   *  - the Trader is killed by pirates
+   *  - the Trader runs out of money to sail anywhere
+   *  - the player quits the game
+   * @param args unused
    */
-	
-	
 	public static void main(String[] args) {
 		
 		World world = null;

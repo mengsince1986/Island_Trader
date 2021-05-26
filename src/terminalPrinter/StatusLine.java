@@ -28,14 +28,15 @@ public class StatusLine {
 	}
 	
 	/**
-	 * @return a formated status line String containing basic player status information
+	 * prints a formated status line String containing basic player status information
+	 * to the terminal
 	 */
 	public void printStatusLine() {
 		
 		String upperDivider = "---------------Trader Status------------------";
 		String lowerDivider = "----------------------------------------------";
 		String remainingDays = "Remaining Days: " + this.player.getRemainingDays();
-		String money = "Money : " + this.player.getOwnedMoney() + " coins";
+		String money = "Money: " + this.player.getOwnedMoney() + " coins";
 		String traderName = "Trader: " + this.player.getName();
 		String island = "Island: " + this.player.getCurrentIsland().getName();
 		
@@ -49,7 +50,12 @@ public class StatusLine {
 	}
 	
 	/**
-	 * @return a formated game over report String, including a congratulatory message and a score 
+	 * takes a String detailing the reason why the game has ended and returns a report String
+	 * that includes the player's name, selected game duration, the actual duration, profit made, a
+	 * congratulatory message, and a score out of 3 for the amount of profit they were able to make
+	 * against the number of days played.
+	 * @param reason a String detailing the reason why the game has ended
+	 * @return a formatted game over report String, including a congratulatory message and a score 
 	 * out of 3 based on how much profit the player made
 	 */
 	public String getGameOverReport(String reason) {

@@ -57,7 +57,8 @@ public class Trader {
 	private Island currentIsland;
 	
 	/**
-	 * a String representation of where the player is on any given Island.
+	 * a String representation of which object, an Island's {@link Port} or {@link Store},
+	 * the player can currently interact with.
 	 * Can take the values "port" or "store".
 	 */
 	private String currentLocation;
@@ -199,7 +200,7 @@ public class Trader {
 	 * @return a pretty String representation of the player's {@link tradingLogs}.
 	 */
 	public String getTradingLogsString() {
-		String logsString = "Your trading log:\n";
+		String logsString = "Your trading log:\n\n";
 		if (this.tradingLogs.size() > 0) {
 			for (TradingLog log : this.tradingLogs) {
 				logsString += log.toString() + "\n";
@@ -299,7 +300,7 @@ public class Trader {
 	
 	/**
 	 * sets the player's {@link currentLocation}.
-	 * @param location "port" or "store"
+	 * @param location "port" or "store", to designate the player's {@link currentLocation}
 	 */
 	public void setCurrentLocation(String location) {
 		this.currentLocation = location;

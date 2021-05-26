@@ -56,7 +56,7 @@ public class Store {
 	 * gets the {@link Item} with the given name String from the desired Store
 	 * list ({@link toSell} or {@link toBuy}).
 	 * @param itemName the name String of the desired Item
-	 * @param whichList "toSell" or "toBuy"
+	 * @param whichList "toSell" or "toBuy", to designate the desired Store list
 	 * @return the Item whose name String matches that given, else null if no Item is matched
 	 */
 	public Item getItem(String itemName, String whichList) {
@@ -77,7 +77,7 @@ public class Store {
 	 * gets the unit price of the {@link Item} with the given name String from the 
 	 * desired store list ({@link toSell} or {@link toBuy}).
 	 * @param itemName the name String of the desired Item
-	 * @param whichList "toSell" or "toBuy"
+	 * @param whichList "toSell" or "toBuy", to designate the desired Store list
 	 * @return the price per unit of the Item whose name String matches that given,
 	 * else -1 if no Item is matched
 	 */
