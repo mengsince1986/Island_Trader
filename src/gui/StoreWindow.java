@@ -138,10 +138,10 @@ public class StoreWindow {
 		storeFrame.getContentPane().add(reportText);
 		
 		// update store report when initializing
-		String report = "Welcome to the store!\n\n";
-		report += manager.getTrader().getCurrentIsland().getStore().forSale() + "\n\n";
+		String report = "Welcome to the store, Captain!\n\n";
+		report += manager.getListForSale() + "\n\n";
 		report += "******************************\n\n";
-		report += manager.getTrader().getCurrentIsland().getStore().forPurchase();
+		report += manager.getListToPurchase();
 		reportText.setText(report);
 		//======================================
 		
@@ -198,10 +198,10 @@ public class StoreWindow {
 		
 	// update status labels
 		
-		String name = manager.getTrader().getName();
-		int days = manager.getTrader().getRemainingDays();
-		int money = manager.getTrader().getOwnedMoney();
-		String islandLocation =manager.getTrader().getCurrentIsland().getName();
+		String name = manager.getTraderName();
+		int days = manager.getRemainingDays();
+		int money = manager.getOwnedMoney();
+		String islandLocation =manager.getCurrentIslandName();
 		
 		nameDisplayLabel.setText(name);
 		DaysDisplayLabel.setText(String.valueOf(days));
@@ -232,7 +232,7 @@ public class StoreWindow {
 		
 		// update sale list when initializing
 		ArrayList<String> saleItems = new ArrayList<String>(); 
-		for (Item item : manager.getTrader().getCurrentIsland().getStore().getToSell()) {
+		for (Item item : manager.getItemsToSell()) {
 			saleItems.add(item.getName());
 		}
 
@@ -273,7 +273,7 @@ public class StoreWindow {
 		
 		// update purchase list when initializing
 		ArrayList<String> purchaseItems = new ArrayList<String>(); 
-		for (Item item : manager.getTrader().getCurrentIsland().getStore().getSellablePlayerItems(manager.getShip())) {
+		for (Item item : manager.getSellableTraderItems()) {
 			purchaseItems.add(item.getName());
 		}
 
@@ -367,14 +367,12 @@ public class StoreWindow {
 				} else {
 					
 					//call Trader.buy() through manager
-					String report = manager.getTrader().buy(manager.getTrader().getCurrentIsland(),
-							                                saleItemName, 
-							                                quantity);
+					String report = manager.buy(saleItemName, quantity);
 					reportText.setText(report);
 					
 					// update sell radio buttons
 					ArrayList<String> purchaseItems = new ArrayList<String>(); 
-					for (Item item : manager.getTrader().getCurrentIsland().getStore().getSellablePlayerItems(manager.getShip())) {
+					for (Item item : manager.getSellableTraderItems()) {
 						purchaseItems.add(item.getName());
 					}
 
@@ -389,13 +387,8 @@ public class StoreWindow {
 					}
 					
 					// update status labels
-					int days = manager.getTrader().getRemainingDays();
-					int money = manager.getTrader().getOwnedMoney();
-					String islandLocation =manager.getTrader().getCurrentIsland().getName();
-					
-					DaysDisplayLabel.setText(String.valueOf(days));
+					int money = manager.getOwnedMoney();
 					moneyDisplayLabel.setText(String.valueOf(money));
-					locationDisplayLabel.setText(islandLocation);
 
 					}
 				
@@ -441,15 +434,13 @@ public class StoreWindow {
 				} else {
 					
 					//call Trader.sell() method through manager
-					String report = manager.getTrader().sell(manager.getTrader().getCurrentIsland(), 
-															 purchaseItemName, 
-															 quantity);
+					String report = manager.sell(purchaseItemName, quantity);
 					reportText.setText(report);
 					
 					// update chosenItem
 					// set to "N/A" if Trader sold all of this item from cargos
 					ArrayList<String> purchaseItems = new ArrayList<String>(); 
-					for (Item item : manager.getTrader().getCurrentIsland().getStore().getSellablePlayerItems(manager.getShip())) {
+					for (Item item : manager.getSellableTraderItems()) {
 						purchaseItems.add(item.getName());
 					}
 					
@@ -457,16 +448,9 @@ public class StoreWindow {
 						chosenItem.setText("N/A");
 					}
 					
-					
 					// update status labels
-					int days = manager.getTrader().getRemainingDays();
-					int money = manager.getTrader().getOwnedMoney();
-					String islandLocation =manager.getTrader().getCurrentIsland().getName();
-					
-					DaysDisplayLabel.setText(String.valueOf(days));
+					int money = manager.getOwnedMoney();
 					moneyDisplayLabel.setText(String.valueOf(money));
-					locationDisplayLabel.setText(islandLocation);
-					// ====================
 					}
 				
 			}
@@ -480,7 +464,8 @@ public class StoreWindow {
 		portButton.setBounds(523, 640, 117, 25);
 		storeFrame.getContentPane().add(portButton);
 		
-		JButton viewStoreButton = new JButton("View Store List");
+		// View Store Button
+		JButton viewStoreButton = new JButton("Store Trading List");
 		viewStoreButton.setBackground(new Color(204, 153, 102));
 		viewStoreButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -489,10 +474,10 @@ public class StoreWindow {
 		viewStoreButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String report = "Welcome to the store!\n\n";
-				report += manager.getTrader().getCurrentIsland().getStore().forSale() + "\n\n";
+				String report = "Following is our trading list.\n\n";
+				report += manager.getListForSale() + "\n\n";
 				report += "******************************\n\n";
-				report += manager.getTrader().getCurrentIsland().getStore().forPurchase();
+				report += manager.getListToPurchase();
 				reportText.setText(report);
 				
 				// set scroll bar to top
@@ -507,13 +492,14 @@ public class StoreWindow {
 		viewStoreButton.setBounds(40, 640, 200, 25);
 		storeFrame.getContentPane().add(viewStoreButton);
 		
+		// View trading logs button
 		JButton viewTradingLogsButton = new JButton("View Trading Logs");
 		viewTradingLogsButton.setBackground(new Color(204, 153, 102));
 		viewTradingLogsButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				String report = manager.getTrader().getTradingLogsString();
+				String report = manager.getTradingLogsDescription();
 				reportText.setText(report);
 				
 				// set scroll bar to top
@@ -528,12 +514,13 @@ public class StoreWindow {
 		viewTradingLogsButton.setBounds(40, 689, 200, 25);
 		storeFrame.getContentPane().add(viewTradingLogsButton);
 		
+		// View Ship cargos button
 		JButton viewShipCargoesButton = new JButton("View Ship Cargos");
 		viewShipCargoesButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String report = "";
-				report += manager.getTrader().getOwndedShip().getCargosString();
+				report += manager.getCargosDescription();
 				reportText.setText(report);
 				
 				// set scroll bar to top

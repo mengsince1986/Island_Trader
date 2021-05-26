@@ -5,15 +5,22 @@ import java.util.*;
 import gui.PortWindow;
 import gui.SetupWindow;
 import gui.StoreWindow;
+import items.Item;
 import trader.Trader;
 import map.Island;
+import map.Route;
 import map.World;
 import map.WorldConstructor;
 import ships.Ship;
 import terminalPrinter.StatusLine;
 
 /**
- * <h1>SENG201 Project: Island Trader</h1> <br>
+ * The GUIGameEnvironment class is the starter of the GUI interface. It is used
+ * to initialize an object working as a manager for {@link SetupWindow},
+ * {@link PortWindow}, and {@link StoreWindow}. It launches, switches and
+ * finishes the GUI window frames. A GUIGameEnvironment object stores the state
+ * of the game and is a media for calling the methods from the back end to 
+ * implement different commands from GUI interface.  
  * 
  * @author Finn van Dorsser
  * @author Meng Zhang
@@ -58,18 +65,103 @@ public class GUIGameEnvironment {
 		String report = "A new trader named " + player.getName() + " has been created!" 
 		                + "\nYour ship is " + ship.getName()
 		                + " and you will start from your home island " 
-		                + player.getCurrentIsland().getName() + ".";
+		                + player.getCurrentIsland().getName() 
+		                + "\nThe playing time is " + days + " days.";
 		return report;
 
 	}
+	
+	public String getTraderName() {
+		
+		String name = player.getName();
+		return name;
+		
+	}
 
+	public int getRemainingDays() {
+		
+		int days = player.getRemainingDays();
+		return days;
+		
+	}
+	
+	public int getOwnedMoney() {
+		
+		int money = player.getOwnedMoney();
+		return money;
+		
+	}
+	
+	public String getCurrentIslandName() {
+		
+		String name = player.getCurrentIsland().getName();
+		return name;
+		
+	}
+	
+	public ArrayList<Route> getCurrentRoutes() {
+		
+		ArrayList<Route> routes = player.getCurrentIsland().getRoutes();
+		return routes;
+		
+	}
+	
+	public String getRoutesDescription() {
+		
+		String routesDescription = player.getCurrentIsland().getRoutesString(ship);
+		return routesDescription;
+		
+	}
+	
+	public String getTraderDescription() {
+		
+		String traderDescription = player.toString();
+		return traderDescription;
+		
+	}
+	
+	public String getTradingLogsDescription() {
+		
+		String tradingLogsDescription = player.getTradingLogsString();
+		return tradingLogsDescription;
+		
+	}
+	
+	public String getShipDescription() {
+		
+		String shipDescription = ship.toString();
+		return shipDescription;
+		
+	}
+	
+	public String getCargosDescription() {
+		
+		String cargosDescription = ship.getCargosString();
+		return cargosDescription;
+		
+	}
+	
+	public String getUpgradeLogsDescription() {
+		
+		String upgradeLogsDescripion = ship.getUpgradeLogString();
+		return upgradeLogsDescripion;
+		
+	}
+	
+	public int getCostPerCannon() {
+		
+		int cost = player.getCurrentIsland().getPort().getcannonCost();
+		return cost;
+		
+	}
+	
 	public String sail(String destination) {
 
 		String report = "";
 
 		Island destIsland = world.getIsland(destination);
 		ArrayList<String> reportList = ship.sailTo(destIsland);
-		report = "Sailing ~~~ ~~~ ~~~\n\n";
+		report = "~~~ ~~~ ~~~ Sailing ~~~ ~~~ ~~~\n\n";
 
 		for (String event : reportList) {
 			report += event;
@@ -77,6 +169,64 @@ public class GUIGameEnvironment {
 
 		return report;
 
+	}
+	
+	public String repair() {
+		
+		String report = player.repairShip();
+		return report;
+		
+	}
+	
+	public String upgradeCannons(int cannonNum) {
+		
+		String report = player.upgradeCannons(cannonNum);
+		return report;
+		
+	}
+	
+	public ArrayList<Item> getItemsToSell() {
+		
+		ArrayList<Item> itemsToSell = player.getCurrentIsland().getStore().getToSell();
+		return itemsToSell;
+		
+	}
+	
+	public ArrayList<Item> getSellableTraderItems() {
+		
+		ArrayList<Item> sellableTraderItems = player.getCurrentIsland().getStore().getSellablePlayerItems(ship);
+		return sellableTraderItems;
+		
+	}
+	
+	public String buy(String itemName, int quantity) {
+		
+		String report = player.buy(player.getCurrentIsland(), 
+				                   itemName, quantity);
+		return report;
+		
+	}
+	
+	public String sell(String itemName, int quantity) {
+		
+		String report = player.sell(player.getCurrentIsland(), 
+				                    itemName, quantity);
+		return report;
+		
+	}
+	
+	public String getListForSale() {
+		
+		String listForSale = player.getCurrentIsland().getStore().forSale();
+		return listForSale;
+		
+	}
+	
+	public String getListToPurchase() {
+		
+		String listToPurchase = player.getCurrentIsland().getStore().forPurchase();
+		return listToPurchase;
+		
 	}
 
 	public String gameOver() {
@@ -87,8 +237,8 @@ public class GUIGameEnvironment {
 		return gameOverReport;
 	}
 
+	
 	// window methods
-
 	// SetupWindow
 	public void launchSetupWindow() {
 		@SuppressWarnings("unused")

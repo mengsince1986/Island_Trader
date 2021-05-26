@@ -175,10 +175,10 @@ public class PortWindow {
 		
 		// update status labels
 		
-		String name = manager.getTrader().getName();
-		int days = manager.getTrader().getRemainingDays();
-		int money = manager.getTrader().getOwnedMoney();
-		String islandLocation =manager.getTrader().getCurrentIsland().getName();
+		String name = manager.getTraderName();
+		int days = manager.getRemainingDays();
+		int money = manager.getOwnedMoney();
+		String islandLocation =manager.getCurrentIslandName();
 		
 		nameDisplayLabel.setText(name);
 		DaysDisplayLabel.setText(String.valueOf(days));
@@ -229,6 +229,7 @@ public class PortWindow {
 		storeButton.setBounds(510, 790, 180, 25);
 		portFrame.getContentPane().add(storeButton);
 		
+		// Repair Button
 		JButton repairButton = new JButton("Repair Ship");
 		repairButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -239,25 +240,20 @@ public class PortWindow {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// call repair method from manager
-				String report = manager.getTrader().repairShip();
+				String report = manager.repair();
 				reportText.setText(report);
 				
 				// update status labels
-				int days = manager.getTrader().getRemainingDays();
-				int money = manager.getTrader().getOwnedMoney();
-				String islandLocation =manager.getTrader().getCurrentIsland().getName();
-				
-				DaysDisplayLabel.setText(String.valueOf(days));
+				int money = manager.getOwnedMoney();
 				moneyDisplayLabel.setText(String.valueOf(money));
-				locationDisplayLabel.setText(islandLocation);
-				// ====================
+
 			}
 		});
 		repairButton.setBackground(new Color(204, 153, 102));
 		repairButton.setBounds(255, 547, 180, 25);
 		portFrame.getContentPane().add(repairButton);
 		
-		
+		// Quit Button
 		JButton quitButton = new JButton("Quit");
 		quitButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		quitButton.addActionListener(new ActionListener() {
@@ -271,6 +267,7 @@ public class PortWindow {
 			}
 		});
 		
+		// Summary Button
 		JButton summaryButton = new JButton("Summary");
 		summaryButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		summaryButton.addMouseListener(new MouseAdapter() {
@@ -285,6 +282,67 @@ public class PortWindow {
 		portFrame.getContentPane().add(summaryButton);
 		summaryButton.setVisible(false);
 		
+		JLabel costLable = new JLabel("Cost:");
+		costLable.setFont(new Font("Dialog", Font.BOLD, 14));
+		costLable.setBounds(491, 636, 70, 15);
+		portFrame.getContentPane().add(costLable);
+		
+		JLabel cannonCostLable = new JLabel("N/A");
+		costLable.setLabelFor(cannonCostLable);
+		cannonCostLable.setFont(new Font("Dialog", Font.BOLD, 14));
+		cannonCostLable.setBounds(541, 636, 150, 15);
+		portFrame.getContentPane().add(cannonCostLable);
+		
+		JSlider cannonNumSlider = new JSlider();
+		cannonNumSlider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				
+				// update cannon cost
+				int cannonNum = cannonNumSlider.getValue();
+				int totalCost = cannonNum * manager.getCostPerCannon();
+				cannonCostLable.setText(String.valueOf(totalCost) + " coins");
+			}
+		});
+		cannonNumSlider.setValue(1);
+		cannonNumSlider.setSnapToTicks(true);
+		cannonNumSlider.setPaintTicks(true);
+		cannonNumSlider.setPaintLabels(true);
+		cannonNumSlider.setMajorTickSpacing(1);
+		cannonNumSlider.setMinimum(1);
+		cannonNumSlider.setMaximum(10);
+		cannonNumSlider.setBounds(251, 636, 220, 40);
+		portFrame.getContentPane().add(cannonNumSlider);
+		
+		//Upgrade Cannon Button
+		JButton upgradeCannonsButton = new JButton("Upgrade Cannons");
+		upgradeCannonsButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				// get upgrade cannon number
+				int cannonNum = cannonNumSlider.getValue();
+				
+				// call upgrade method from manager
+				String report = manager.upgradeCannons(cannonNum);
+				reportText.setText(report);
+				
+				// update status labels
+				int money = manager.getOwnedMoney();
+				moneyDisplayLabel.setText(String.valueOf(money));
+				
+			}
+		});
+		upgradeCannonsButton.setFont(new Font("Dialog", Font.BOLD, 14));
+		upgradeCannonsButton.setBackground(new Color(204, 153, 102));
+		upgradeCannonsButton.setBounds(51, 632, 180, 25);
+		portFrame.getContentPane().add(upgradeCannonsButton);
+		
+		// update cannon cost when initializing
+		int cannonNum = cannonNumSlider.getValue();
+		int totalCost = cannonNum * manager.getCostPerCannon();
+		cannonCostLable.setText(String.valueOf(totalCost) + " coins");
+		
+		// Sail Button
 		JButton sailButton = new JButton("Sail to");
 		sailButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -321,19 +379,17 @@ public class PortWindow {
 						manager.getTrader().noMoneyToSail()) {
 						
 						// update status labels
-						String name = manager.getTrader().getName();
-						int days = manager.getTrader().getRemainingDays();
-						int money = manager.getTrader().getOwnedMoney();
-						String islandLocation = manager.getTrader().getCurrentIsland().getName();
+						int days = manager.getRemainingDays();
+						int money = manager.getOwnedMoney();
+						String islandLocation = manager.getCurrentIslandName();
 						
-						nameDisplayLabel.setText(name);
 						DaysDisplayLabel.setText(String.valueOf(days));
 						moneyDisplayLabel.setText(String.valueOf(money));
 						locationDisplayLabel.setText(islandLocation);
-						// ====================
 						
 						// update report
-						report = "==============GAME OVER============\n" + report;
+						report = report 
+							   + "\n\n==============GAME OVER============";
 						reportText.setText(report);
 						
 						// set all buttons invisible except for "Quit"
@@ -356,20 +412,22 @@ public class PortWindow {
 						reportText.setText(report);
 						
 						// update status labels
-						String name = manager.getTrader().getName();
-						int days = manager.getTrader().getRemainingDays();
-						int money = manager.getTrader().getOwnedMoney();
-						String islandLocation =manager.getTrader().getCurrentIsland().getName();
+						int days = manager.getRemainingDays();
+						int money = manager.getOwnedMoney();
+						String islandLocation =manager.getCurrentIslandName();
 						
-						nameDisplayLabel.setText(name);
 						DaysDisplayLabel.setText(String.valueOf(days));
 						moneyDisplayLabel.setText(String.valueOf(money));
 						locationDisplayLabel.setText(islandLocation);
-						// ====================
+						
+						// update cannon cost
+						int cannonNum = cannonNumSlider.getValue();
+						int totalCost = cannonNum * manager.getCostPerCannon();
+						cannonCostLable.setText(String.valueOf(totalCost) + " coins");
 						
 						// update sail destination radio buttons
 						ArrayList<String> islandNames = new ArrayList<String>(); 
-						for (Route route : manager.getTrader().getCurrentIsland().getRoutes()) {
+						for (Route route : manager.getCurrentRoutes()) {
 							islandNames.add(route.getDest().getName());
 						}
 
@@ -404,6 +462,7 @@ public class PortWindow {
 		sailButton.setBounds(50, 450, 180, 25);
 		portFrame.getContentPane().add(sailButton);
 		
+		// Destination Radio Buttons
 		JRadioButton destRadionButton1 = new JRadioButton("N/A");
 		destRadionButton1.setFont(new Font("Dialog", Font.BOLD, 14));
 		destRadionButton1.setSelected(true);
@@ -424,9 +483,8 @@ public class PortWindow {
 		portFrame.getContentPane().add(destRadionButton3);
 		
 		// update destination radio buttons when initializing PortWindow
-		
 		ArrayList<String> islandNames = new ArrayList<String>(); 
-		for (Route route : manager.getTrader().getCurrentIsland().getRoutes()) {
+		for (Route route : manager.getCurrentRoutes()) {
 			islandNames.add(route.getDest().getName());
 		}
 
@@ -439,8 +497,6 @@ public class PortWindow {
 			}
 			i += 1;
 		}
-		
-		
 		// ========================
 		
 		JSeparator separator1 = new JSeparator();
@@ -450,70 +506,7 @@ public class PortWindow {
 		quitButton.setBounds(175, 790, 100, 25);
 		portFrame.getContentPane().add(quitButton);
 		
-		JLabel costLable = new JLabel("Cost:");
-		costLable.setFont(new Font("Dialog", Font.BOLD, 14));
-		costLable.setBounds(491, 636, 70, 15);
-		portFrame.getContentPane().add(costLable);
 		
-		JLabel cannonCostLable = new JLabel("N/A");
-		costLable.setLabelFor(cannonCostLable);
-		cannonCostLable.setFont(new Font("Dialog", Font.BOLD, 14));
-		cannonCostLable.setBounds(541, 636, 150, 15);
-		portFrame.getContentPane().add(cannonCostLable);
-		
-		JSlider cannonNumSlider = new JSlider();
-		cannonNumSlider.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				
-				// update cannon cost
-				int cannonNum = cannonNumSlider.getValue();
-				int totalCost = cannonNum * manager.getTrader().getCurrentIsland().getPort().getcannonCost();
-				cannonCostLable.setText(String.valueOf(totalCost) + " coins");
-			}
-		});
-		cannonNumSlider.setValue(1);
-		cannonNumSlider.setSnapToTicks(true);
-		cannonNumSlider.setPaintTicks(true);
-		cannonNumSlider.setPaintLabels(true);
-		cannonNumSlider.setMajorTickSpacing(1);
-		cannonNumSlider.setMinimum(1);
-		cannonNumSlider.setMaximum(10);
-		cannonNumSlider.setBounds(251, 636, 220, 40);
-		portFrame.getContentPane().add(cannonNumSlider);
-		
-		JButton upgradeCannonsButton = new JButton("Upgrade Cannons");
-		upgradeCannonsButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				// get upgrade cannon number
-				int cannonNum = cannonNumSlider.getValue();
-				
-				// call upgrade method from manager
-				String report = manager.getTrader().upgradeCannons(cannonNum);
-				reportText.setText(report);
-				
-				// update status labels
-				int days = manager.getTrader().getRemainingDays();
-				int money = manager.getTrader().getOwnedMoney();
-				String islandLocation =manager.getTrader().getCurrentIsland().getName();
-				
-				DaysDisplayLabel.setText(String.valueOf(days));
-				moneyDisplayLabel.setText(String.valueOf(money));
-				locationDisplayLabel.setText(islandLocation);
-				// ====================
-				
-			}
-		});
-		upgradeCannonsButton.setFont(new Font("Dialog", Font.BOLD, 14));
-		upgradeCannonsButton.setBackground(new Color(204, 153, 102));
-		upgradeCannonsButton.setBounds(51, 632, 180, 25);
-		portFrame.getContentPane().add(upgradeCannonsButton);
-		
-		// update cannon cost when initializing
-		int cannonNum = cannonNumSlider.getValue();
-		int totalCost = cannonNum * manager.getTrader().getCurrentIsland().getPort().getcannonCost();
-		cannonCostLable.setText(String.valueOf(totalCost) + " coins");
 		
 		
 		JSeparator separator2 = new JSeparator();
@@ -534,6 +527,7 @@ public class PortWindow {
 		restartButton.setBounds(50, 790, 100, 25);
 		portFrame.getContentPane().add(restartButton);
 		
+		// View Routes Button
 		JButton viewRoutesButton = new JButton("Available Routes");
 		viewRoutesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -543,7 +537,7 @@ public class PortWindow {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				String routeReport = manager.getTrader().getCurrentIsland().getRoutesString(manager.getShip());
+				String routeReport = manager.getRoutesDescription();
 				reportText.setText(routeReport);
 				
 				// set scroll bar to top
@@ -560,14 +554,15 @@ public class PortWindow {
 		viewRoutesButton.setBounds(50, 547, 180, 25);
 		portFrame.getContentPane().add(viewRoutesButton);
 		
+		// View Ship Button
 		JButton viewShipButton = new JButton("Ship Status");
 		viewShipButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				String shipStatus = manager.getShip().toString() + "\n" +
-				                    manager.getShip().getCargosString() + "\n" + 
-				                    manager.getShip().getUpgradeLogString();
+				String shipStatus = manager.getShipDescription() + "\n" +
+				                    manager.getCargosDescription() + "\n" + 
+				                    manager.getUpgradeLogsDescription();
 				reportText.setText(shipStatus);
 				
 				// set scroll bar to top
@@ -588,8 +583,8 @@ public class PortWindow {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				String traderStatus = manager.getTrader().toString() + "\n\n" +
-						              manager.getTrader().getTradingLogsString();
+				String traderStatus = manager.getTraderDescription() + "\n\n" +
+						              manager.getTradingLogsDescription();
 				reportText.setText(traderStatus);
 				
 				// set scroll bar to top
@@ -609,7 +604,6 @@ public class PortWindow {
 		JSeparator separator2_1 = new JSeparator();
 		separator2_1.setBounds(45, 600, 650, 2);
 		portFrame.getContentPane().add(separator2_1);
-		
 		
 	}
 }

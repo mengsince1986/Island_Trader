@@ -54,7 +54,7 @@ public class StatusLine {
 	 */
 	public String getGameOverReport(String reason) {
 
-		String upperDivider = "----------------Game Over!--------------------";
+		String upperDivider = "-----------------Game Over--------------------";
 		String lowerDivider = "----------------------------------------------";
 		int playerProfit = this.player.getOwnedMoney() - this.player.getStartingMoney();
 		int daysPlayed = Integer.max(1, this.player.getSelectedDays() - this.player.getRemainingDays());
