@@ -5,17 +5,23 @@
 * Finn van Dorsser (82830202)
 * Meng Zhang (71682325)
 
-## How to load the source code into Eclipse?
+## How to load the source code into Eclipse:
 
-1. Unzip archive islandTraderGroup010.zip
+1. Unzip archive "IslandTraderGroup010.zip"
 2. Open Eclipse (version 4.19.0 is recommended)
 3. Click "Open Projects from File System"
-4. Click "Directory" and choose the unzipped folder islandTraderGroup010
-5. Only select Eclipse project "IslandTraderGUI"
+4. Click "Directory" and choose the unzipped folder "IslandTraderGroup010"
+5. Select "mzh103_fva22_IslandTrader"
 6. Click "Finish" to import the project
 
-## How to run JAR file?
+## How to run the GUI version of the game:
 
-1. Ensure Java 15 is installed on the machine
-2. Open the folder islandTraderGroup010 in a terminal window
-3. Run "java -jar islandTrader010.jar"
+1. Ensure Java 14 or higher is installed on the machine
+2. Enter the directory "IslandTraderGroup010"
+3. Run <code>java -jar mzh103_fva22_IslandTraderGUI.jar</code>
+
+## How to run the command-line version of the game:
+
+1. Ensure Java 14 or higher is installed on the machine
+2. Enter the directory "IslandTraderGroup010"
+3. Run <code>java -jar mzh103_fva22_IslandTraderCMD.jar</code>
