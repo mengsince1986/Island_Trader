@@ -1,9 +1,11 @@
-# SENG201 Project IslandTrader
+# Island Trader
 
-## Group 010
-
+## Authors
 * Finn van Dorsser (82830202)
 * Meng Zhang (71682325)
+
+## Introduction
+Island Trader is a voyage trading game which is originally a project of UC-SENG201: Software Engineering. In the game, you are a trader who travels by ship to trade goods on multiple islands. You will buy goods on one island then travel to another to sell them. You will keep traveling between islands and trading goods with the goal to earn as much profit as possible before the game ends.
 
 ## How to load the source code into Eclipse:
 
